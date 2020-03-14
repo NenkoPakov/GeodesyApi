@@ -1,0 +1,73 @@
+﻿@using GeodesyApi.Common
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>УНИВЕРСИТЕТ ПО АРХИТЕКТУРА, СТРОИТЕЛСТВО И ГЕОДЕЗИЯ - ГЕОГРАФСКА ИНФОРМАЦИОННА СИСТЕМА</title>
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/screens.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/owl.carousel.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/owl.theme.default.min.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/form.css" asp-append-version="true">
+
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            <a href="#" title="Български антарктически институт"><img src="img/logo.jpg" alt="УНИВЕРСИТЕТ ПО АРХИТЕКТУРА, СТРОИТЕЛСТВО И ГЕОДЕЗИЯ - ГЕОГРАФСКА ИНФОРМАЦИОННА СИСТЕМА" title="УНИВЕРСИТЕТ ПО АРХИТЕКТУРА, СТРОИТЕЛСТВО И ГЕОДЕЗИЯ - ГЕОГРАФСКА ИНФОРМАЦИОННА СИСТЕМА"> <span>УНИВЕРСИТЕТ ПО АРХИТЕКТУРА, СТРОИТЕЛСТВО И ГЕОДЕЗИЯ<br>ГЕОГРАФСКА ИНФОРМАЦИОННА СИСТЕМА</span></a>
+        </div>
+        <div class="menu-wrapper">
+            <a href="#menu" class="menu-link">	Меню <span class="ico-caret-down" aria-hidden="true">	&#x2630;</span></a>
+            <nav id="menu" role="navigation">
+                <div class="menu">
+                    <ul class="menu">
+                        <li><a href="#" title=""><img src="~/img/icons/home.svg" alt="" title="" asp-append-version="true"><br><span>Начало</span></a></li>
+                        <li><a href="#" title=""><img src="~/img/icons/catalog-nav.svg" alt="" title="" asp-append-version="true"><br><span>Каталог</span></a></li>
+                        <li><a href="#" title=""><img src="~/img/icons/library-nav.svg" alt="" title="" asp-append-version="true"><br><span>Библиотека</span></a></li>
+                        <li><a href="#" title=""><img src="~/img/icons/gis-nav.svg" alt="" title="" asp-append-version="true"><br><span>ГИС</span></a></li>
+                        <li><a href="#" title=""><img src="~/img/icons/projects-nav.svg" alt="" title="" asp-append-version="true"><br><span>Проекти</span></a></li>
+                        <li><a href="#" title=""><img src="~/img/icons/tests-nav.svg" alt="" title="" asp-append-version="true"><br><span>Проверка на знанията</span></a></li>
+                        <li><a href="#" title=""><img src="~/img/icons/news-nav.svg" alt="" title="" asp-append-version="true"><br><span>Новини и събития</span></a></li>
+                        <li><a href="#" title=""><img src="~/img/icons/mats-nav.svg" alt="" title="" asp-append-version="true"><br><span>Дисциплини и материали</span></a></li>
+                        <li><a href="#" title=""><img src="~/img/icons/contacts-nav.svg" alt="" title="" asp-append-version="true"><br><span>Контакт</span></a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div class="login">
+            <ul class="menu">
+                <li><a href="#" title=""><img src="~/img/icons/login-nav.svg" alt="" title="" asp-append-version="true"><br><span>Вход</span></a></li>
+                <li><a href="#" title=""><img src="~/img/icons/reg-nav.svg" alt="" title="" asp-append-version="true"><br><span>Регистрация</span></a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="container">
+        <partial name="_CookieConsentPartial" />
+        <main role="main" class="pb-3">
+            @this.RenderBody()
+        </main>
+    </div>
+
+
+    @this.RenderSection("Scripts", required: false)
+
+
+
+
+    <footer>
+        Български антарктически институт, 2020
+    </footer><!-- FOOTER -->
+
+    <script src="~/js/jquery.min.js" type="text/javascript" asp-append-version="true"></script>
+    <script src="~/js/owl.carousel.js" asp-append-version="true"></script>
+
+
+</body>
+</html>

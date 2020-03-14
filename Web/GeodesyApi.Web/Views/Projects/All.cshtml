@@ -1,0 +1,94 @@
+﻿@{
+    this.ViewData["Title"] = "All Projects";
+}
+
+<section class="page projects">
+    <aside>
+        <h1><img src="img/icons/projects.svg" alt="" title=""> Проекти</h1>
+        <a href="#" id="show" class="show-nav">&#9776;</a>
+        <div class="sidebar-nav" id="pushleft">
+            <a href="#" id="hide" class="hide-nav">&times;</a>
+            <!-- inner nav-->
+            <ul class="cd-accordion-menu animated">
+                <li class="has-children">
+                    <input type="checkbox" name="group-1" id="group-1">
+                    <label for="group-1">Категории</label>
+                    <ul>
+                        <li><a href="#" title="" class="active">Науки за земята</a></li>
+                        <li><a href="#" title="">Биология и екология</a></li>
+                        <li><a href="#" title="">Биология</a></li>
+                        <li><a href="#" title="">Медицина</a></li>
+                        <li><a href="#" title="">Геология</a></li>
+                        <li><a href="#" title="">Геодезия, картография и ГИС</a></li>
+                        <li><a href="#" title="">Океанографски науки</a></li>
+                        <li><a href="#" title="">Логистика и инженерни науки</a></li>
+                    </ul>
+                </li>
+                <li class="has-children">
+                    <input type="checkbox" name="group-2" id="group-2">
+                    <label for="group-2">Вид на проекта</label>
+                    <ul>
+                        <li><a href="#">Текущ</a></li>
+                        <li><a href="#">Предстоящ</a></li>
+                        <li><a href="#">Приключил</a></li>
+                    </ul>
+                </li>
+                <li class="has-children">
+                    <input type="checkbox" name="group-3" id="group-3">
+                    <label for="group-3">Година на изпълнение</label>
+                    <ul>
+                        <li><a href="#">2019</a></li>
+                        <li><a href="#">2018</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" title="" class="active">Последни проекти</a>
+                </li>
+            </ul><!-- inner nav-->
+            <!-- sidebar-buttons  -->
+            <div class="sidebar-buttons">
+                <a href="#" title="" class="all-projects">Покажи всички</a>
+                <a asp-controller="Projects" asp-action="New"  title="" class="new-project">Нов проект</a>
+            </div><!-- sidebar-buttons  -->
+        </div>
+
+
+    </aside>
+    <div class="content">
+        <div class="main">
+            <div class="search">
+                <form action="#" method="post">
+                    <input type="search" name="search-field" class="search-field" placeholder="Въведете параметри за търсене...">
+                    <input type="submit" name="search-button" class="search-button" value="">
+                </form>
+            </div>
+
+            <h2>Последни проекти</h2>
+
+
+            
+            <!-- .pagination -->
+            <div class="pagination">
+                <a href="#">&larr;</a>
+                <a href="#">1</a>
+                <strong>2</strong>
+                <a href="#">3</a>
+                ...
+                <a href="#">10</a>
+                <a href="#">&rarr;</a>
+            </div><!-- .pagination -->
+
+
+        </div>
+
+        <div class="show-selected" id="p0">
+            <div class="right-column2">
+                <div class="map">
+                    <img src="img/map1.png" alt="" title="">
+
+                    <a href="#" title="">Към ГИС</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- PAGE -->

@@ -1,0 +1,62 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-GeodesyApi-BBB373B5-EF3F-4DBB-B8AA-7152CEC275BF</UserSecretsId>
+	<AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\lib\**" />
+    <Content Remove="wwwroot\lib\**" />
+    <EmbeddedResource Remove="wwwroot\lib\**" />
+    <None Remove="wwwroot\lib\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\stylecop.json" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.435" />
+    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.0.96" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.2" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.164" PrivateAssets="all">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\GeodesyApi.Data.Models\GeodesyApi.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Data\GeodesyApi.Data\GeodesyApi.Data.csproj" />
+    <ProjectReference Include="..\..\Services\GeodesyApi.Services.Data\GeodesyApi.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Services\GeodesyApi.Services.Mapping\GeodesyApi.Services.Mapping.csproj" />
+    <ProjectReference Include="..\..\Services\GeodesyApi.Services.Messaging\GeodesyApi.Services.Messaging.csproj" />
+    <ProjectReference Include="..\..\Services\GeodesyApi.Services\GeodesyApi.Services.csproj" />
+    <ProjectReference Include="..\GeodesyApi.Web.Infrastructure\GeodesyApi.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\GeodesyApi.Web.ViewModels\GeodesyApi.Web.ViewModels.csproj" />
+  </ItemGroup>
+</Project>
