@@ -125,6 +125,7 @@ h6 {padding:0; margin:0; font-size:1rem; font-weight:400; color:#4c4c4c;}
 .sidebar-buttons a { display:block; width:100%; text-align:center; text-transform:uppercase; color:#ffffff; text-decoration:none; font-size:.786rem; font-weight:700; letter-spacing:1px; padding:.8rem 0; margin-bottom:.5rem; border-radius:25px;}
 .sidebar-buttons a.all-projects { background:#07acc8;}
 .sidebar-buttons a.new-project { background:#4fc37e;}
+.sidebar-buttons a.login { background:#4fc37e;}
 
 /* sidebar nav */
 .cd-accordion-menu { width:100%; padding:0; margin:0 0 2.5rem; list-style:none;}

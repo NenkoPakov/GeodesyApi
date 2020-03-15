@@ -3,9 +3,9 @@ namespace GeodesyApi.Data.Models
 {
     using System;
     using System.Collections.Generic;
-
+    using System.ComponentModel.DataAnnotations;
     using GeodesyApi.Data.Common.Models;
-
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
@@ -28,6 +28,22 @@ namespace GeodesyApi.Data.Models
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set; }
+
+        [Required]
+        [Range(0, 10000)]
+        public int FacultyNumber { get; set; }
+
+        [Required]
+        [MinLength(2)]
+        [MaxLength(50)]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [MinLength(2)]
+        [MaxLength(50)]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
