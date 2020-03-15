@@ -40,12 +40,24 @@
             </nav>
         </div>
 
-        <div class="login">
-            <ul class="menu">
-                <li><a asp-controller="Users" asp-action="Login" title=""><img src="~/img/icons/login-nav.svg" alt="" title="" asp-append-version="true"><br><span>Вход</span></a></li>
-                <li><a asp-controller="Users" asp-action="Register" title=""><img src="~/img/icons/reg-nav.svg" alt="" title="" asp-append-version="true"><br><span>Регистрация</span></a></li>
-            </ul>
-        </div>
+        @if (!this.User.Identity.IsAuthenticated)
+        {
+            <div class="login">
+                <ul class="menu">
+                    <li><a asp-controller="Users" asp-action="Login" title=""><img src="~/img/icons/login-nav.svg" alt="" title="" asp-append-version="true"><br><span>Вход</span></a></li>
+                    <li><a asp-controller="Users" asp-action="Register" title=""><img src="~/img/icons/reg-nav.svg" alt="" title="" asp-append-version="true"><br><span>Регистрация</span></a></li>
+                </ul>
+            </div>
+        }
+        else
+        {
+            <div class="login">
+                <ul class="menu">
+                    <li><a asp-controller="Users" asp-action="Logout" title=""><img src="~/img/icons/logout-nav.svg" alt="" title="" asp-append-version="true"><br><span>Изход</span></a></li>
+                </ul>
+            </div>
+        }
+
     </header>
 
     <div class="container">
