@@ -1,7 +1,6 @@
 ﻿using GeodesyApi.Data.Common.Models;
 using GeodesyApi.Data.Models.Enums;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,9 +8,12 @@ using System.Text;
 
 namespace GeodesyApi.Data.Models
 {
-    public class Material : BaseModel<int>
+    public class Material : BaseDeletableModel<int>
     {
         [Required]
+        [MinLength(2)]
+        [MaxLength(50)]
+        [Display(Name = "Заглавие")]
         public string Title { get; set; }
 
         [Required]
@@ -21,8 +23,11 @@ namespace GeodesyApi.Data.Models
         public virtual ApplicationUser Author { get; set; }
 
         [Required]
+        [Display(Name = "Категория")]
         public MaterialsType Categoty { get; set; }
 
-        public byte[] Files { get; set; }
+        [Required]
+        [Display(Name = "Добави файл")]
+        public IFormFile File { get; set; }
     }
 }

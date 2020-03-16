@@ -33,7 +33,7 @@ nav ul li a.active, nav ul li a:hover {color:#4c4c4c; text-decoration:none; bord
 nav ul li img { width:24px; display:inline-block; padding:.5rem 0; text-align:center;}
 .menu-wrapper a.menu-link { display: none;}
 
-.login {float:left; width:10%; text-align:right;}
+.login .logout .register{float:left; width:10%; text-align:right;}
 .login ul { padding:0; margin:0; list-style:none;}
 .login ul li { display:inline-block; padding:0; font-size:.857rem; text-align:center;}
 .login ul li a { color:#44a8f0; text-decoration:none; display:inline-block;border-bottom:1px solid #ffffff; padding:0.2rem .5rem; transition:border-bottom .3s ease-in-out; position:relative}

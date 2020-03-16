@@ -1,7 +1,7 @@
 ﻿namespace GeodesyApi.Web
 {
     using System.Reflection;
-
+    using CloudinaryDotNet;
     using GeodesyApi.Data;
     using GeodesyApi.Data.Common;
     using GeodesyApi.Data.Common.Repositories;
@@ -21,20 +21,25 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
 
+    using CloudinaryDotNet;
+    using System;
+    using System.IO;
+    using GeodesyApi.Services;
+
     public class Startup
     {
-        private readonly IConfiguration configuration;
+        private readonly IConfiguration Configuration;
 
         public Startup(IConfiguration configuration)
         {
-            this.configuration = configuration;
+            this.Configuration = configuration;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(
-                options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
+                options => options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
 
@@ -50,7 +55,7 @@
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.AddSingleton(this.configuration);
+            services.AddSingleton(this.Configuration);
 
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
@@ -60,6 +65,17 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IMaterialsService, MaterialsService>();
+
+            // Cloudinary
+            Account account = new Account(
+                this.Configuration["Cloudinary:ApiName"],
+                this.Configuration["Cloudinary:ApiKey"],
+                this.Configuration["Cloudinary:ApiSecret"]);
+
+            Cloudinary cloudinary = new Cloudinary(account);
+
+            services.AddSingleton(cloudinary);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
