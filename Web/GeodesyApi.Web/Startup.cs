@@ -62,10 +62,14 @@
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
+
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IMaterialsService, MaterialsService>();
+
+            //services.AddScoped<IRepository,MaterialsService>();
+
 
             // Cloudinary
             Account account = new Account(

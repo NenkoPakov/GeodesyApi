@@ -19,15 +19,13 @@ namespace GeodesyApi.Data.Models
         [Required]
         public string AuthorId { get; set; }
 
-        [Required]
         public virtual ApplicationUser Author { get; set; }
 
         [Required]
         [Display(Name = "Категория")]
-        public MaterialsType Categoty { get; set; }
+        public MaterialsType Category { get; set; }
 
         [Required]
-        [Display(Name = "Добави файл")]
-        public IFormFile File { get; set; }
+        public string FileUrl { get; set; }
     }
 }

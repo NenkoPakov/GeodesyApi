@@ -24,6 +24,8 @@
     <ProjectReference Include="..\..\Data\GeodesyApi.Data.Models\GeodesyApi.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\GeodesyApi.Data.Common\GeodesyApi.Data.Common.csproj" />
     <ProjectReference Include="..\..\GeodesyApi.Common\GeodesyApi.Common.csproj" />
+    <ProjectReference Include="..\..\Web\GeodesyApi.Web.ViewModels\GeodesyApi.Web.ViewModels.csproj" />
+    <ProjectReference Include="..\GeodesyApi.Services.Mapping\GeodesyApi.Services.Mapping.csproj" />
   </ItemGroup>
 
 </Project>
