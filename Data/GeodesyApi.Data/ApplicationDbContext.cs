@@ -49,6 +49,8 @@
 
         public virtual DbSet<News> News { get; set; }
 
+        public virtual DbSet<Comment> Comments { get; set; }
+
         public override int SaveChanges() => SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
