@@ -9,12 +9,12 @@ using System.Text;
 
 namespace GeodesyApi.Data.Models
 {
-    public class News : BaseModel<int>
+    public class News : BaseDeletableModel<int>
     {
-        //public News()
-        //{
-        //    this.Files = new HashSet<byte>();
-        //}
+        public News()
+        {
+            this.Comments = new HashSet<Comment>();
+        }
 
         [Required]
         public string Title { get; set; }
@@ -28,10 +28,12 @@ namespace GeodesyApi.Data.Models
         public virtual ApplicationUser User { get; set; }
 
         [Required]
-        public NewsType Categoty { get; set; }
+        public NewsType Category { get; set; }
 
         [Required]
         public NewsGroupType Group { get; set; }
+
+        public virtual ICollection<Comment> Comments { get; set; }
 
     }
 }

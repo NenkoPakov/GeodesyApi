@@ -270,7 +270,7 @@ namespace GeodesyApi.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Categoty")
+                    b.Property<int>("Category")
                         .HasColumnType("int");
 
                     b.Property<string>("Content")
@@ -280,8 +280,14 @@ namespace GeodesyApi.Data.Migrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("Group")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -295,6 +301,8 @@ namespace GeodesyApi.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
 
                     b.HasIndex("UserId");
 
@@ -775,13 +783,13 @@ namespace GeodesyApi.Data.Migrations
             modelBuilder.Entity("GeodesyApi.Data.Models.Comment", b =>
                 {
                     b.HasOne("GeodesyApi.Data.Models.News", "News")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("NewsId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("GeodesyApi.Data.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("UserId");
                 });
 
@@ -797,7 +805,7 @@ namespace GeodesyApi.Data.Migrations
             modelBuilder.Entity("GeodesyApi.Data.Models.News", b =>
                 {
                     b.HasOne("GeodesyApi.Data.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("News")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

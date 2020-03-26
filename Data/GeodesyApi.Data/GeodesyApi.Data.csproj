@@ -18,13 +18,6 @@
   <PropertyGroup>
     <GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <Compile Remove="Migrations\20200312204616_RelationUserMaterialsOneToMany2.cs" />
-    <Compile Remove="Migrations\20200312204616_RelationUserMaterialsOneToMany2.Designer.cs" />
-    <Compile Remove="Migrations\20200312204954_RelationUserMaterialsOneToMany2.cs" />
-    <Compile Remove="Migrations\20200312204954_RelationUserMaterialsOneToMany2.Designer.cs" />
-  </ItemGroup>
 
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />

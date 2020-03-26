@@ -17,6 +17,8 @@ namespace GeodesyApi.Data.Models
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
             this.Materials = new HashSet<Material>();
+            this.News = new HashSet<News>();
+            this.Comments = new HashSet<Comment>();
         }
 
         // Audit info
@@ -52,5 +54,9 @@ namespace GeodesyApi.Data.Models
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
 
         public virtual ICollection<Material> Materials { get; set; }
+
+        public virtual ICollection<News> News { get; set; }
+
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

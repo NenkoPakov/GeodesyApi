@@ -67,6 +67,7 @@
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IMaterialsService, MaterialsService>();
+            services.AddTransient<INewsService, NewsService>();
 
             //services.AddScoped<IRepository,MaterialsService>();
 
