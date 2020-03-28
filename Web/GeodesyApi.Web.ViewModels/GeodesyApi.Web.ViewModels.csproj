@@ -25,4 +25,10 @@
     <ProjectReference Include="..\..\Services\GeodesyApi.Services.Mapping\GeodesyApi.Services.Mapping.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="TestViewModel.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
 </Project>

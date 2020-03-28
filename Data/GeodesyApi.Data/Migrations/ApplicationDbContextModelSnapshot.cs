@@ -286,6 +286,9 @@ namespace GeodesyApi.Data.Migrations
                     b.Property<int>("Group")
                         .HasColumnType("int");
 
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 

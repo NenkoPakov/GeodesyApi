@@ -21,6 +21,10 @@
     <EmbeddedResource Remove="wwwroot\lib\**" />
     <None Remove="wwwroot\lib\**" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\GIS\Map.cshtml" />
+  </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
@@ -32,6 +36,10 @@
   <PropertyGroup>
     <GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <Compile Include="Views\GIS\Map.cshtml" />
+  </ItemGroup>
 
 
   <ItemGroup>
