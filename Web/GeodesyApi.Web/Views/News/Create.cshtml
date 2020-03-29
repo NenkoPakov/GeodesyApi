@@ -1,0 +1,59 @@
+﻿@model GeodesyApi.Web.ViewModels.News.CreateNewsViewModel
+@{
+    this.ViewData["Title"] = "Create a new post";
+}
+
+<h1>@this.ViewData["Title"]</h1>
+
+<form method="post" asp-controller="News" asp-action="Create" enctype="multipart/form-data">
+    <div>
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Content"></label>
+        <textarea asp-for="Content" class="form-control"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="Category" class="control-label">@Html.DropDownListFor(x => x.Category, @Html.GetEnumSelectList(typeof(GeodesyApi.Data.Models.Enums.NewsType)), new { @class = "form-control" })</label>
+    </div>
+    <div>
+        <label asp-for="Group" class="control-label">@Html.DropDownListFor(x => x.Group, @Html.GetEnumSelectList(typeof(GeodesyApi.Data.Models.Enums.NewsGroupType)), new { @class = "form-control" })</label>
+    </div>
+    <hr>
+    <div class="form-group mt-3">
+        <label class="mr-2">Прикачи изображение:</label>
+        <input asp-for="Image" type="file" name="Image" value="other">
+    </div>
+    <hr>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+
+
+@*
+
+    <div class="col-md-6 offset-md-3 mt-5">
+          <h1>Прикачи нови материали</h1>
+          <form asp-controller="News" asp-action="Create" method="post" enctype="multipart/form-data">
+              <div class="form-group">
+                  <label asp-for="Title" class="control-label"><b>Заглавие</b></label>
+                  <input asp-for="Title" class="control-label" type="text" placeholder="Въведи заглавие" required>
+              </div>
+              <div class="form-group">
+                  <label asp-for="Category" class="control-label"><b>Категория</b>@Html.DropDownListFor(x => x.Category, @Html.GetEnumSelectList(typeof(GeodesyApi.Data.Models.Enums.NewsType)), new { @class = "form-control" })</label>
+              </div>
+              <hr>
+              <div class="form-group mt-3">
+                  <label class="mr-2">Прикачи материали:</label>
+                  <input asp-for="Images" type="file" name="Images" value="other" multiple>
+              </div>
+              <hr>
+              <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+      </div>    *@

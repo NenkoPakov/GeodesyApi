@@ -1,0 +1,38 @@
+﻿@model GeodesyApi.Web.ViewModels.Materials.GetAllMaterialsViewModel
+
+@foreach (var material in Model.Materials)
+{
+    
+            <div class="media-body">
+                <p>
+                    <li class="list-inline-item">
+                        <a href=@material.FileUrl>@material.Title</a>
+                    </li>
+                </p>
+                <ul class="list-inline list-unstyled text-right">
+                    <li class="list-inline-item">
+                        <i class="fas fa-user-edit"></i> @material.AuthorUserName
+                    </li>
+                    <li class="list-inline-item">
+                        <i class="fas fa-calendar-alt"></i> @material.Category
+                    </li>
+
+                </ul>
+            </div>
+
+        <div class="media">
+            <img src="img_avatar1.png" class="align-self-center mr-3" style="width:60px">
+            <div class="media-body">
+                <h4> <a href=@material.FileUrl>@material.Title</a></h4>
+                <p>
+                    <span><i class="fas fa-user-edit"></i> @material.AuthorUserName</span>
+                    <span><i class="fas fa-user-edit"></i> @material.Category</span>
+            </div>
+        </div>
+
+    
+
+}
+
+
+
