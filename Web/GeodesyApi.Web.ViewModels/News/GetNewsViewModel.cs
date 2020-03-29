@@ -27,6 +27,8 @@ namespace GeodesyApi.Web.ViewModels.News
 
         public DateTime CreatedOn { get; set; }
 
+        public string Url => $"{this.Title.Replace(' ', '-')}";
+
         public string ImageUrl { get; set; }
 
         public virtual IEnumerable<CommentInNewsViewModel> Comments { get; set; }

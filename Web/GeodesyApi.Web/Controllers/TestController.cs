@@ -45,5 +45,11 @@ namespace GeodesyApi.Web.Controllers
 
             return this.Redirect("/Home/Index");
         }
+
+
+        public IActionResult Test()
+        {
+        return this.View();
+        }
     }
 }
