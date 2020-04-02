@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Ganss.XSS;
 using GeodesyApi.Data.Models;
 using GeodesyApi.Data.Models.Enums;
 using GeodesyApi.Services.Mapping;
@@ -8,7 +9,7 @@ using System.Text;
 
 namespace GeodesyApi.Web.ViewModels.Materials
 {
-    public class GetMaterialViewModel :  IMapFrom<Material>,IMapTo<GetAllMaterialsViewModel>
+    public class GetMaterialViewModel : IMapFrom<Material>, IMapTo<GetAllMaterialsViewModel>
     {
         public string Title { get; set; }
 
@@ -16,15 +17,18 @@ namespace GeodesyApi.Web.ViewModels.Materials
 
         public string AuthorUserName { get; set; }
 
-        public string FileUrl { get; set; }
+        public string Description { get; set; }
 
-        //public void CreateMappings(IProfileExpression configuration)
-        //{
-        //    //     configuration.CreateMap<Material,GetAllMaterialsViewModel>()
-        //    //         .ForMember(m=>m.FileUrl,options=>
-        //    //         {
-        //    //             options.MapFrom(p=>p.)
-        //    //         })
-        //}
+        public string ShortDescription
+        {
+            get
+            {
+                return this.Description.Length > 300
+                        ? this.Description.Substring(0, 300) + "..."
+                        : this.Description;
+            }
+        }
+
+        public string FileUrl { get; set; }
     }
 }

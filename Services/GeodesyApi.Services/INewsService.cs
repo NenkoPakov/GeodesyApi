@@ -16,5 +16,9 @@ namespace GeodesyApi.Services
         Task<News> CreateNews(CreateNewsViewModel input, ApplicationUser user);
 
         GetNewsCollectionViewModel GetNews(int? id);
+
+        int GetCount();
+
+        GetNewsCollectionViewModel GetAll(int? take = null, int skip = 0);
     }
 }

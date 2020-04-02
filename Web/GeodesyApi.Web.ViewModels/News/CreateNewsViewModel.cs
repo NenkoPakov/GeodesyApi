@@ -1,4 +1,5 @@
-﻿using Ganss.XSS;
+﻿using AutoMapper;
+using Ganss.XSS;
 using GeodesyApi.Data.Models;
 using GeodesyApi.Data.Models.Enums;
 using GeodesyApi.Services.Mapping;
@@ -16,8 +17,6 @@ namespace GeodesyApi.Web.ViewModels.News
         public string Content { get; set; }
 
         public IFormFile Image { get; set; }
-
-        public string SanitizedContent => new HtmlSanitizer().Sanitize(this.Content);
 
         public NewsType Category { get; set; }
 

@@ -22,6 +22,10 @@ namespace GeodesyApi.Data.Models
         public virtual ApplicationUser Author { get; set; }
 
         [Required]
+        [Display(Name = "Описание")]
+        public string Description { get; set; }
+
+        [Required]
         [Display(Name = "Категория")]
         public MaterialsType Category { get; set; }
 

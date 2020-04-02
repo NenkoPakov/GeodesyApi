@@ -3,7 +3,7 @@
 
 <form asp-controller="Users" asp-action="Login" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="row">
+    <div class="container">
         <div class="col-5 mb-2">
             <label asp-for="Username" class="control-label">Потребителско име</label>
             <input asp-for="Username" class="form-control" />
@@ -18,8 +18,11 @@
 
         <div class="sidebar-buttons">
             <input type="hidden" id="RecaptchaValue" name="RecaptchaValue" />
-            <input type="submit" class="all-projects" formmethod="post" asp-controller="Users" asp-action="Login" value="Login" />
-            <input type="submit" class="new-projects" asp-controller="Home" asp-action="Index" value="Cancel">
+
+            <div class="d-inline-block m-5">
+                <input type="submit" class="btm" formmethod="post" asp-controller="Users" asp-action="Login" value="Login" />
+                <input type="submit" class="btn-danger"  asp-controller="Home" asp-action="Index" value="Cancel">
+            </div>
         </div>
     </div>
 </form>

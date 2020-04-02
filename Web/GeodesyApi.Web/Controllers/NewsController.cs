@@ -14,6 +14,8 @@ namespace GeodesyApi.Web.Controllers
 {
     public class NewsController : BaseController
     {
+        private const int NewsPerPage = 5;
+
         public NewsController(UserManager<ApplicationUser> userManager, INewsService newsService)
         {
             this.UserManager = userManager;
@@ -34,26 +36,27 @@ namespace GeodesyApi.Web.Controllers
         {
             var user = await this.UserManager.GetUserAsync(this.User);
 
-            var news = await this.NewsService.CreateNews(input,user);
+            var news = await this.NewsService.CreateNews(input, user);
 
             return this.RedirectToAction("GetNews");
         }
 
-        public async Task<IActionResult> GetNews(int? id)
+        [Route("News/{page}")]
+        public async Task<IActionResult> GetNews(int page = 1)
         {
-            var news = this.NewsService.GetNews(id);
+            var news = this.NewsService.GetAll(NewsPerPage, (page - 1) * NewsPerPage);
+
+            var count = this.NewsService.GetCount();
+            news.PagesCount = (int)Math.Ceiling((double)count / NewsPerPage);
+
+            if (news.PagesCount == 0)
+            {
+                news.PagesCount = 1;
+            }
+
+            news.CurrentPage = page;
 
             return this.View(news);
         }
-
-        //[HttpPost]
-        //public async Task<IActionResult> GetNews()
-        //{
-        //    var user = await this.UserManager.GetUserAsync(this.User);
-        //
-        //    var news = await this.NewsService.CreateNews(input.Title, input.Content, input.Category, input.Group, user.Id);
-        //
-        //    return this.RedirectToAction("GetNews");
-        //}
     }
 }

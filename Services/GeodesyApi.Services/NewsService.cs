@@ -54,6 +54,22 @@ namespace GeodesyApi.Services
             return news;
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public GetNewsCollectionViewModel GetNews(int? id)
         {
             var getNewsViewModel = new GetNewsCollectionViewModel();
@@ -77,6 +93,29 @@ namespace GeodesyApi.Services
             getNewsViewModel.News = news;
 
             return getNewsViewModel;
+        }
+
+        public GetNewsCollectionViewModel GetAll(int? take = null, int skip = 0)
+        {
+            var newsViewModel = new GetNewsCollectionViewModel();
+
+            var query = this.NewsRepository.All()
+                .OrderByDescending(x => x.CreatedOn).Skip(skip);
+            if (take.HasValue)
+            {
+                query = query.Take(take.Value);
+            }
+
+            var news = query.To<GetNewsViewModel>().ToList();
+
+            newsViewModel.News = news;
+
+            return newsViewModel;
+        }
+
+        public int GetCount()
+        {
+            return this.NewsRepository.All().Count();
         }
     }
 }
