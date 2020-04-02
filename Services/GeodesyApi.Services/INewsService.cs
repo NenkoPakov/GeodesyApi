@@ -19,6 +19,8 @@ namespace GeodesyApi.Services
 
         int GetCount();
 
-        GetNewsCollectionViewModel GetAll(int? take = null, int skip = 0);
+        //GetNewsCollectionViewModel GetAll(int? take = null, int skip = 0);
+
+        GetNewsCollectionViewModel GetNews(NewsGroupType? newsGroup = null, int? take = null, int skip = 0);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GeodesyApi.Data.Models;
+using GeodesyApi.Data.Models.Enums;
 using GeodesyApi.Services;
 using GeodesyApi.Web.ViewModels;
 using GeodesyApi.Web.ViewModels.News;
@@ -42,9 +43,11 @@ namespace GeodesyApi.Web.Controllers
         }
 
         [Route("News/{page}")]
-        public async Task<IActionResult> GetNews(int page = 1)
+        [Route("News/{category}/{page}")]
+        //[Route("News/{category}/{newsId}")]
+        public async Task<IActionResult> GetNews(NewsGroupType? category, int? newsId, int page = 1)
         {
-            var news = this.NewsService.GetAll(NewsPerPage, (page - 1) * NewsPerPage);
+            var news = this.NewsService.GetNews(category,NewsPerPage, (page - 1) * NewsPerPage);
 
             var count = this.NewsService.GetCount();
             news.PagesCount = (int)Math.Ceiling((double)count / NewsPerPage);

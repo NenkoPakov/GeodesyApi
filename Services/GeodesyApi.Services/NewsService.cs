@@ -95,12 +95,23 @@ namespace GeodesyApi.Services
             return getNewsViewModel;
         }
 
-        public GetNewsCollectionViewModel GetAll(int? take = null, int skip = 0)
+        public GetNewsCollectionViewModel GetNews(NewsGroupType? newsGroup = null, int? take = null, int skip = 0)
         {
             var newsViewModel = new GetNewsCollectionViewModel();
 
-            var query = this.NewsRepository.All()
-                .OrderByDescending(x => x.CreatedOn).Skip(skip);
+            IQueryable<News> query;
+
+            if (newsGroup == null)
+            {
+                query = this.GetAll();
+            }
+            else
+            {
+                query = this.GetByGroup(newsGroup);
+            }
+
+            query.Skip(skip);
+
             if (take.HasValue)
             {
                 query = query.Take(take.Value);
@@ -112,6 +123,21 @@ namespace GeodesyApi.Services
 
             return newsViewModel;
         }
+
+        private IQueryable<News> GetByGroup(NewsGroupType? newsGroup)
+        {
+            return this.NewsRepository.All()
+                .Where(c => c.Group == newsGroup)
+                .OrderByDescending(x => x.CreatedOn);
+        }
+
+        private IQueryable<News> GetAll()
+        {
+            return this.NewsRepository.All()
+                .OrderByDescending(x => x.CreatedOn);
+        }
+
+
 
         public int GetCount()
         {
