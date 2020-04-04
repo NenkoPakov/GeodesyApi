@@ -15,7 +15,7 @@ namespace GeodesyApi.Web.Controllers
 {
     public class NewsController : BaseController
     {
-        private const int NewsPerPage = 5;
+        private const int NewsPerPage = 10;
 
         public NewsController(UserManager<ApplicationUser> userManager, INewsService newsService)
         {
@@ -43,7 +43,7 @@ namespace GeodesyApi.Web.Controllers
         }
 
         [Route("News/All/{page}")]
-        public async Task<IActionResult> GetNews( int page = 1)
+        public async Task<IActionResult> GetNews(int page = 1)
         {
             var news = this.NewsService.GetNews(NewsPerPage, (page - 1) * NewsPerPage);
 
@@ -62,22 +62,22 @@ namespace GeodesyApi.Web.Controllers
 
 
         [Route("News/{category}/{page}")]
-       public async Task<IActionResult> GetByCategory(NewsGroupType? category, int page = 1)
-       {
-           var news = this.NewsService.GetByCategory(category, NewsPerPage, (page - 1) * NewsPerPage);
-       
-           var count = this.NewsService.GetCount();
-           news.PagesCount = (int)Math.Ceiling((double)count / NewsPerPage);
-       
-           if (news.PagesCount == 0)
-           {
-               news.PagesCount = 1;
-           }
-       
-           news.CurrentPage = page;
-       
-           return this.View("GetNews",news);
-       }
+        public async Task<IActionResult> GetByCategory(NewsGroupType? category, int page = 1)
+        {
+            var news = this.NewsService.GetByCategory(category, NewsPerPage, (page - 1) * NewsPerPage);
+
+            var count = news.News.Count();
+            news.PagesCount = (int)Math.Ceiling((double)count / NewsPerPage);
+
+            if (news.PagesCount == 0)
+            {
+                news.PagesCount = 1;
+            }
+
+            news.CurrentPage = page;
+
+            return this.View("GetNews", news);
+        }
 
 
 
@@ -86,7 +86,7 @@ namespace GeodesyApi.Web.Controllers
         {
             var news = this.NewsService.GetById(newsId);
 
-            return this.View("Details",news);
+            return this.View("Details", news);
         }
 
 

@@ -54,12 +54,13 @@
 
 
     </aside>
+
     <div class="content">
         <div class="news-container">
             <div class="articles">
                 @foreach (var item in Model.News)
                 {
-                    <article>
+                    <article class="col-md-6">
                         <div class="news-icon">
                             <img src="~/img/icons/news-list2.svg" alt="" title="">
                         </div>
@@ -68,6 +69,7 @@
                             <span>@item.CreatedOn, Публикуван в категория: <a href="#" title="">@item.Category </a></span>
                         </div>
                     </article>
+                    <hr>
                 }
 
             </div>
