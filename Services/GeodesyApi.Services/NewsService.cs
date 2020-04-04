@@ -54,63 +54,45 @@ namespace GeodesyApi.Services
             return news;
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public GetNewsCollectionViewModel GetNews(int? id)
+        public GetNewsViewModel GetById(int newsId)
         {
-            var getNewsViewModel = new GetNewsCollectionViewModel();
+            var newsViewModel = new GetNewsViewModel();
 
-            List<GetNewsViewModel> news;
+            var query = this.NewsRepository.All()
+                .Where(n => n.Id == newsId);
 
-            if (id == null)
-            {
-                news = this.NewsRepository.All()
-                                .To<GetNewsViewModel>()
-                                .ToList();
-            }
-            else
-            {
-                news = this.NewsRepository.All()
-                .Where(n => (int)n.Category == id)
-                .To<GetNewsViewModel>()
-                .ToList();
-            }
 
-            getNewsViewModel.News = news;
+            var news = query.To<GetNewsViewModel>().FirstOrDefault();
 
-            return getNewsViewModel;
+            return news;
         }
 
-        public GetNewsCollectionViewModel GetNews(NewsGroupType? newsGroup = null, int? take = null, int skip = 0)
+        public GetNewsCollectionViewModel GetNews(int? take = null, int skip = 0)
         {
             var newsViewModel = new GetNewsCollectionViewModel();
 
-            IQueryable<News> query;
+            var query = this.GetAll()
+                .Skip(skip);
 
-            if (newsGroup == null)
+            if (take.HasValue)
             {
-                query = this.GetAll();
-            }
-            else
-            {
-                query = this.GetByGroup(newsGroup);
+                query = query.Take(take.Value);
             }
 
-            query.Skip(skip);
+            var news = query.To<GetNewsViewModel>().ToList();
+
+            newsViewModel.News = news;
+
+            return newsViewModel;
+        }
+
+
+        public GetNewsCollectionViewModel GetByCategory(NewsGroupType? newsGroup = null, int? take = null, int skip = 0)
+        {
+            var newsViewModel = new GetNewsCollectionViewModel();
+
+            IQueryable<News> query = this.GetByGroup(newsGroup)
+                .Skip(skip);
 
             if (take.HasValue)
             {
@@ -142,6 +124,11 @@ namespace GeodesyApi.Services
         public int GetCount()
         {
             return this.NewsRepository.All().Count();
+        }
+
+        public GetNewsCollectionViewModel GetNews(int? id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -14,13 +14,13 @@ namespace GeodesyApi.Services
     public interface INewsService
     {
         Task<News> CreateNews(CreateNewsViewModel input, ApplicationUser user);
-
-        GetNewsCollectionViewModel GetNews(int? id);
-
+        
         int GetCount();
 
-        //GetNewsCollectionViewModel GetAll(int? take = null, int skip = 0);
+        GetNewsViewModel GetById(int newsId);
 
-        GetNewsCollectionViewModel GetNews(NewsGroupType? newsGroup = null, int? take = null, int skip = 0);
+        GetNewsCollectionViewModel GetNews(int? take = null, int skip = 0);
+
+        GetNewsCollectionViewModel GetByCategory(NewsGroupType? newsGroup = null, int? take = null, int skip = 0);
     }
 }

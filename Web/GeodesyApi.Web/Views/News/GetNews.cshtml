@@ -16,7 +16,7 @@
             <ul class="cd-accordion-menu animated">
                 <li class="has-children">
                     <input type="checkbox" name="group-1" id="group-1">
-                    <label for="group-1">Новини</label>
+                    <a asp-route="NumberOfNewsPage" asp-route-category="News" title="">Новини</a>
                     <ul>
                         <li><a href="#" title="">Заседание на работна група</a></li>
                         <li><a href="#" title="" class="active">Конференция</a></li>
@@ -26,7 +26,7 @@
                 </li>
                 <li class="has-children">
                     <input type="checkbox" name="group-2" id="group-2">
-                    <label for="group-2">Събития</label>
+                    <a asp-route="NumberOfNewsPage" asp-route-category="Event">Събития</a>
                     <ul>
                         <li><a href="#" title="">Заседание на работна група</a></li>
                         <li><a href="#" title="">Конференция</a></li>
@@ -36,7 +36,7 @@
                 </li>
                 <li class="has-children">
                     <input type="checkbox" name="group-3" id="group-3">
-                    <label for="group-3">Препоръчано за студенти</label>
+                    <a asp-route="NumberOfNewsPage" asp-route-category="RecommendedForStudents">Препоръчано за студенти</a>
                     <ul>
                         <li><a href="#" title="">Биология и екология</a></li>
                         <li><a href="#" title="" class="active">Науки за земята</a></li>
@@ -86,7 +86,6 @@
                         <li class="page-item">
                             <a class="page-link"
                                asp-route="NumberOfNewsPage"
-                               asp-route-name="@this.ViewData["Title"]"
                                asp-route-page="@(this.Model.CurrentPage - 1)">Previous</a>
                         </li>
                     }
@@ -97,7 +96,6 @@
                         <li class="page-item @active">
                             <a class="page-link"
                                asp-route="NumberOfNewsPage"
-                               asp-route-name="@this.ViewData["Title"]"
                                asp-route-page="@i">@i</a>
                         </li>
                     }
@@ -113,7 +111,6 @@
                         <li class="page-item">
                             <a class="page-link"
                                asp-route="NumberOfNewsPage"
-                               asp-route-name="@this.ViewData["Title"]"
                                asp-route-page="@(this.Model.CurrentPage + 1)">Next</a>
                         </li>
                     }

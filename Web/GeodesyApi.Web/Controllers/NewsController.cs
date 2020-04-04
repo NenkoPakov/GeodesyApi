@@ -42,12 +42,10 @@ namespace GeodesyApi.Web.Controllers
             return this.RedirectToAction("GetNews");
         }
 
-        [Route("News/{page}")]
-        [Route("News/{category}/{page}")]
-        //[Route("News/{category}/{newsId}")]
-        public async Task<IActionResult> GetNews(NewsGroupType? category, int? newsId, int page = 1)
+        [Route("News/All/{page}")]
+        public async Task<IActionResult> GetNews( int page = 1)
         {
-            var news = this.NewsService.GetNews(category,NewsPerPage, (page - 1) * NewsPerPage);
+            var news = this.NewsService.GetNews(NewsPerPage, (page - 1) * NewsPerPage);
 
             var count = this.NewsService.GetCount();
             news.PagesCount = (int)Math.Ceiling((double)count / NewsPerPage);
@@ -61,5 +59,49 @@ namespace GeodesyApi.Web.Controllers
 
             return this.View(news);
         }
+
+
+        [Route("News/{category}/{page}")]
+       public async Task<IActionResult> GetByCategory(NewsGroupType? category, int page = 1)
+       {
+           var news = this.NewsService.GetByCategory(category, NewsPerPage, (page - 1) * NewsPerPage);
+       
+           var count = this.NewsService.GetCount();
+           news.PagesCount = (int)Math.Ceiling((double)count / NewsPerPage);
+       
+           if (news.PagesCount == 0)
+           {
+               news.PagesCount = 1;
+           }
+       
+           news.CurrentPage = page;
+       
+           return this.View("GetNews",news);
+       }
+
+
+
+        [Route("News/Details/{newsId}")]
+        public async Task<IActionResult> GetNewsById(int newsId)
+        {
+            var news = this.NewsService.GetById(newsId);
+
+            return this.View("Details",news);
+        }
+
+
+        //private int NewsCount() 
+        //{
+        //    var count = this.NewsService.GetCount();
+        //    news.PagesCount = (int)Math.Ceiling((double)count / NewsPerPage);
+        //
+        //    if (news.PagesCount == 0)
+        //    {
+        //        news.PagesCount = 1;
+        //    }
+        //
+        //    news.CurrentPage = page;
+        //}
+
     }
 }

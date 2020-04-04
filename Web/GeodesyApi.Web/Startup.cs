@@ -126,7 +126,11 @@
                     {
                         endpoints.MapControllerRoute(
                             "NumberOfNewsPage",
-                            "news/{page}",
+                            "news/{category}/{page}",
+                            new { controller = "News", action = "GetNews", category = "All" });
+                        endpoints.MapControllerRoute(
+                            "NumberOfNewsPage",
+                            "news/{category}/{page}",
                             new { controller = "News", action = "GetNews" });
                         endpoints.MapControllerRoute(
                             "areaRoute",
