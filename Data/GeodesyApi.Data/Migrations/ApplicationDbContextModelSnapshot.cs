@@ -177,6 +177,9 @@ namespace GeodesyApi.Data.Migrations
                     b.Property<int>("NewsId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ParentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -185,6 +188,8 @@ namespace GeodesyApi.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.HasIndex("NewsId");
+
+                    b.HasIndex("ParentId");
 
                     b.HasIndex("UserId");
 
@@ -794,6 +799,10 @@ namespace GeodesyApi.Data.Migrations
                         .HasForeignKey("NewsId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("GeodesyApi.Data.Models.Comment", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
 
                     b.HasOne("GeodesyApi.Data.Models.ApplicationUser", "User")
                         .WithMany("Comments")

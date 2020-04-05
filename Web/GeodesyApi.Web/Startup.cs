@@ -68,6 +68,7 @@
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IMaterialsService, MaterialsService>();
             services.AddTransient<INewsService, NewsService>();
+            services.AddTransient<ICommentsService, CommentsService>();
 
             //services.AddScoped<IRepository,MaterialsService>();
 

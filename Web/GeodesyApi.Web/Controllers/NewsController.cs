@@ -86,6 +86,9 @@ namespace GeodesyApi.Web.Controllers
         {
             var news = this.NewsService.GetById(newsId);
 
+
+
+            //return this.View("Details", new NewsDetailsAndCommentsViewModel() { News = news, Comment = new CommentViewModel() });
             return this.View("Details", news);
         }
 
