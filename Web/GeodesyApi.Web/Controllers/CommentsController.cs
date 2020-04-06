@@ -30,7 +30,7 @@ namespace GeodesyApi.Web.Controllers
 
             await this.CommentsService.Create(input, user);
 
-            return this.RedirectToAction("GetNewsById", input.NewsId);
+            return this.RedirectToRoute($"News/Details/{ input.NewsId}");
         }
     }
 }

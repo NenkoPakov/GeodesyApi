@@ -1,5 +1,6 @@
 ﻿using GeodesyApi.Data;
 using GeodesyApi.Data.Models;
+using GeodesyApi.Web.ViewModels.News;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;

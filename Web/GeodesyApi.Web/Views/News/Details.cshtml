@@ -36,8 +36,11 @@
                                     <p class="media-comment">
                                         @Html.Raw(comment.SanitizedContent)
                                     </p>
-                                    <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
-                                    <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" href="#replyOne"><span class="glyphicon glyphicon-comment"></span> 2 comments</a>
+
+                                    <ul class="nav nav-tabs list-inline" role="tablist">
+                                        <button class="btn btn-info btn-circle text-uppercase" href="#add-comment" onclick="addParentIdValue(@comment.Id)" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-share-alt"></span> Reply</button>
+                                        <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" href="#replyOne"><span class="glyphicon glyphicon-comment"></span> 2 comments</a>
+                                    </ul>
                                 </div>
                                 @{ DisplayChildComments(comment.Id); }
 
@@ -141,73 +144,40 @@
 
 
         @*
-            <div id="comment" class="collapse show" aria-labelledby="commentOne" data-parent="#accordion">
-                <div class="card-body">
-                    <ul class="media-body">
+                <div id="comment" class="collapse show" aria-labelledby="commentOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <ul class="media-body">
 
-                        @foreach (var comment in comments)
-                        {
-                            <li class="media media-replied">
-                                <a class="pull-left" href="#">
-                                    <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/ManikRathee/128.jpg" alt="profile">
-                                </a>
-                                <div class="media-body">
-                                    <div class="well well-lg">
-                                        <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> @comment.UserUserName</h4>
-                                        <ul class="media-date text-uppercase reviews list-inline">
-                                            <time datetime="@comment.CreatedOn.ToString("O")"></time>
-                                        </ul>
-                                        <p class="media-comment">
-                                            @Html.Raw(comment.SanitizedContent)
-                                        </p>
-                                        <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
+                            @foreach (var comment in comments)
+                            {
+                                <li class="media media-replied">
+                                    <a class="pull-left" href="#">
+                                        <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/ManikRathee/128.jpg" alt="profile">
+                                    </a>
+                                    <div class="media-body">
+                                        <div class="well well-lg">
+                                            <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> @comment.UserUserName</h4>
+                                            <ul class="media-date text-uppercase reviews list-inline">
+                                                <time datetime="@comment.CreatedOn.ToString("O")"></time>
+                                            </ul>
+                                            <p class="media-comment">
+                                                @Html.Raw(comment.SanitizedContent)
+                                            </p>
+                                            <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
+
+                                        </div>
 
                                     </div>
-
-                                </div>
-                            </li>
-                            DisplayChildComments(comment.Id);
-                        }
-                    </ul>
-        </div>
-        </div>
+                                </li>
+                                DisplayChildComments(comment.Id);
+                            }
+                        </ul>
+            </div>
+            </div>
         *@
 
     }
 }
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
-
-
-
-<div class="card">
-    <div class="card-header" id="headingOne">
-        <h5 class="mb-0">
-            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                Collapsible Group Item #1
-            </button>
-        </h5>
-    </div>
-
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-        <div class="card-body">
-            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <link rel="stylesheet" href="~/css/bootstrap.css" asp-append-version="true" />
 
@@ -234,57 +204,47 @@
         <div class="page-header">
             <h3 class="reviews">Comments</h3>
         </div>
+
+
+
+
+
+
         <div class="comment-tabs">
             <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item"><a href="#comments" class="nav-link active" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Comments</h4></a></li>
-                <li class="nav-item"><a href="#add-comment" class="nav-link" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Add comment</h4></a></li>
+                <li class="nav-item"><a href="#comments" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Comments</h4></a></li>
+                <li class="nav-item"><a href="#add-comment" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Add comment</h4></a></li>
             </ul>
             <div class="tab-content">
-
-
-
-
-                <ul role="tabpanel" class="tab-pane fade in active" id="comments">
-                    <ul class="media-list">
-                        <div>
-                            @{DisplayComments();}
+                <div class="tab-pane" id="comments">
+                    @{DisplayComments();}
+                </div>
+                <div class="tab-pane" id="add-comment">
+                    <form asp-controller="Comments" asp-action="Create" method="post" class="form-horizontal" id="commentForm" role="form" enctype="multipart/form-data">
+                        <input type="hidden" name="NewsId" value="@this.Model.Id" />
+                        <input type="hidden" name="ParentId" id="ParentId" value="" />
+                        <div class="form-group">
+                            <label for="email" class="col-sm-2 control-label">Comment</label>
+                            <div class="col-sm-10">
+                                <textarea name="Content" id="Content" class="form-control" rows="5"></textarea>
+                            </div>
                         </div>
-
-
-
-                        <div class="tab-pane" id="add-comment">
-                            <form asp-controller="Comments" asp-action="Create" method="post" class="form-horizontal" id="commentForm" role="form" enctype="multipart/form-data">
-                                <input type="hidden" name="NewsId" value="@this.Model.Id" />
-                                <input type="hidden" name="ParentId" value="0" />
-                                <div>
-                                    <label for="Content"></label>
-                                    <textarea name="Content" id="Content" class="form-control"></textarea>
-                                </div>
-
-                                @*<div class="form-group">
-                                        <label for="uploadMedia" class="col-sm-2 control-label">Upload media</label>
-                                        <div class="col-sm-10">
-                                            <div class="input-group">
-                                                <div class="input-group-addon">http://</div>
-                                                <input type="text" class="form-control" name="uploadMedia" id="uploadMedia">
-                                            </div>
-                                        </div>
-                                    </div>*@
-                                <div class="form-group">
-                                    <div class="col-sm-offset-2 col-sm-10">
-                                        <button class="btn btn-success btn-circle text-uppercase" type="submit" id="submitComment"><span class="glyphicon glyphicon-send"></span> Submit comment</button>
-                                    </div>
-                                </div>
-                            </form>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button class="btn btn-success btn-circle text-uppercase" type="submit" id="submitComment"><span class="glyphicon glyphicon-send"></span> Summit comment</button>
+                            </div>
                         </div>
-
-
-
-
-                    </ul>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-
-
 </div>
+
+@section Scripts {
+    <script>
+        function addParentIdValue(parentId) {
+            $("#commentForm input[name='ParentId']").val(parentId);
+        }
+    </script>
+}
