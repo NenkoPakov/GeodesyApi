@@ -1,0 +1,290 @@
+﻿@model GeodesyApi.Web.ViewModels.News.GetNewsViewModel
+@{
+    this.ViewData["Title"] = "News";
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+
+    void DisplayComments()
+    {
+
+        var comments = this.Model.Comments.Where(x => x.ParentId == null).OrderBy(n => n.CreatedOn);
+        if (!comments.Any())
+        {
+            return;
+        }
+
+
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="comments-logout">
+                <ul class="media-list">
+                    @foreach (var comment in comments)
+                    {
+                        <li class="media">
+                            <a class="pull-left" href="#">
+                                <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg" alt="profile">
+                            </a>
+                            <div class="media-body">
+                                <div class="well well-lg">
+                                    <h4 class="media-heading text-uppercase reviews">@comment.UserUserName </h4>
+                                    <ul class="media-date text-uppercase reviews list-inline">
+                                        <time datetime="@comment.CreatedOn.ToString("O")"></time>
+                                    </ul>
+                                    <p class="media-comment">
+                                        @Html.Raw(comment.SanitizedContent)
+                                    </p>
+                                    <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
+                                    <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" href="#replyOne"><span class="glyphicon glyphicon-comment"></span> 2 comments</a>
+                                </div>
+                                @{ DisplayChildComments(comment.Id); }
+
+
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+        @*
+            @foreach (var comment in comments)
+            {
+                <li class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg" alt="profile">
+                    </a>
+
+                    <div class="media-body">
+                        <div class="well well-lg">
+                            <h4 class="media-heading text-uppercase reviews">@comment.UserUserName </h4>
+                            <ul class="media-date text-uppercase reviews list-inline">
+                                <time datetime="@comment.CreatedOn.ToString("O")"></time>
+                            </ul>
+                            <p class="media-comment">
+                                @comment.SanitizedContent
+                            </p>
+                            <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
+                            <div class="card">
+                                <div class="card-header" id="commentOne">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" data-parent="#comment" aria-expanded="true" aria-controls="collapseOne">
+                                            <span class="glyphicon glyphicon-comment"></span>Comments
+                                        </button>
+                                    </h5>
+                                </div>
+                                <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" data-parent="#comment"><span class="glyphicon glyphicon-comment"></span>Comments</a>
+
+                                @{ DisplayChildComments(comment.Id); }
+                            </div>
+                        </div>
+
+                </li>
+
+            }*@
+    }
+
+
+
+    void DisplayChildComments(int? parentId)
+    {
+        var comments = this.Model.Comments.Where(x =>
+          x.ParentId == parentId);
+        if (!comments.Any())
+        {
+            return;
+        }
+
+
+
+        @foreach (var comment in comments)
+        {
+            <div class="collapse" id="replyOne">
+                <ul class="media-body">
+                    <li class="media media-replied">
+                        <a class="pull-left" href="#">
+                            <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/ManikRathee/128.jpg" alt="profile">
+                        </a>
+                        <div class="media-body">
+                            <div class="well well-lg">
+                                <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> @comment.UserUserName</h4>
+                                <ul class="media-date text-uppercase reviews list-inline">
+                                    @comment.CreatedOn.ToString("O")
+                                </ul>
+                                <p class="media-comment">
+                                    @Html.Raw(comment.SanitizedContent)
+                                </p>
+                                <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
+                            </div>
+                        </div>
+
+                    </li>
+                    @{DisplayChildComments(comment.Id);}
+                </ul>
+            </div>
+        }
+
+
+
+
+
+
+
+
+        @*
+            <div id="comment" class="collapse show" aria-labelledby="commentOne" data-parent="#accordion">
+                <div class="card-body">
+                    <ul class="media-body">
+
+                        @foreach (var comment in comments)
+                        {
+                            <li class="media media-replied">
+                                <a class="pull-left" href="#">
+                                    <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/ManikRathee/128.jpg" alt="profile">
+                                </a>
+                                <div class="media-body">
+                                    <div class="well well-lg">
+                                        <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> @comment.UserUserName</h4>
+                                        <ul class="media-date text-uppercase reviews list-inline">
+                                            <time datetime="@comment.CreatedOn.ToString("O")"></time>
+                                        </ul>
+                                        <p class="media-comment">
+                                            @Html.Raw(comment.SanitizedContent)
+                                        </p>
+                                        <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
+
+                                    </div>
+
+                                </div>
+                            </li>
+                            DisplayChildComments(comment.Id);
+                        }
+                    </ul>
+        </div>
+        </div>
+        *@
+
+    }
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+
+
+
+<div class="card">
+    <div class="card-header" id="headingOne">
+        <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Collapsible Group Item #1
+            </button>
+        </h5>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+        <div class="card-body">
+            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="~/css/bootstrap.css" asp-append-version="true" />
+
+<div class="container">
+
+    <div class="col-sm-8 blog-main d-block mx-auto">
+        <div class="blog-post  text-justify">
+            <div class="box-image align-items-center">
+                <img class="news-image " src="@Model.ImageUrl" />
+            </div>
+
+
+            <h2 class="blog-post-title text-center">@Model.Title</h2>
+            <p class="blog-post-meta">@Model.CreatedOn by <a href="#">@Model.UserUserName</a></p>
+            <hr>
+            <p>@Html.Raw(Model.SanitizedContent)</p>
+
+        </div>
+
+
+        <!------ Include the above in your HEAD tag ---------->
+
+
+        <div class="page-header">
+            <h3 class="reviews">Comments</h3>
+        </div>
+        <div class="comment-tabs">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item"><a href="#comments" class="nav-link active" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Comments</h4></a></li>
+                <li class="nav-item"><a href="#add-comment" class="nav-link" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Add comment</h4></a></li>
+            </ul>
+            <div class="tab-content">
+
+
+
+
+                <ul role="tabpanel" class="tab-pane fade in active" id="comments">
+                    <ul class="media-list">
+                        <div>
+                            @{DisplayComments();}
+                        </div>
+
+
+
+                        <div class="tab-pane" id="add-comment">
+                            <form asp-controller="Comments" asp-action="Create" method="post" class="form-horizontal" id="commentForm" role="form" enctype="multipart/form-data">
+                                <input type="hidden" name="NewsId" value="@this.Model.Id" />
+                                <input type="hidden" name="ParentId" value="0" />
+                                <div>
+                                    <label for="Content"></label>
+                                    <textarea name="Content" id="Content" class="form-control"></textarea>
+                                </div>
+
+                                @*<div class="form-group">
+                                        <label for="uploadMedia" class="col-sm-2 control-label">Upload media</label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">http://</div>
+                                                <input type="text" class="form-control" name="uploadMedia" id="uploadMedia">
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button class="btn btn-success btn-circle text-uppercase" type="submit" id="submitComment"><span class="glyphicon glyphicon-send"></span> Submit comment</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+
+
+
+                    </ul>
+            </div>
+        </div>
+    </div>
+
+
+</div>
