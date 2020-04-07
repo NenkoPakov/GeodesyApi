@@ -7,13 +7,37 @@
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>УНИВЕРСИТЕТ ПО АРХИТЕКТУРА, СТРОИТЕЛСТВО И ГЕОДЕЗИЯ - ГЕОГРАФСКА ИНФОРМАЦИОННА СИСТЕМА</title>
-    @*<link rel="stylesheet" href="~/css/bootstrap.css" asp-append-version="true" />*@
+
+
+
+
+    <environment names="Development">
+        <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/style.css" asp-append-version="true">
+        <link rel="stylesheet" href="~/css/screens.css" asp-append-version="true">
+        <link rel="stylesheet" href="~/css/owl.carousel.css" asp-append-version="true">
+        <link rel="stylesheet" href="~/css/owl.theme.default.min.css" asp-append-version="true">
+    </environment>
+    <environment names="Staging,Production">
+        <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/style.css" asp-append-version="true">
+        <link rel="stylesheet" href="~/css/screens.css" asp-append-version="true">
+        <link rel="stylesheet" href="~/css/owl.carousel.css" asp-append-version="true">
+        <link rel="stylesheet" href="~/css/owl.theme.default.min.css" asp-append-version="true">
+    </environment>
+
+
+
+
+
+
+
+    @*<link rel="stylesheet" href="~/css/bootstrap.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true">
     <link rel="stylesheet" href="~/css/screens.css" asp-append-version="true">
     <link rel="stylesheet" href="~/css/owl.carousel.css" asp-append-version="true">
     <link rel="stylesheet" href="~/css/owl.theme.default.min.css" asp-append-version="true">
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
+        *@
 
 
 
@@ -91,11 +115,9 @@
             </ul>
         </div>
     </header><!-- HEADER -->
+    @**@
 
-
-        @**@
-
-        @*<a href="#menu" class="">	Меню <span class="ico-caret-down" aria-hidden="true">	&#x2630;</span></a>*
+    @*<a href="#menu" class="">	Меню <span class="ico-caret-down" aria-hidden="true">	&#x2630;</span></a>*
         <nav id="menu" role="rowheader">
             <div class="menu">
                 <ul class="d-sm-inline">
@@ -132,27 +154,52 @@
         </header>*@
 
 
-        <div class="container-custom">
-            <partial name="_CookieConsentPartial" />
-            <main role="main" class="pb-3">
-            </main>
-            @this.RenderBody()
-        </div>
+    <div class="container-custom">
+        <partial name="_CookieConsentPartial" />
+        <main role="main" class="pb-3">
+        </main>
+        @this.RenderBody()
+    </div>
 
 
-        @this.RenderSection("Scripts", required: false)
+    @this.RenderSection("Scripts", required: false)
 
 
 
 
-        <footer>
-            Български антарктически институт, 2020
-        </footer><!-- FOOTER -->
+    <footer>
+        Български антарктически институт, 2020
+    </footer><!-- FOOTER -->
 
+
+
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js" asp-append-version="true"></script>
+        <script src="~/lib/moment/min/moment-with-locales.min.js" asp-append-version="true"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/owl.carousel.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
         <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
-        <script src="~/js/jquery.min.js" type="text/javascript" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+        <script src="~/lib/moment/min/moment-with-locales.min.js" asp-append-version="true"></script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
         <script src="~/js/owl.carousel.js" asp-append-version="true"></script>
+    </environment>
+
+
+
+
+    @*
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
+        <script src="~/js/jquery.min.js" type="text/javascript" asp-append-version="true"></script>*@
+
 
 
 </body>

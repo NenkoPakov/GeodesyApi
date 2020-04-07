@@ -1,4 +1,5 @@
-﻿<!-- PAGE -->
+﻿@model  GeodesyApi.Web.ViewModels.Materials.GetAllMaterialsViewModel
+<!-- PAGE -->
 <section class="page materials">
     <aside>
         <h1><img src="img/icons/mats.svg" alt="" title=""> Дисциплини и материали</h1>
@@ -28,7 +29,7 @@
             <h2>Последни материали</h2>
 
 
-            @foreach (var material in @Model.Materials)
+            @foreach (var material in Model.Materials)
             {
                 <!-- .list -->
                 <div class="list">

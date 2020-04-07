@@ -17,9 +17,13 @@
 
   <ItemGroup>
     <Compile Remove="wwwroot\lib\**" />
+    <Compile Remove="wwwroot\lub\**" />
     <Content Remove="wwwroot\lib\**" />
+    <Content Remove="wwwroot\lub\**" />
     <EmbeddedResource Remove="wwwroot\lib\**" />
+    <EmbeddedResource Remove="wwwroot\lub\**" />
     <None Remove="wwwroot\lib\**" />
+    <None Remove="wwwroot\lub\**" />
   </ItemGroup>
 
   <ItemGroup>

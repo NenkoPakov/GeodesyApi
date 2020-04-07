@@ -18,92 +18,98 @@
 
 
 <!-- PAGE -->
-<section class="page news">
-    <aside>
-        <h1><img src="~/img/icons/news.svg" alt="" title=""> Новини и събития</h1>
-        <a href="#" id="show" class="show-nav">&#9776;</a>
-        <div class="sidebar-nav" id="pushleft">
-            <a href="#" id="hide" class="hide-nav">&times;</a>
-            <!-- inner nav-->
-            <ul class="cd-accordion-menu animated">
-                <li class="has-children">
-                    <input type="checkbox" name="group-1" id="group-1">
-                    <label for="group-1">Новини</label>
-                    <ul>
-                        <li><a href="#" title="">Заседание на работна група</a></li>
-                        <li><a href="#" title="" class="active">Конференция</a></li>
-                        <li><a href="#" title="">Нови геод. инструменти</a></li>
-                        <li><a href="#" title="">Конкурси</a></li>
-                    </ul>
-                </li>
-                <li class="has-children">
-                    <input type="checkbox" name="group-2" id="group-2">
-                    <label for="group-2">Събития</label>
-                    <ul>
-                        <li><a href="#" title="">Заседание на работна група</a></li>
-                        <li><a href="#" title="">Конференция</a></li>
-                        <li><a href="#" title="">Нови геод. инструменти</a></li>
-                        <li><a href="#" title="">Конкурси</a></li>
-                    </ul>
-                </li>
-                <li class="has-children">
-                    <input type="checkbox" name="group-3" id="group-3">
-                    <label for="group-3">Препоръчано за студенти</label>
-                    <ul>
-                        <li><a href="#" title="">Биология и екология</a></li>
-                        <li><a href="#" title="" class="active">Науки за земята</a></li>
-                        <li><a href="#" title="">Биология</a></li>
-                        <li><a href="#" title="">Медицина</a></li>
-                        <li><a href="#" title="">Геология</a></li>
-                        <li><a href="#" title="">Геодезия, картография и ГИС</a></li>
-                        <li><a href="#" title="">Океанографски науки</a></li>
-                        <li><a href="#" title="">Логистика и инженерни науки</a></li>
-                    </ul>
-                </li>
-            </ul><!-- inner nav-->
+    <section class="page news">
+        <aside>
+            <h1><img src="~/img/icons/news.svg" alt="" title=""> Новини и събития</h1>
+            <a href="#" id="show" class="show-nav">&#9776;</a>
+            <div class="sidebar-nav" id="pushleft">
+                <a href="#" id="hide" class="hide-nav">&times;</a>
+                <!-- inner nav-->
+                <ul class="cd-accordion-menu animated">
+                    <li class="has-children">
+                        <input type="checkbox" name="group-1" id="group-1">
+                        <label for="group-1">Новини</label>
+                        <ul>
+                            <li><a href="#" title="">Заседание на работна група</a></li>
+                            <li><a href="#" title="" class="active">Конференция</a></li>
+                            <li><a href="#" title="">Нови геод. инструменти</a></li>
+                            <li><a href="#" title="">Конкурси</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <input type="checkbox" name="group-2" id="group-2">
+                        <label for="group-2">Събития</label>
+                        <ul>
+                            <li><a href="#" title="">Заседание на работна група</a></li>
+                            <li><a href="#" title="">Конференция</a></li>
+                            <li><a href="#" title="">Нови геод. инструменти</a></li>
+                            <li><a href="#" title="">Конкурси</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <input type="checkbox" name="group-3" id="group-3">
+                        <label for="group-3">Препоръчано за студенти</label>
+                        <ul>
+                            <li><a href="#" title="">Биология и екология</a></li>
+                            <li><a href="#" title="" class="active">Науки за земята</a></li>
+                            <li><a href="#" title="">Биология</a></li>
+                            <li><a href="#" title="">Медицина</a></li>
+                            <li><a href="#" title="">Геология</a></li>
+                            <li><a href="#" title="">Геодезия, картография и ГИС</a></li>
+                            <li><a href="#" title="">Океанографски науки</a></li>
+                            <li><a href="#" title="">Логистика и инженерни науки</a></li>
+                        </ul>
+                    </li>
+                </ul><!-- inner nav-->
+            </div>
+        </aside>
 
-        </div>
+        <script src="/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            tinymce.init({
+                selector: "textarea",
+                plugins: ["image paste table link code media"]
+            });
+        </script>
 
+        <div class="content">
+            <div class="news-container">
+                <article>
+                    <form method="post" asp-controller="News" asp-action="Create" enctype="multipart/form-data">
+                        <div>
+                            <label asp-for="Title"></label>
+                            <input asp-for="Title" class="input" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
 
-    </aside>
-    <div class="content">
-        <div class="news-container">
-                    <article>
-                        <form method="post" asp-controller="News" asp-action="Create" enctype="multipart/form-data">
-                            <div>
-                                <label asp-for="Title"></label>
-                                <input asp-for="Title" class="input" />
-                                <span asp-validation-for="Title" class="text-danger"></span>
-                            </div>
+                        <div>
+                            <label asp-for="Content"></label>
+                            <textarea asp-for="Content" class="form-control"></textarea>
+                            <span asp-validation-for="Content" class="text-danger"></span>
+                        </div>
 
-                            <div>
-                                <label asp-for="Content"></label>
-                                <textarea asp-for="Content" class="form-control"></textarea>
-                                <span asp-validation-for="Content" class="text-danger"></span>
-                            </div>
+                        <br />
 
-                            <br />
-
-                            <div>
-                                <label asp-for="Category" class="dropdown-item">@Html.DropDownListFor(x => x.Category, @Html.GetEnumSelectList(typeof(GeodesyApi.Data.Models.Enums.NewsType)), new { @class = "form-control" })</label>
-                            </div>
-                            <div>
-                                <label asp-for="Group" class="dropdown-item">@Html.DropDownListFor(x => x.Group, @Html.GetEnumSelectList(typeof(GeodesyApi.Data.Models.Enums.NewsGroupType)), new { @class = "form-control" })</label>
-                            </div>
-                            <hr>
-                            <div class="form-group mt-3">
-                                <label class="mr-2">Прикачи изображение:</label>
-                                <input asp-for="Image" type="file" name="Image" value="other">
-                            </div>
-                            <hr>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                    </article>
+                        <div>
+                            <label asp-for="Category" class="dropdown-item">@Html.DropDownListFor(x => x.Category, @Html.GetEnumSelectList(typeof(GeodesyApi.Data.Models.Enums.NewsType)), new { @class = "form-control" })</label>
+                        </div>
+                        <div>
+                            <label asp-for="Group" class="dropdown-item">@Html.DropDownListFor(x => x.Group, @Html.GetEnumSelectList(typeof(GeodesyApi.Data.Models.Enums.NewsGroupType)), new { @class = "form-control" })</label>
+                        </div>
+                        <hr>
+                        <div class="form-group mt-3">
+                            <label class="mr-2">Прикачи изображение:</label>
+                            <input asp-for="Image" type="file" name="Image" value="other">
+                        </div>
+                        <hr>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </article>
             </div>
         </div>
-    </div>
+        </div>
 
-</section><!-- PAGE -->
+    </section><!-- PAGE -->
 
 
 <script src="js/jquery.min.js" type="text/javascript"></script>
