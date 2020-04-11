@@ -14,8 +14,8 @@ namespace GeodesyApi.Services
     public interface INewsService
     {
         Task<News> CreateNews(CreateNewsViewModel input, ApplicationUser user);
-        
-        int GetCount();
+
+        int GetCount(ICollection<GetNewsViewModel> news);
 
         GetNewsViewModel GetById(int newsId);
 

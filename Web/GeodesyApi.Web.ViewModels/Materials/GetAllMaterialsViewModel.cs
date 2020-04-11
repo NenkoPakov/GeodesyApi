@@ -10,6 +10,10 @@ namespace GeodesyApi.Web.ViewModels.Materials
 {
     public class GetAllMaterialsViewModel:IMapFrom<GetMaterialViewModel>
     {
-        public IEnumerable<GetMaterialViewModel> Materials { get; set; }
+        public int CurrentPage { get; set; }
+
+        public int PagesCount { get; set; }
+
+        public ICollection<GetMaterialViewModel> Materials { get; set; }
     }
 }

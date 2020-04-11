@@ -10,6 +10,6 @@ namespace GeodesyApi.Web.ViewModels.News
 
         public int PagesCount { get; set; }
 
-        public IEnumerable<GetNewsViewModel> News { get; set; }
+        public ICollection<GetNewsViewModel> News { get; set; }
     }
 }

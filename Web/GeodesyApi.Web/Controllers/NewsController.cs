@@ -42,12 +42,13 @@ namespace GeodesyApi.Web.Controllers
             return this.RedirectToAction("GetNews");
         }
 
-        [Route("News/All/{page}")]
+        [Route("News/All/{page?}")]
         public async Task<IActionResult> GetNews(int page = 1)
         {
             var news = this.NewsService.GetNews(NewsPerPage, (page - 1) * NewsPerPage);
 
-            var count = this.NewsService.GetCount();
+            var count = this.NewsService.GetCount(news.News);
+
             news.PagesCount = (int)Math.Ceiling((double)count / NewsPerPage);
 
             if (news.PagesCount == 0)
@@ -61,12 +62,13 @@ namespace GeodesyApi.Web.Controllers
         }
 
 
-        [Route("News/{category}/{page}")]
+        [Route("News/{category}/{page?}")]
         public async Task<IActionResult> GetByCategory(NewsGroupType? category, int page = 1)
         {
             var news = this.NewsService.GetByCategory(category, NewsPerPage, (page - 1) * NewsPerPage);
 
-            var count = news.News.Count();
+            var count = this.NewsService.GetCount(news.News);
+
             news.PagesCount = (int)Math.Ceiling((double)count / NewsPerPage);
 
             if (news.PagesCount == 0)
@@ -87,8 +89,6 @@ namespace GeodesyApi.Web.Controllers
             var news = this.NewsService.GetById(newsId);
 
 
-
-            //return this.View("Details", new NewsDetailsAndCommentsViewModel() { News = news, Comment = new CommentViewModel() });
             return this.View("Details", news);
         }
 

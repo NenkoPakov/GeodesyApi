@@ -34,17 +34,67 @@ namespace GeodesyApi.Services
 
         public IDeletableEntityRepository<Material> MaterialsRepository { get; }
 
-        public GetAllMaterialsViewModel GetAll()
+        public GetAllMaterialsViewModel GetMaterials(int? take = null, int skip = 0)
         {
             var viewModel = new GetAllMaterialsViewModel();
 
-            var materials = this.MaterialsRepository.All()
-                .To<GetMaterialViewModel>()
-                .ToList();
+            var query = this.GetAll()
+                .Skip(skip);
+
+            if (take.HasValue)
+            {
+                query = query.Take(take.Value);
+            }
+
+            var materials = query.To<GetMaterialViewModel>().ToList();
 
             viewModel.Materials = materials;
 
             return viewModel;
+        }
+
+
+        public GetAllMaterialsViewModel GetByCategory(MaterialsType? materialsCategory = null, int? take = null, int skip = 0)
+        {
+            var viewModel = new GetAllMaterialsViewModel();
+
+            var query = this.GetByCategoty(materialsCategory)
+                .Skip(skip);
+
+            if (take.HasValue)
+            {
+                query = query.Take(take.Value);
+            }
+
+            var materials = query.To<GetMaterialViewModel>().ToList();
+
+            viewModel.Materials = materials;
+
+            return viewModel;
+        }
+
+        public int GetCount(MaterialsType? category=null)
+        {
+            if (category!=null)
+            {
+                return this.GetByCategoty(category)
+                    .Count();
+            }
+
+            return this.GetAll().Count();
+        }
+
+        private IQueryable<Material> GetByCategoty(MaterialsType? materialsCategoty)
+        {
+            return this.MaterialsRepository.All()
+                .Where(c => c.Category == materialsCategoty)
+                .OrderByDescending(x => x.CreatedOn);
+        }
+
+        private IQueryable<Material> GetAll()
+        {
+            return this.MaterialsRepository.All()
+                .OrderByDescending(x => x.CreatedOn);
         }
 
         public async Task<IDeletableEntityRepository<Material>> UploadAsync(MaterialUploadViewModel input, string userId)
@@ -73,5 +123,6 @@ namespace GeodesyApi.Services
 
             return this.MaterialsRepository;
         }
+
     }
 }

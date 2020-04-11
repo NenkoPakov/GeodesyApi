@@ -124,23 +124,31 @@
 
             app.UseEndpoints(
                 endpoints =>
-                    {
-                        endpoints.MapControllerRoute(
-                            "NumberOfNewsPage",
-                            "news/{category}/{page}",
-                            new { controller = "News", action = "GetNews", category = "All" });
-                        endpoints.MapControllerRoute(
-                            "NumberOfNewsPage",
-                            "news/{category}/{page}",
-                            new { controller = "News", action = "GetNews" });
-                        endpoints.MapControllerRoute(
-                            "areaRoute",
-                            "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-                        endpoints.MapControllerRoute(
-                            "default",
-                            "{controller=Home}/{action=Index}/{id?}");
-                        endpoints.MapRazorPages();
-                    });
+                {
+                    endpoints.MapControllerRoute(
+                        "NumberOfMaterialsPage",
+                        "materials/{category}/{page}",
+                        new { controller = "Materials", action = "GetMaterials", page = 1 });
+                    endpoints.MapControllerRoute(
+                        "NumberOfMaterialsPage",
+                        "materials/All/{page}",
+                        new { controller = "Materials", action = "GetMaterials", page = 1 });
+                    endpoints.MapControllerRoute(
+                        "NumberOfNewsPage",
+                        "news/{category}/{page}",
+                        new { controller = "News", action = "GetNews", page = 1 });
+                    endpoints.MapControllerRoute(
+                        "NumberOfNewsPage",
+                        "news/All/{page}",
+                        new { controller = "News", action = "GetNews", page = 1 });
+                    endpoints.MapControllerRoute(
+                        "areaRoute",
+                        "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    endpoints.MapControllerRoute(
+                        "default",
+                        "{controller=Home}/{action=Index}/{id?}");
+                    endpoints.MapRazorPages();
+                });
         }
     }
 }

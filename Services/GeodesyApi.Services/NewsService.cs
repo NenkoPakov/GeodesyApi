@@ -91,7 +91,7 @@ namespace GeodesyApi.Services
         {
             var newsViewModel = new GetNewsCollectionViewModel();
 
-            IQueryable<News> query = this.GetByGroup(newsGroup)
+            var query = this.GetByGroup(newsGroup)
                 .Skip(skip);
 
             if (take.HasValue)
@@ -121,14 +121,10 @@ namespace GeodesyApi.Services
 
 
 
-        public int GetCount()
+        public int GetCount(ICollection<GetNewsViewModel> news)
         {
-            return this.NewsRepository.All().Count();
+            return news.Count();
         }
 
-        public GetNewsCollectionViewModel GetNews(int? id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
