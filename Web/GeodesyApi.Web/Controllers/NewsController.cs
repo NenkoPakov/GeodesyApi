@@ -65,6 +65,11 @@ namespace GeodesyApi.Web.Controllers
         [Route("News/{category}/{page?}")]
         public async Task<IActionResult> GetByCategory(NewsGroupType? category, int page = 1)
         {
+            if (category==null)
+            {
+                return this.BadRequest();
+            }
+
             var news = this.NewsService.GetByCategory(category, NewsPerPage, (page - 1) * NewsPerPage);
 
             var count = this.NewsService.GetCount(news.News);

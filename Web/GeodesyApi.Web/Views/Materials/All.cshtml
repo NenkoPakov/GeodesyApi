@@ -9,16 +9,16 @@
 
             <!-- inner nav-->
             <ul class="cd-accordion-menu animated">
-                <li><a asp-route="NumberOfMaterialsPage" asp-route-category="Lab" title="">Материали за лекции</a></li>
-                <li><a asp-route="NumberOfMaterialsPage" asp-route-category="Exercise" title="">Материали за упражнения</a></li>
-                <li><a asp-route="NumberOfMaterialsPage" asp-route-category="Test" title="">Материали за тестове   </a></li>
-                <li><a asp-route="NumberOfMaterialsPage" asp-route-category="CertificationRequirements" title="">Изисквания за заверка  </a></li>
-                <li><a asp-route="NumberOfMaterialsPage" asp-route-category="Publication" title="">Публикации</a></li>
-                <li><a asp-route="NumberOfMaterialsPage" asp-route-category="Questionnaire" title="">Конспект</a></li>
-                <li><a asp-route="NumberOfMaterialsPage" asp-route-category="Information" title="">Информация</a></li>
-                <li><a asp-route="NumberOfMaterialsPage" asp-route-category="Coursework" title="">Курсови задачи</a></li>
-                <li><a asp-route="NumberOfMaterialsPage" asp-route-category="Others" title="">Други</a></li>
-                <li><a asp-route="NumberOfMaterialsPage" title="">Всички</a></li>
+                <li><a asp-route="NumberOfMaterialsPages" asp-route-category="Lab" title="">Материали за лекции</a></li>
+                <li><a asp-route="NumberOfMaterialsPages" asp-route-category="Exercise" title="">Материали за упражнения</a></li>
+                <li><a asp-route="NumberOfMaterialsPages" asp-route-category="Test" title="">Материали за тестове   </a></li>
+                <li><a asp-route="NumberOfMaterialsPages" asp-route-category="CertificationRequirements" title="">Изисквания за заверка  </a></li>
+                <li><a asp-route="NumberOfMaterialsPages" asp-route-category="Publication" title="">Публикации</a></li>
+                <li><a asp-route="NumberOfMaterialsPages" asp-route-category="Questionnaire" title="">Конспект</a></li>
+                <li><a asp-route="NumberOfMaterialsPages" asp-route-category="Information" title="">Информация</a></li>
+                <li><a asp-route="NumberOfMaterialsPages" asp-route-category="Coursework" title="">Курсови задачи</a></li>
+                <li><a asp-route="NumberOfMaterialsPages" asp-route-category="Others" title="">Други</a></li>
+                <li><a asp-route="NumberOfMaterialsPages" title="">Всички</a></li>
 
             </ul><!-- inner nav-->
         </div>
@@ -74,7 +74,7 @@
                     {
                         <li class="page-item">
                             <a class="page-link"
-                               asp-route="NumberOfMaterialsPage"
+                               asp-route="NumberOfMaterialsPages"
                                asp-route-page="@(this.Model.CurrentPage - 1)">Previous</a>
                         </li>
                     }
@@ -84,7 +84,7 @@
                         var active = i == this.Model.CurrentPage ? "active" : string.Empty;
                         <li class="page-item @active">
                             <a class="page-link"
-                               asp-route="NumberOfMaterialsPage"
+                               asp-route="NumberOfMaterialsPages"
                                asp-route-page="@i">@i</a>
                         </li>
                     }
@@ -99,7 +99,7 @@
                     {
                         <li class="page-item">
                             <a class="page-link"
-                               asp-route="NumberOfMaterialsPage"
+                               asp-route="NumberOfMaterialsPages"
                                asp-route-page="@(this.Model.CurrentPage + 1)">Next</a>
                         </li>
                     }

@@ -54,8 +54,12 @@ namespace GeodesyApi.Web.Controllers
 
         [Route("Materials/{category}/{page?}")]
         public async Task<IActionResult> GetByCategory(MaterialsType? category, int page = 1)
-        
         {
+            if (category == null)
+            {
+                return this.BadRequest();
+            }
+
             var materials = this.MaterialsService.GetByCategory(category, MaterialsPerPage, (page - 1) * MaterialsPerPage);
 
             var count = this.MaterialsService.GetCount(category);

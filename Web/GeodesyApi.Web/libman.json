@@ -82,6 +82,22 @@
       "files": [
         "min/moment-with-locales.min.js"
       ]
+    },
+    {
+      "library": "owlcarousel@1.3.3",
+      "destination": "wwwroot/lib/owlcarousel/",
+      "files": [
+        "owl-carousel/AjaxLoader.gif",
+        "owl-carousel/owl.carousel.css",
+        "owl-carousel/grabbing.png",
+        "owl-carousel/owl.carousel.js",
+        "owl-carousel/owl.carousel.min.css",
+        "owl-carousel/owl.carousel.min.js",
+        "owl-carousel/owl.theme.css",
+        "owl-carousel/owl.theme.min.css",
+        "owl-carousel/owl.transitions.css",
+        "owl-carousel/owl.transitions.min.css"
+      ]
     }
   ]
 }

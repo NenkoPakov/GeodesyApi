@@ -123,6 +123,5 @@ namespace GeodesyApi.Services
 
             return this.MaterialsRepository;
         }
-
     }
 }

@@ -50,7 +50,7 @@ namespace GeodesyApi.Web.Controllers
 
         public IActionResult Test()
         {
-        return this.RedirectToPage("Home","Error");
+        return this.View();
         }
     }
 }

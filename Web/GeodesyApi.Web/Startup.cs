@@ -126,19 +126,19 @@
                 endpoints =>
                 {
                     endpoints.MapControllerRoute(
-                        "NumberOfMaterialsPage",
+                        "NumberOfMaterialsPages",
                         "materials/{category}/{page}",
                         new { controller = "Materials", action = "GetMaterials", page = 1 });
                     endpoints.MapControllerRoute(
-                        "NumberOfMaterialsPage",
+                        "NumberOfMaterialsPages",
                         "materials/All/{page}",
                         new { controller = "Materials", action = "GetMaterials", page = 1 });
                     endpoints.MapControllerRoute(
-                        "NumberOfNewsPage",
+                        "NumberOfNewsPages",
                         "news/{category}/{page}",
                         new { controller = "News", action = "GetNews", page = 1 });
                     endpoints.MapControllerRoute(
-                        "NumberOfNewsPage",
+                        "NumberOfNewsPages",
                         "news/All/{page}",
                         new { controller = "News", action = "GetNews", page = 1 });
                     endpoints.MapControllerRoute(

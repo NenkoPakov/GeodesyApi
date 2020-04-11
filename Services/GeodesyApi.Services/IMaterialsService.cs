@@ -15,7 +15,6 @@ namespace GeodesyApi.Services
 {
     public interface IMaterialsService
     {
-        //Task<IDeletableEntityRepository<Material>> UploadAsync(string title, int category, ICollection<IFormFile> files, string userId);
         Task<IDeletableEntityRepository<Material>> UploadAsync(MaterialUploadViewModel input, string userId);
 
         int GetCount(MaterialsType? category = null);

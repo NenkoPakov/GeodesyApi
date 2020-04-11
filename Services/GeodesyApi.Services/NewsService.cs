@@ -126,5 +126,20 @@ namespace GeodesyApi.Services
             return news.Count();
         }
 
+        public GetNewsCollectionViewModel GetLastNews()
+        {
+            var countOfNewsAtHomePage = 4;
+
+            var newsViewModel = new GetNewsCollectionViewModel();
+
+            var news = this.GetAll()
+                .Take(countOfNewsAtHomePage)
+                .To<GetNewsViewModel>()
+                .ToList();
+
+            newsViewModel.News = news;
+
+            return newsViewModel;
+        }
     }
 }

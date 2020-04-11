@@ -25,84 +25,35 @@
         <link rel="stylesheet" href="~/css/owl.carousel.css" asp-append-version="true">
         <link rel="stylesheet" href="~/css/owl.theme.default.min.css" asp-append-version="true">
     </environment>
-
-
-
-
-
-
-
-    @*<link rel="stylesheet" href="~/css/bootstrap.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true">
-    <link rel="stylesheet" href="~/css/screens.css" asp-append-version="true">
-    <link rel="stylesheet" href="~/css/owl.carousel.css" asp-append-version="true">
-    <link rel="stylesheet" href="~/css/owl.theme.default.min.css" asp-append-version="true">
-        *@
-
-
-
-
-
-
-    @*
-        <link rel="stylesheet" href="https://esri.github.io/calcite-maps/dist/css/calcite-maps-bootstrap.min-v0.8.css">
-        <!-- Calcite Maps -->
-        <link rel="stylesheet" href="https://esri.github.io/calcite-maps/dist/css/calcite-maps-arcgis-4.x.min-v0.8.css">
-        <!-- ArcGIS JS 4 -->
-        <link rel="stylesheet" href="https://js.arcgis.com/4.10/esri/css/main.css">
-    *@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </head>
 
 <body>
     <!-- HEADER -->
     <header>
         <div class="logo">
-            <a href="#" title="Български антарктически институт"><img src="~/img/logo.jpg" alt="УНИВЕРСИТЕТ ПО АРХИТЕКТУРА, СТРОИТЕЛСТВО И ГЕОДЕЗИЯ - ГЕОГРАФСКА ИНФОРМАЦИОННА СИСТЕМА" title="УНИВЕРСИТЕТ ПО АРХИТЕКТУРА, СТРОИТЕЛСТВО И ГЕОДЕЗИЯ - ГЕОГРАФСКА ИНФОРМАЦИОННА СИСТЕМА"> <span>УНИВЕРСИТЕТ ПО АРХИТЕКТУРА, СТРОИТЕЛСТВО И ГЕОДЕЗИЯ<br>ГЕОГРАФСКА ИНФОРМАЦИОННА СИСТЕМА</span></a>
+            <a asp-controller="Home" asp-action="Index" title="Български антарктически институт"><img src="~/img/logo.jpg" alt="УНИВЕРСИТЕТ ПО АРХИТЕКТУРА, СТРОИТЕЛСТВО И ГЕОДЕЗИЯ - ГЕОГРАФСКА ИНФОРМАЦИОННА СИСТЕМА" title="УНИВЕРСИТЕТ ПО АРХИТЕКТУРА, СТРОИТЕЛСТВО И ГЕОДЕЗИЯ - ГЕОГРАФСКА ИНФОРМАЦИОННА СИСТЕМА"> <span>УНИВЕРСИТЕТ ПО АРХИТЕКТУРА, СТРОИТЕЛСТВО И ГЕОДЕЗИЯ<br>ГЕОГРАФСКА ИНФОРМАЦИОННА СИСТЕМА</span></a>
         </div>
         <div class="menu-wrapper">
             <a href="#menu" class="menu-link">	Меню <span class="dropdown-header" aria-hidden="true">	&#x2630;</span></a>
             <nav id="menu" role="navigation">
                 <div class="menu">
                     <ul class="menu">
-                        <li><a class="dropdown-item" href="#" title=""><img src="~/img/icons/home.svg" alt="" title=""><br><span>Начало</span></a></li>
-                        <li><a class="dropdown-item" href="#" title=""><img src="~/img/icons/catalog-nav.svg" alt="" title=""><br><span>Каталог</span></a></li>
-                        <li><a class="dropdown-item" href="#" title=""><img src="~/img/icons/library-nav.svg" alt="" title=""><br><span>Библиотека</span></a></li>
-                        <li><a class="dropdown-item" href="#" title=""><img src="~/img/icons/gis-nav.svg" alt="" title=""><br><span>ГИС</span></a></li>
-                        <li><a class="dropdown-item" href="#" title=""><img src="~/img/icons/projects-nav.svg" alt="" title=""><br><span>Проекти</span></a></li>
-                        <li><a class="dropdown-item" href="#" title=""><img src="~/img/icons/tests-nav.svg" alt="" title=""><br><span>Проверка на знанията</span></a></li>
-                        <li><a class="dropdown-item" href="#" title=""><img src="~/img/icons/news-nav.svg" alt="" title=""><br><span>Новини и събития</span></a></li>
-                        <li><a class="dropdown-item" href="#" title=""><img src="~/img/icons/mats-nav.svg" alt="" title=""><br><span>Дисциплини и материали</span></a></li>
-                        <li><a class="dropdown-item" href="#" title=""><img src="~/img/icons/contacts-nav.svg" alt="" title=""><br><span>Контакт</span></a></li>
+                        <li><a asp-controller="Home" asp-action="Index" title=""><img src="~/img/icons/home.svg" alt="" title=""><br><span>Начало</span></a></li>
+                        <li><a href="#" title=""><img src="~/img/icons/catalog-nav.svg" alt="" title=""><br><span>Каталог</span></a></li>
+                        <li><a href="#" title=""><img src="~/img/icons/library-nav.svg" alt="" title=""><br><span>Библиотека</span></a></li>
+                        <li><a href="#" title=""><img src="~/img/icons/gis-nav.svg" alt="" title=""><br><span>ГИС</span></a></li>
+                        <li><a href="#" title=""><img src="~/img/icons/projects-nav.svg" alt="" title=""><br><span>Проекти</span></a></li>
+                        <li><a href="#" title=""><img src="~/img/icons/tests-nav.svg" alt="" title=""><br><span>Проверка на знанията</span></a></li>
+                        <li><a asp-route="NumberOfNewsPages" title=""><img src="~/img/icons/news-nav.svg" alt="" title=""><br><span>Новини и събития</span></a></li>
+                        <li><a asp-route="NumberOfMaterialsPages" title=""><img src="~/img/icons/mats-nav.svg" alt="" title=""><br><span>Дисциплини и материали</span></a></li>
+                        <li><a href="#" title=""><img src="~/img/icons/contacts-nav.svg" alt="" title=""><br><span>Контакт</span></a></li>
                     </ul>
                 </div>
             </nav>
         </div>
 
-
-
         <div class="login">
             <ul class="menu">
-
                 @if (!this.User.Identity.IsAuthenticated)
                 {
                     <li><a asp-controller="Users" asp-action="Login" title=""><img src="~/img/icons/login-nav.svg" alt="" title="" asp-append-version="true"><br><span>Вход</span></a></li>
@@ -110,50 +61,11 @@
                 }
                 else
                 {
-                    <li><a asp-controller="Users" asp-action="Logout" title=""><img src="~/img/icons/logout-nav.svg" alt="" title="" asp-append-version="true"><br><span>Изход</span></a></li>
+                    <li><a asp-controller="Users" asp-action="Logout" title=""><img src="~/img/icons/reg-nav.svg" alt="" title="" asp-append-version="true"><br><span>Изход</span></a></li>
                 }
             </ul>
         </div>
-    </header><!-- HEADER -->
-    @**@
-
-    @*<a href="#menu" class="">	Меню <span class="ico-caret-down" aria-hidden="true">	&#x2630;</span></a>*
-        <nav id="menu" role="rowheader">
-            <div class="menu">
-                <ul class="d-sm-inline">
-
-                    <span class="col-4">
-                        <li><a asp-controller="Home" asp-action="Index" title="Български антарктически институт"><img src="~/img/logo.jpg" alt="" title=""><p class=" align-middle">УНИВЕРСИТЕТ ПО АРХИТЕКТУРА, СТРОИТЕЛСТВО И ГЕОДЕЗИЯ<br>ГЕОГРАФСКА ИНФОРМАЦИОННА СИСТЕМА<br></p></a></li>
-                    </span>
-                    <li><a asp-controller="Home" asp-action="Index" title=""><img src="~/img/icons/home.svg" alt="" title="" asp-append-version="true"><br><span>Начало</span></a></li>
-                    <li><a href="#" title=""><img src="~/img/icons/catalog-nav.svg" alt="" title="" asp-append-version="true"><br><span>Каталог</span></a></li>
-                    <li><a href="#" title=""><img src="~/img/icons/library-nav.svg" alt="" title="" asp-append-version="true"><br><span>Библиотека</span></a></li>
-                    <li><a href="#" title=""><img src="~/img/icons/gis-nav.svg" alt="" title="" asp-append-version="true"><br><span>ГИС</span></a></li>
-                    <li><a asp-controller="Projects" asp-action="All" title=""><img src="~/img/icons/projects-nav.svg" alt="" title="" asp-append-version="true"><br><span>Проекти</span></a></li>
-                    <li><a href="#" title=""><img src="~/img/icons/tests-nav.svg" alt="" title="" asp-append-version="true"><br><span>Проверка на знанията</span></a></li>
-                    <li><a href="#" title=""><img src="~/img/icons/news-nav.svg" alt="" title="" asp-append-version="true"><br><span>Новини и събития</span></a></li>
-                    <li><a href="#" title=""><img src="~/img/icons/mats-nav.svg" alt="" title="" asp-append-version="true"><br><span>Дисциплини и материали</span></a></li>
-                    <li><a href="#" title=""><img src="~/img/icons/contacts-nav.svg" alt="" title="" asp-append-version="true"><br><span>Контакт</span></a></li>
-                    @if (!this.User.Identity.IsAuthenticated)
-                    {
-                        <li><a asp-controller="Users" asp-action="Login" title=""><img src="~/img/icons/login-nav.svg" alt="" title="" asp-append-version="true"><br><span>Вход</span></a></li>
-                        <li><a asp-controller="Users" asp-action="Register" title=""><img src="~/img/icons/reg-nav.svg" alt="" title="" asp-append-version="true"><br><span>Регистрация</span></a></li>
-                    }
-                    else
-                    {
-                        <li><a asp-controller="Users" asp-action="Logout" title=""><img src="~/img/icons/logout-nav.svg" alt="" title="" asp-append-version="true"><br><span>Изход</span></a></li>
-                    }
-                </ul>
-            </div>
-        </nav>
-        </div>
-        </div>
-
-
-
-        </header>*@
-
-
+    </header>    <!-- HEADER -->
     <div class="container-custom">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
@@ -161,17 +73,11 @@
         @this.RenderBody()
     </div>
 
-
     @this.RenderSection("Scripts", required: false)
 
-
-
-
     <footer>
-        Български антарктически институт, 2020
+        Български антарктически институт, @DateTime.Now.Year
     </footer><!-- FOOTER -->
-
-
 
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
@@ -191,16 +97,6 @@
         <script src="~/js/site.min.js" asp-append-version="true"></script>
         <script src="~/js/owl.carousel.js" asp-append-version="true"></script>
     </environment>
-
-
-
-
-    @*
-        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
-        <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
-        <script src="~/js/jquery.min.js" type="text/javascript" asp-append-version="true"></script>*@
-
-
 
 </body>
 </html>

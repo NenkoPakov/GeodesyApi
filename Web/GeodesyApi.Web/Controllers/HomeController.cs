@@ -1,18 +1,26 @@
 ﻿namespace GeodesyApi.Web.Controllers
 {
     using System.Diagnostics;
-
+    using GeodesyApi.Services;
     using GeodesyApi.Web.ViewModels;
 
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : BaseController
     {
+        public HomeController(INewsService newsService)
+        {
+            NewsService = newsService;
+        }
+
+        public INewsService NewsService { get; }
 
         [HttpGet("/")]
         public IActionResult Index()
         {
-            return this.View();
+            var news = this.NewsService.GetLastNews();
+
+            return this.View(news);
         }
 
         public IActionResult Privacy()
