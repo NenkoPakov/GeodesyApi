@@ -1,4 +1,4 @@
-﻿@model  GeodesyApi.Web.ViewModels.Materials.GetAllMaterialsViewModel
+﻿@model GeodesyApi.Web.ViewModels.Materials.GetAllMaterialsViewModel
 <!-- PAGE -->
 <section class="page materials">
     <aside>
@@ -48,7 +48,12 @@
                     </a>
 
                     <div class="buttons_list">
-                        <a href="#" title="">виж повече</a>
+                        <button id="pdf-selector" title="" onclick="myFunction('@material.FileUrl')">виж повече</button>
+
+
+
+
+
                         <a href="#" title="">сваляне</a>
 
                         <!-- If current user is author of this material -->
@@ -113,10 +118,10 @@
         <div class="show-selected">
             <a href="#" title="Към всички материали" class="close">&times; Към всички материали</a>
             <div class="right-column2">
-                <div class="map">
-                    <iframe src="Test Document.pdf" style="width:100%; height:80vh;"></iframe>
+                <div class="container-fluid">
+                    <iframe id="pdf-previewer" src="a" style="width:100%; height:80vh;"></iframe>
 
-                    <a href="#" title="">сваляне</a>
+                    <a class="btn btn-success" href="#" title="">сваляне</a>
                 </div>
             </div>
         </div>
@@ -176,4 +181,10 @@
             $("#pushleft").addClass('newClass');
         });
     });
+</script>
+
+<script>
+    function myFunction(e) {
+        document.getElementById("pdf-previewer").setAttribute("src", `${e}`);
+    }
 </script>

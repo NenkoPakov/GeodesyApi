@@ -11,5 +11,7 @@ namespace GeodesyApi.Services
     public interface ICommentsService
     {
         Task Create(CommentViewModel input, ApplicationUser user);
+
+        bool CanCreate(string userId);
     }
 }

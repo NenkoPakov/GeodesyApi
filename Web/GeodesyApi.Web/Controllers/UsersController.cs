@@ -1,4 +1,5 @@
 ﻿using GeodesyApi.Data.Models;
+using GeodesyApi.Services.Mapping;
 using GeodesyApi.Web.ViewModels;
 using GeodesyApi.Web.ViewModels.Users;
 using Microsoft.AspNetCore.Identity;
@@ -38,6 +39,12 @@ namespace GeodesyApi.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginInputModel loginInputModel)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(loginInputModel);
+            }
+
+
             var username = loginInputModel.Username;
             var password = loginInputModel.Password;
 
@@ -55,26 +62,36 @@ namespace GeodesyApi.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterInputModel registerInputModel)
         {
-            var username = registerInputModel.Username;
-            var firstName = registerInputModel.FirstName;
-            var lastName = registerInputModel.LastName;
-            var email = registerInputModel.Email;
-            var phoneNumber = registerInputModel.PhoneNumber;
-            var facultyNumber = registerInputModel.FacultyNumber;
-            var password = registerInputModel.Password;
-
-            var result = await this.UserManager.CreateAsync(new ApplicationUser()
+            if (!this.ModelState.IsValid)
             {
-                UserName = username,
-                FirstName = firstName,
-                LastName = lastName,
-                Email = email,
-                //EmailConfirmed = true,
-                PhoneNumber = phoneNumber,
-                FacultyNumber = facultyNumber,
-            }, password);
+                return this.View(registerInputModel);
+            }
 
-            return this.Redirect("/Users/Login");
+            var user = AutoMapperConfig.MapperInstance.Map<ApplicationUser>(registerInputModel);
+
+
+            var password = registerInputModel.Password;
+            var result = await this.UserManager.CreateAsync(user, password);
+
+            //var username = registerInputModel.Username;
+            //var firstName = registerInputModel.FirstName;
+            //var lastName = registerInputModel.LastName;
+            //var email = registerInputModel.Email;
+            //var phoneNumber = registerInputModel.PhoneNumber;
+            //var facultyNumber = registerInputModel.FacultyNumber;
+            //
+            //var result = await this.UserManager.CreateAsync(new ApplicationUser()
+            //{
+            //    UserName = username,
+            //    FirstName = firstName,
+            //    LastName = lastName,
+            //    Email = email,
+            //    //EmailConfirmed = true,
+            //    PhoneNumber = phoneNumber,
+            //    FacultyNumber = facultyNumber,
+            //}, password);
+
+            return this.RedirectToAction("Login", registerInputModel);
         }
 
 

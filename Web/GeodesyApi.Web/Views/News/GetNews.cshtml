@@ -66,7 +66,7 @@
                             <img src="~/img/icons/news-list2.svg" alt="" title="">
                         </div>
                         <div class="article-title">
-                            <a href="@item.Id" title="">@item.Title</a><br>
+                            <a asp-action="Details" asp-route-id="@item.Id" title="">@item.Title</a><br>
                             <span> <time datetime=" @item.CreatedOn.ToString("O")"></time>, Публикуван в категория: <a href="#" title="">@item.Category </a></span>
                         </div>
                     </article>

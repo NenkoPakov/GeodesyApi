@@ -18,7 +18,9 @@ namespace GeodesyApi.Data.Models
         //public IdentityUser Author { get; set; }
 
         [Required]
+        [Display(Name = "Категория")]
         public LibraryType Categoty { get; set; }
+
 
         public byte[] Files { get; set; }
     }

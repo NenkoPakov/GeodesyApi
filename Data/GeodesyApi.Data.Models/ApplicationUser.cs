@@ -31,9 +31,9 @@ namespace GeodesyApi.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
-        [Required]
+        
         [Range(0, 10000)]
-        public int FacultyNumber { get; set; }
+        public int? FacultyNumber { get; set; }
 
         [Required]
         [MinLength(2)]

@@ -47,7 +47,7 @@ namespace GeodesyApi.Web.Controllers
         {
             var news = this.NewsService.GetNews(NewsPerPage, (page - 1) * NewsPerPage);
 
-            var count = this.NewsService.GetCount(news.News);
+            var count = this.NewsService.GetCount();
 
             news.PagesCount = (int)Math.Ceiling((double)count / NewsPerPage);
 
@@ -72,7 +72,7 @@ namespace GeodesyApi.Web.Controllers
 
             var news = this.NewsService.GetByCategory(category, NewsPerPage, (page - 1) * NewsPerPage);
 
-            var count = this.NewsService.GetCount(news.News);
+            var count = this.NewsService.GetCount(category);
 
             news.PagesCount = (int)Math.Ceiling((double)count / NewsPerPage);
 

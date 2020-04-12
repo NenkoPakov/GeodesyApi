@@ -17,9 +17,11 @@ namespace GeodesyApi.Data.Models
         }
 
         [Required]
+        [Display(Name = "Заглавие")]
         public string Title { get; set; }
 
         [Required]
+        [Display(Name = "Съдържание")]
         public string Content { get; set; }
 
         [Required]
@@ -28,11 +30,14 @@ namespace GeodesyApi.Data.Models
         public virtual ApplicationUser User { get; set; }
 
         [Required]
+        [Display(Name = "Подкатегория")]
         public NewsType Category { get; set; }
 
         [Required]
+        [Display(Name = "Категория")]
         public NewsGroupType Group { get; set; }
-        
+
+        [Required]
         public string ImageUrl { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }

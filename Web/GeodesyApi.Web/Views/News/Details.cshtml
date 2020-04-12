@@ -1,10 +1,23 @@
 ﻿@model GeodesyApi.Web.ViewModels.News.GetNewsViewModel
+
+@using System.Linq
+@using Microsoft.AspNetCore.Identity
+@using GeodesyApi.Data.Models
+@inject GeodesyApi.Services.ICommentsService commentsService
+
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    var user = UserManager.GetUserId(this.User);
+}
 @{
     this.ViewData["Title"] = "News";
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+
 
 
     void DisplayComments()
@@ -16,7 +29,7 @@
             return;
         }
 
-       
+
 
         <div class="tab-content">
             <div class="tab-pane active" id="comments-logout">
@@ -42,11 +55,14 @@
 
                                     <ul class="nav nav-tabs list-inline" role="tablist">
                                         <button class="btn btn-info btn-circle text-uppercase" href="#add-comment" onclick="addParentIdValue(@comment.Id)" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-share-alt"></span> Reply</button>
-                                        <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" href="#replyOne"><span class="glyphicon glyphicon-comment"></span> @countOfChildComments. comments</a>
+                                        @if (@countOfChildComments > 0)
+                                        {
+                                            <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" href="#replyOne"><span class="glyphicon glyphicon-comment"></span> @countOfChildComments. comments</a>
+                                        }
                                     </ul>
                                 </div>
-                                @{ DisplayChildComments(comment.Id); }
 
+                                @{ DisplayChildComments(comment.Id); }
 
                             </div>
                         </li>
@@ -54,49 +70,6 @@
                 </ul>
             </div>
         </div>
-
-
-
-
-
-
-
-
-        @*
-            @foreach (var comment in comments)
-            {
-                <li class="media">
-                    <a class="pull-left" href="#">
-                        <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg" alt="profile">
-                    </a>
-
-                    <div class="media-body">
-                        <div class="well well-lg">
-                            <h4 class="media-heading text-uppercase reviews">@comment.UserUserName </h4>
-                            <ul class="media-date text-uppercase reviews list-inline">
-                                <time datetime="@comment.CreatedOn.ToString("O")"></time>
-                            </ul>
-                            <p class="media-comment">
-                                @comment.SanitizedContent
-                            </p>
-                            <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
-                            <div class="card">
-                                <div class="card-header" id="commentOne">
-                                    <h5 class="mb-0">
-                                        <button class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" data-parent="#comment" aria-expanded="true" aria-controls="collapseOne">
-                                            <span class="glyphicon glyphicon-comment"></span>Comments
-                                        </button>
-                                    </h5>
-                                </div>
-                                <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" data-parent="#comment"><span class="glyphicon glyphicon-comment"></span>Comments</a>
-
-                                @{ DisplayChildComments(comment.Id); }
-                            </div>
-                        </div>
-
-                </li>
-
-            }*@
     }
 
 
@@ -125,7 +98,7 @@
                                 <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> @comment.UserUserName</h4>
                                 <ul class="media-date text-uppercase reviews list-inline">
                                     <time datetime=" @comment.CreatedOn.ToString("O")"></time>
-                                   
+
                                 </ul>
                                 <p class="media-comment">
                                     @Html.Raw(comment.SanitizedContent)
@@ -139,46 +112,6 @@
                 </ul>
             </div>
         }
-
-
-
-
-
-
-
-
-        @*
-                <div id="comment" class="collapse show" aria-labelledby="commentOne" data-parent="#accordion">
-                    <div class="card-body">
-                        <ul class="media-body">
-
-                            @foreach (var comment in comments)
-                            {
-                                <li class="media media-replied">
-                                    <a class="pull-left" href="#">
-                                        <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/ManikRathee/128.jpg" alt="profile">
-                                    </a>
-                                    <div class="media-body">
-                                        <div class="well well-lg">
-                                            <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> @comment.UserUserName</h4>
-                                            <ul class="media-date text-uppercase reviews list-inline">
-                                                <time datetime="@comment.CreatedOn.ToString("O")"></time>
-                                            </ul>
-                                            <p class="media-comment">
-                                                @Html.Raw(comment.SanitizedContent)
-                                            </p>
-                                            <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
-
-                                        </div>
-
-                                    </div>
-                                </li>
-                                DisplayChildComments(comment.Id);
-                            }
-                        </ul>
-            </div>
-            </div>
-        *@
 
     }
 }
@@ -245,7 +178,15 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
-                                <button class="btn btn-success btn-circle text-uppercase" type="submit" id="submitComment"><span class="glyphicon glyphicon-send"></span> Summit comment</button>
+
+                                @{
+                                    
+
+                                    var isDisabled = this.commentsService.CanCreate(user) ? string.Empty : "disabled";
+                                    ;
+                                    <button href="#comments" class="btn btn-success btn-circle text-uppercase" type="submit" id="submitComment" @isDisabled><span class="glyphicon glyphicon-send"></span> Submmit comment</button>
+                                }
+
                             </div>
                         </div>
                     </form>

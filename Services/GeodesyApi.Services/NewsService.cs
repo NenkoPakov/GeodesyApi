@@ -121,9 +121,15 @@ namespace GeodesyApi.Services
 
 
 
-        public int GetCount(ICollection<GetNewsViewModel> news)
+        public int GetCount(NewsGroupType? category = null)
         {
-            return news.Count();
+            if (category != null)
+            {
+                return this.GetByGroup(category)
+                    .Count();
+            }
+
+            return this.GetAll().Count();
         }
 
         public GetNewsCollectionViewModel GetLastNews()
