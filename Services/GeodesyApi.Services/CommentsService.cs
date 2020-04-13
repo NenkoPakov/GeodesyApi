@@ -25,11 +25,17 @@ namespace GeodesyApi.Services
         {
             var currentTime = DateTime.UtcNow.TimeOfDay;
 
-            var createdOnTimeOfLastPost =this.CommentsRepository.AllWithDeleted()
-                .Where(c => c.UserId == userId)
-                .OrderByDescending(c => c.CreatedOn)
-                .FirstOrDefault()
-                .CreatedOn.TimeOfDay;
+            var LastPost = this.CommentsRepository.AllWithDeleted()
+           .Where(c => c.UserId == userId)
+            .OrderByDescending(c => c.CreatedOn)
+            .FirstOrDefault();
+
+            if (LastPost == null)
+            {
+                return true;
+            }
+
+            var createdOnTimeOfLastPost= LastPost.CreatedOn.TimeOfDay;
 
             return (currentTime - createdOnTimeOfLastPost).TotalMinutes > 2;
         }

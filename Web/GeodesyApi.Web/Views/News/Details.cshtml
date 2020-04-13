@@ -57,7 +57,7 @@
                                         <button class="btn btn-info btn-circle text-uppercase" href="#add-comment" onclick="addParentIdValue(@comment.Id)" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-share-alt"></span> Reply</button>
                                         @if (@countOfChildComments > 0)
                                         {
-                                            <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" href="#replyOne"><span class="glyphicon glyphicon-comment"></span> @countOfChildComments. comments</a>
+                                            <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" href="#replyOne-@comment.Id.ToString()"><span class="glyphicon glyphicon-comment"></span> @countOfChildComments comments</a>
                                         }
                                     </ul>
                                 </div>
@@ -83,11 +83,12 @@
             return;
         }
 
-
-
         @foreach (var comment in comments)
         {
-            <div class="collapse" id="replyOne">
+
+                    var countOfChildComments = this.Model.Comments.Count(x => x.ParentId == comment.Id);
+
+            <div class="collapse" id="replyOne-@parentId.ToString()">
                 <ul class="media-body">
                     <li class="media media-replied">
                         <a class="pull-left" href="#">
@@ -103,7 +104,13 @@
                                 <p class="media-comment">
                                     @Html.Raw(comment.SanitizedContent)
                                 </p>
-                                <a class="btn btn-info btn-circle text-uppercase" href="#" id="reply"><span class="glyphicon glyphicon-share-alt"></span> Reply</a>
+                                <ul class="nav nav-tabs list-inline" role="tablist">
+                                    <button class="btn btn-info btn-circle text-uppercase" href="#add-comment" onclick="addParentIdValue(@comment.Id)" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-share-alt"></span> Reply</button>
+                                    @if (@countOfChildComments > 0)
+                                    {
+                                        <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" href="#replyOne-@comment.Id.ToString()"><span class="glyphicon glyphicon-comment"></span> @countOfChildComments comments</a>
+                                    }
+                                </ul>
                             </div>
                         </div>
 
@@ -180,10 +187,9 @@
                             <div class="col-sm-offset-2 col-sm-10">
 
                                 @{
-                                    
+
 
                                     var isDisabled = this.commentsService.CanCreate(user) ? string.Empty : "disabled";
-                                    ;
                                     <button href="#comments" class="btn btn-success btn-circle text-uppercase" type="submit" id="submitComment" @isDisabled><span class="glyphicon glyphicon-send"></span> Submmit comment</button>
                                 }
 

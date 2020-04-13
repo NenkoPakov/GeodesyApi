@@ -48,15 +48,14 @@
                     </a>
 
                     <div class="buttons_list">
-                        <button id="pdf-selector" title="" onclick="myFunction('@material.FileUrl')">виж повече</button>
-
-
-
-
-
-                        <a href="#" title="">сваляне</a>
+                        <a  id="pdf-selector" title="" onclick="myFunction('@material.FileUrl')">виж повече</a>
+                        <a href="#" title="" download>сваляне</a>
 
                         <!-- If current user is author of this material -->
+
+                 
+
+
                         <a href="#" title="" class="reg_u">изтриване</a>
                         <a href="#" title="" class="reg_u">редактиране</a>
                     </div>
@@ -119,9 +118,9 @@
             <a href="#" title="Към всички материали" class="close">&times; Към всички материали</a>
             <div class="right-column2">
                 <div class="container-fluid">
-                    <iframe id="pdf-previewer" src="a" style="width:100%; height:80vh;"></iframe>
+                    <iframe id="pdf-previewer" src="" style="width:100%; height:80vh;"></iframe>
 
-                    <a class="btn btn-success" href="#" title="">сваляне</a>
+                    <a class="btn btn-success" id="pdf-previewer-download" href="#" title=""  download>сваляне</a>
                 </div>
             </div>
         </div>
@@ -185,6 +184,7 @@
 
 <script>
     function myFunction(e) {
-        document.getElementById("pdf-previewer").setAttribute("src", `${e}`);
+        document.getElementById("pdf-previewer").setAttribute("src",e.replace("http://", "https://"));
+        document.getElementById("pdf-previewer-download").setAttribute("href",e.replace("http://", "https://"));
     }
 </script>
