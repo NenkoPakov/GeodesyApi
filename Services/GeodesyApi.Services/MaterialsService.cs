@@ -101,7 +101,7 @@ namespace GeodesyApi.Services
         {
             var uploadResult = await CloudinaryExtension.UploadMultipleAsync(this.Cloudinary, input.Files);
 
-            foreach (var file in uploadResult)
+            foreach (var fileUrl in uploadResult)
             {
                 var material = AutoMapperConfig.MapperInstance.Map<Material>(input);
 
@@ -114,7 +114,7 @@ namespace GeodesyApi.Services
                 //};
 
                 material.AuthorId = userId;
-                material.FileUrl = file.Uri.AbsoluteUri;
+                material.FileUrl = fileUrl;
 
                 await this.MaterialsRepository.AddAsync(material);
             }

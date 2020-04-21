@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace GeodesyApi.Web.Controllers
@@ -49,7 +50,17 @@ namespace GeodesyApi.Web.Controllers
             var password = loginInputModel.Password;
 
 
-            await this.SignInManager.PasswordSignInAsync(username, password, true, true);
+            var isValidInput = await this.SignInManager.PasswordSignInAsync(username, password, true, true);
+
+           //if (isValidInput == Microsoft.AspNetCore.Identity.SignInResult.Success)
+           //{
+           //    var IdentityClaims = new List<Claim>()
+           //    {
+           //        value
+           //        new Claim(ClaimTypes.NameIdentifier,"")
+           //    }
+           //}
+
 
             return this.Redirect("/");
         }

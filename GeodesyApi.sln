@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7A731632
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeodesyApi.Services", "Services\GeodesyApi.Services\GeodesyApi.Services.csproj", "{8522212F-F01E-4E20-9975-FCF5E10D71DB}"
 	ProjectSection(ProjectDependencies) = postProject
+		{4D39C126-3FB5-4B26-B08C-1BF48EFFA23E} = {4D39C126-3FB5-4B26-B08C-1BF48EFFA23E}
 		{A2288C46-0FBF-43B6-80B6-3072FD65BC32} = {A2288C46-0FBF-43B6-80B6-3072FD65BC32}
 	EndProjectSection
 EndProject
@@ -37,6 +38,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sandbox", "Tests\Sandbox\Sandbox.csproj", "{8AB6B92A-0837-4BDE-B950-10BE3FF2B6A8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeodesyApi.Services.Data.Tests", "Tests\GeodesyApi.Services.Data.Tests\GeodesyApi.Services.Data.Tests.csproj", "{901AB2DA-6E52-4FB2-91F0-58EB0115F2F7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8522212F-F01E-4E20-9975-FCF5E10D71DB} = {8522212F-F01E-4E20-9975-FCF5E10D71DB}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeodesyApi.Web.Tests", "Tests\GeodesyApi.Web.Tests\GeodesyApi.Web.Tests.csproj", "{3EE06C6E-C8F3-418A-A309-8AC81976A074}"
 EndProject

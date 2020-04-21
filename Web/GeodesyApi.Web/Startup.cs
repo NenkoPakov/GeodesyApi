@@ -25,6 +25,7 @@
     using System;
     using System.IO;
     using GeodesyApi.Services;
+    using GeodesyApi.Web.Middleware;
 
     public class Startup
     {
@@ -34,6 +35,7 @@
         {
             this.Configuration = configuration;
         }
+
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -62,13 +64,17 @@
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
-
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<GeodesyApi.Services.Messaging.IEmailSender, SendGridEmailSender>(provider =>
+                                                                     new SendGridEmailSender(/*this.Configuration["SendGridApiKey"]*/));
+            services.AddTransient<GeodesyApi.Services.Messaging.IEmailSender>(x => new SendGridEmailSender(/*this.Configuration["SendGridApiKey"]*/));
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IMaterialsService, MaterialsService>();
             services.AddTransient<INewsService, NewsService>();
             services.AddTransient<ICommentsService, CommentsService>();
+            services.AddTransient<ICloudinaryService, CloudinaryService>(); 
+            services.AddTransient<IProjectsService, ProjectsService>(); 
+
 
             //services.AddScoped<IRepository,MaterialsService>();
 
@@ -120,6 +126,7 @@
             app.UseRouting();
 
             app.UseAuthentication();
+           // app.UseMiddleware<IdCookieModdleware>();
             app.UseAuthorization();
 
             app.UseEndpoints(

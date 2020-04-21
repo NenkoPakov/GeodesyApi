@@ -10,6 +10,7 @@ namespace GeodesyApi.Web.Controllers
     {
         public IActionResult Map()
         {
+
             return this.View();
         }
     }

@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using GeodesyApi.Common;
     using SendGrid;
     using SendGrid.Helpers.Mail;
 
@@ -12,13 +12,42 @@
     {
         private readonly SendGridClient client;
 
-        public SendGridEmailSender(string apiKey)
+        public SendGridEmailSender()
         {
+            Environment.SetEnvironmentVariable("SEND_GRID", "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");
+
+            var apiKey = Environment.GetEnvironmentVariable("SEND_GRID");
+
             this.client = new SendGridClient(apiKey);
         }
 
-        public async Task SendEmailAsync(string from, string fromName, string to, string subject, string htmlContent, IEnumerable<EmailAttachment> attachments = null)
+        /*
+        static async Task Execute()
         {
+            var apiKey = Environment.GetEnvironmentVariable("SEND_GRID");
+            var client2 = new SendGridClient(apiKey);
+            var from = new EmailAddress("nenko_pakov@abv.bg", "Nenko");
+            var to = new EmailAddress("nenko.pakov@gmail.com", "Nenko");
+            var subject = "asdasdsdsjdah asdjh askd ashkjd haskjfgdsyfau asd";
+            var plainTextContent = "11111111111111asdasdsdsjdah asdjh askd ashkjd haskjfgdsyfau asd";
+            var htmlContent = "<strong>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</strong>";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+
+            var responce = await client2.SendEmailAsync(msg);
+            ;
+        }
+        
+        */
+
+        public async Task SendEmailAsync(
+            string to,
+            string subject,
+            string htmlContent,
+            string from = GlobalConstants.SystemEmail,
+            string fromName = GlobalConstants.SystemName,
+            IEnumerable<EmailAttachment> attachments = null)
+        {
+
             if (string.IsNullOrWhiteSpace(subject) && string.IsNullOrWhiteSpace(htmlContent))
             {
                 throw new ArgumentException("Subject and message should be provided.");

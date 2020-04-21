@@ -1,5 +1,6 @@
 ﻿using GeodesyApi.Data;
 using GeodesyApi.Data.Models;
+using GeodesyApi.Web.ViewModels;
 using GeodesyApi.Web.ViewModels.News;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -51,6 +52,12 @@ namespace GeodesyApi.Web.Controllers
         public IActionResult Test()
         {
         return this.View();
+        }
+
+        [HttpPost]
+        public IActionResult Test(Test input)
+        {
+            return this.View();
         }
     }
 }

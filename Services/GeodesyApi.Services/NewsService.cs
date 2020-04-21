@@ -19,14 +19,14 @@ namespace GeodesyApi.Services
 {
     public class NewsService : INewsService
     {
-        public NewsService(IDeletableEntityRepository<News> newsRepository, IDeletableEntityRepository<ApplicationUser> userRepository, Cloudinary cloudinary)
+        public NewsService(IDeletableEntityRepository<News> newsRepository, IDeletableEntityRepository<ApplicationUser> userRepository, ICloudinaryService cloudinary)
         {
             this.Cloudinary = cloudinary;
             this.NewsRepository = newsRepository;
             this.UserRepository = userRepository;
         }
 
-        public Cloudinary Cloudinary { get; }
+        public ICloudinaryService Cloudinary { get; }
 
         public UserManager<ApplicationUser> UserManager { get; }
 
@@ -36,12 +36,11 @@ namespace GeodesyApi.Services
 
         public async Task<News> CreateNews(CreateNewsViewModel input, ApplicationUser user)
         {
-            var uploadResult = await CloudinaryExtension.UploadAsync(this.Cloudinary, input.Image);
+            var uploadResult = await Cloudinary.UploadAsync(input.Image);
 
             var news = AutoMapperConfig.MapperInstance.Map<News>(input);
 
-            //news.ImageUrl = uploadResult.Uri.AbsoluteUri;
-            news.ImageUrl = uploadResult.Uri.AbsoluteUri;
+            news.ImageUrl = uploadResult;
             news.User = user;
             news.UserId = user.Id;
             news.User.News.Add(news);

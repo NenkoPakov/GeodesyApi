@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "GeodesyApi.Services.Messaging": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "GeodesyApiKey": "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"
+      }
+    }
+  }
+}

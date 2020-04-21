@@ -1,0 +1,83 @@
+﻿@model GeodesyApi.Web.ViewModels.Projects.CreateProjectViewModel
+@{
+    this.ViewData["Title"] = "Create a new post";
+}
+
+
+<div class="container">
+    <form method="post" asp-controller="Projects" asp-action="Create" enctype="multipart/form-data">
+
+        <div>
+            <label asp-for="Url"></label>
+            <input asp-for="Url" id="version" class="form-control" />
+            <span asp-validation-for="Url" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Service"></label>
+            <input asp-for="Service" id="version" class="form-control" />
+            <span asp-validation-for="Service" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Version"></label>
+            <input asp-for="Version" id="version" class="form-control" />
+            <span asp-validation-for="Version" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Requerst"></label>
+            <input asp-for="Requerst" id="version" class="form-control" />
+            <span asp-validation-for="Requerst" class="text-danger"></span>
+        </div>
+
+
+        <div>
+            <label asp-for="Layer"></label>
+            <input asp-for="Layer" id="version" class="form-control" />
+            <span asp-validation-for="Layer" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Bbox"></label>
+            <input asp-for="Bbox" id="version" class="form-control" />
+            <span asp-validation-for="Bbox" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Width"></label>
+            <input asp-for="Width" id="version" class="form-control" />
+            <span asp-validation-for="Width" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Hight"></label>
+            <input asp-for="Hight" id="version" class="form-control" />
+            <span asp-validation-for="Hight" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Srs"></label>
+            <input asp-for="Srs" id="version" class="form-control" />
+            <span asp-validation-for="Srs" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label asp-for="Format"></label>
+            <input asp-for="Format" id="version" class="form-control" />
+            <span asp-validation-for="Format" class="text-danger"></span>
+        </div>
+        <input type="submit" value="Submit">
+
+    </form>
+</div>
+<script>
+    document.forms[0].addEventListener('submit', function () {
+        const example = document.querySelector('[name="fullUrl"]').value;
+
+
+
+        (new URL(example)).searchParams.forEach((x, y) =>
+            document.getElementById(y).value = x);
+    });
+</script>

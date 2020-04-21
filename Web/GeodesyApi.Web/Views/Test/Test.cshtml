@@ -1,2 +1,12 @@
-﻿
-    <a href="https://res.cloudinary.com/dv3tfjvk0/image/upload/v1586727753/v1kkimdsgea9sytnqtfy.pdf" class=" btn" title="Download" a> <button type="button">Download</button> </a>
+﻿@model GeodesyApi.Web.ViewModels.Test
+
+    <form method="post" asp-controller="Test" asp-action="Test" enctype="multipart/form-data">
+        Email: <input type="text" asp-for="email" name="email"><br>
+        <input type="hidden" asp-for="retypeEmail" name="retype-email">
+        <input type="submit" value="Submit">
+    </form>
+<script>
+    document.forms[0].addEventListener('submit', function(){
+    document.element('[name="retype-email"]').value =  document.querySelector('[name="email"]').value;
+});
+</script>

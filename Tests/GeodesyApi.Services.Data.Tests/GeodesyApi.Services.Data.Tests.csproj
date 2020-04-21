@@ -30,6 +30,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\GeodesyApi.Data\GeodesyApi.Data.csproj" />
     <ProjectReference Include="..\..\Services\GeodesyApi.Services.Data\GeodesyApi.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Services\GeodesyApi.Services\GeodesyApi.Services.csproj" />
+    <ProjectReference Include="..\..\Web\GeodesyApi.Web\GeodesyApi.Web.csproj" />
   </ItemGroup>
 
 </Project>

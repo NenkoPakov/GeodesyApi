@@ -19,6 +19,7 @@ namespace GeodesyApi.Data.Models
             this.Materials = new HashSet<Material>();
             this.News = new HashSet<News>();
             this.Comments = new HashSet<Comment>();
+            this.Projects = new HashSet<Project>();
         }
 
         // Audit info
@@ -58,5 +59,7 @@ namespace GeodesyApi.Data.Models
         public virtual ICollection<News> News { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
+
+        public virtual ICollection<Project> Projects { get; set; }
     }
 }

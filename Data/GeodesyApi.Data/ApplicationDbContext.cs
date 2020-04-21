@@ -37,7 +37,7 @@
 
         public virtual DbSet<ProjectMap> ProjectMap { get; set; }
 
-        public virtual DbSet<Projects> Projects { get; set; }
+        public virtual DbSet<Projects> Projectss { get; set; }
 
         public virtual DbSet<ProjectUpdates> ProjectUpdates { get; set; }
 
@@ -50,6 +50,8 @@
         public virtual DbSet<News> News { get; set; }
 
         public virtual DbSet<Comment> Comments { get; set; }
+
+        public virtual DbSet<Project> Projects { get; set; }
 
         //public virtual DbSet<NewsCategory> NewsCategories { get; set; }
 

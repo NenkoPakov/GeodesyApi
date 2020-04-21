@@ -12,7 +12,7 @@ namespace GeodesyApi.Common.CloudinaryHelper
 {
     public class CloudinaryExtension
     {
-        public static async Task<RawUploadResult> UploadAsync(Cloudinary cloudinary, IFormFile file)
+        public virtual async Task<string> UploadAsync(Cloudinary cloudinary, IFormFile file)
         {
             byte[] submittedFile;
 
@@ -28,12 +28,12 @@ namespace GeodesyApi.Common.CloudinaryHelper
 
             var result = await cloudinary.UploadAsync(uploadParams);
 
-            return result;
+            return result.Uri.AbsoluteUri;
         }
 
-        public static async Task<ICollection<RawUploadResult>> UploadMultipleAsync(Cloudinary cloudinary, ICollection<IFormFile> files)
+        public static async Task<ICollection<string>> UploadMultipleAsync(Cloudinary cloudinary, ICollection<IFormFile> files)
         {
-            var filesRepository = new List<RawUploadResult>();
+            var filesRepository = new List<string>();
 
             foreach (var file in files)
             {
@@ -51,7 +51,7 @@ namespace GeodesyApi.Common.CloudinaryHelper
 
                 var result = await cloudinary.UploadAsync(uploadParams);
 
-                filesRepository.Add(result);
+                filesRepository.Add(result.Uri.AbsoluteUri);
             }
 
             return filesRepository;
