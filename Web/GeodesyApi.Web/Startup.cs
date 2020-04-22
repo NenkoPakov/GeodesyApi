@@ -64,21 +64,6 @@
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
-            // Application services
-            services.AddTransient<GeodesyApi.Services.Messaging.IEmailSender, SendGridEmailSender>(provider =>
-                                                                     new SendGridEmailSender(/*this.Configuration["SendGridApiKey"]*/));
-            services.AddTransient<GeodesyApi.Services.Messaging.IEmailSender>(x => new SendGridEmailSender(/*this.Configuration["SendGridApiKey"]*/));
-            services.AddTransient<ISettingsService, SettingsService>();
-            services.AddTransient<IMaterialsService, MaterialsService>();
-            services.AddTransient<INewsService, NewsService>();
-            services.AddTransient<ICommentsService, CommentsService>();
-            services.AddTransient<ICloudinaryService, CloudinaryService>(); 
-            services.AddTransient<IProjectsService, ProjectsService>(); 
-
-
-            //services.AddScoped<IRepository,MaterialsService>();
-
-
             // Cloudinary
             Account account = new Account(
                 this.Configuration["Cloudinary:ApiName"],
@@ -88,6 +73,23 @@
             Cloudinary cloudinary = new Cloudinary(account);
 
             services.AddSingleton(cloudinary);
+
+            // Application services
+            services.AddTransient<GeodesyApi.Services.Messaging.IEmailSender, SendGridEmailSender>(provider =>
+                                                                     new SendGridEmailSender(/*this.Configuration["SendGridApiKey"]*/));
+            services.AddTransient<GeodesyApi.Services.Messaging.IEmailSender>(x => new SendGridEmailSender(/*this.Configuration["SendGridApiKey"]*/));
+            services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IMaterialsService, MaterialsService>();
+            services.AddTransient<INewsService, NewsService>();
+            services.AddTransient<ICommentsService, CommentsService>();
+            services.AddTransient<ICloudinaryService, CloudinaryService>(c=>new CloudinaryService(cloudinary)); 
+            services.AddTransient<IProjectsService, ProjectsService>(); 
+
+
+            //services.AddScoped<IRepository,MaterialsService>();
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

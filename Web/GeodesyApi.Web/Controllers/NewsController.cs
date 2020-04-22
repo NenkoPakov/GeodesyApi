@@ -2,6 +2,7 @@
 using GeodesyApi.Data.Models;
 using GeodesyApi.Data.Models.Enums;
 using GeodesyApi.Services;
+using GeodesyApi.Services.Mapping;
 using GeodesyApi.Web.ViewModels;
 using GeodesyApi.Web.ViewModels.News;
 using Microsoft.AspNetCore.Identity;
@@ -96,6 +97,15 @@ namespace GeodesyApi.Web.Controllers
 
             return this.View("Details", news);
         }
+
+        //public async Task<IActionResult> Edit(int newsId)
+        //{
+        //    var news = this.NewsService.GetById(newsId);
+        //
+        //    var newsViewModel = AutoMapperConfig.MapperInstance.Map<EditNewsViewModel>(news);
+        //
+        //    return this.View(newsViewModel);
+        //}
 
 
         //private int NewsCount() 

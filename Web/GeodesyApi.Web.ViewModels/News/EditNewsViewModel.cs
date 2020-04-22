@@ -1,20 +1,15 @@
-﻿using AutoMapper;
-using Ganss.XSS;
-using GeodesyApi.Data.Models;
-using GeodesyApi.Data.Models.Enums;
+﻿using GeodesyApi.Data.Models.Enums;
 using GeodesyApi.Services.Mapping;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Text;
 
 namespace GeodesyApi.Web.ViewModels.News
 {
-    public class CreateNewsViewModel : IMapTo<GeodesyApi.Data.Models.News>
+    public class EditNewsViewModel : IMapFrom<GeodesyApi.Data.Models.News>
     {
-        //private IFormFile image;
         [Required(ErrorMessage = "Заглавието е задължително и трябва да е между 2 и 50 символа")]
         [MinLength(2)]
         [MaxLength(50)]
@@ -36,11 +31,5 @@ namespace GeodesyApi.Web.ViewModels.News
 
         [Display(Name = "Категория")]
         public NewsGroupType Group { get; set; }
-
-
-        public DateTime CreatedOn { get; set; }
-
-
-
     }
 }

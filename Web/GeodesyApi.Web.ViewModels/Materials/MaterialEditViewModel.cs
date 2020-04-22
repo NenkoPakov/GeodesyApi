@@ -11,8 +11,11 @@ using System.Text;
 
 namespace GeodesyApi.Web.ViewModels.Materials
 {
-    public class MaterialUploadViewModel : IMapTo<Material>
+    public class MaterialEditViewModel : IMapFrom<Material>
     {
+        [Required]
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "Заглавието е задължително и трябва да е между 2 и 50 символа")]
         [MinLength(2)]
         [MaxLength(50)]
@@ -42,19 +45,6 @@ namespace GeodesyApi.Web.ViewModels.Materials
                 {
                     options.MapFrom(p => this.SanitizedDescription);
                 });
-
-            configuration.CreateMap<Material, MaterialUploadViewModel>()
-                .ForMember(m => m.Files, options =>
-                {
-                    options.Ignore();
-                });
-
-            //configuration.CreateMap<MaterialFiles, MaterialUploadViewModel>()
-            //    .ForMember(m => m.Files, options =>
-            //    {
-            //        options.MapFrom(x=>x);
-            //    });
-
         }
     }
 }

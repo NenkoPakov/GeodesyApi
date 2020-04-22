@@ -9,8 +9,10 @@ using System.Text;
 
 namespace GeodesyApi.Web.ViewModels.Materials
 {
-    public class GetMaterialViewModel : IMapFrom<Material>, IMapTo<GetAllMaterialsViewModel>
+    public class GetMaterialViewModel : IMapFrom<Material>, IMapFrom<MaterialFiles>, IMapTo<GetAllMaterialsViewModel>
     {
+        public int Id { get; set; }
+
         public string Title { get; set; }
 
         public MaterialsType Category { get; set; }
@@ -29,6 +31,15 @@ namespace GeodesyApi.Web.ViewModels.Materials
             }
         }
 
-        public string FileUrl { get; set; }
+        public ICollection<string> FilesUrlsFileUrl { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<MaterialFiles, GetMaterialViewModel>()
+                .ForMember(m => m.FilesUrlsFileUrl, options =>
+                {
+                    options.MapFrom(p => p.FileUrl);
+                });
+        }
     }
 }

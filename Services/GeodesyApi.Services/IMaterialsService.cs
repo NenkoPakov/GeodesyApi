@@ -15,12 +15,18 @@ namespace GeodesyApi.Services
 {
     public interface IMaterialsService
     {
-        Task<IDeletableEntityRepository<Material>> UploadAsync(MaterialUploadViewModel input, string userId);
+        Task<IDeletableEntityRepository<Material>> UploadAsync(MaterialUploadViewModel input, ApplicationUser user);
 
         int GetCount(MaterialsType? category = null);
 
         GetAllMaterialsViewModel GetMaterials(int? take = null, int skip = 0);
 
         GetAllMaterialsViewModel GetByCategory(MaterialsType? materialsCategory = null, int? take = null, int skip = 0);
+
+        Material GetById(int materialId);
+
+        void DelateMaterialsByUser(string userId, int materialId);
+
+        Task<IDeletableEntityRepository<Material>> EditAsync(MaterialEditViewModel input, ApplicationUser user);
     }
 }

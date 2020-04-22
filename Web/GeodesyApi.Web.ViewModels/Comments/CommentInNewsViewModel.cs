@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace GeodesyApi.Web.ViewModels.Materials
+namespace GeodesyApi.Web.ViewModels.Comments
 {
     public class CommentInNewsViewModel:IMapFrom<Comment>
     {

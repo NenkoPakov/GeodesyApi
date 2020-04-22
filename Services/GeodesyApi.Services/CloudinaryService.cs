@@ -18,7 +18,7 @@ namespace GeodesyApi.Services
             this.Cloudinary = cloudinary;
         }
 
-        public virtual async Task<string> UploadAsync(IFormFile file)
+        public async Task<string> UploadAsync(IFormFile file)
         {
             byte[] submittedFile;
 
@@ -32,35 +32,35 @@ namespace GeodesyApi.Services
                 File = new FileDescription(file.Name, destinationStream),
             };
 
-            var result = await this.Cloudinary.UploadAsync(uploadParams);
+            var result = await Cloudinary.UploadAsync(uploadParams);
 
             return result.Uri.AbsoluteUri;
         }
 
-        // public static async Task<ICollection<string>> UploadMultipleAsync(ICollection<IFormFile> files)
-        // {
-        //     var filesRepository = new List<string>();
-        //
-        //     foreach (var file in files)
-        //     {
-        //         byte[] submittedFile;
-        //
-        //         using var memoryStream = new MemoryStream();
-        //         await file.CopyToAsync(memoryStream);
-        //         submittedFile = memoryStream.ToArray();
-        //
-        //         using var destinationStream = new MemoryStream(submittedFile);
-        //         var uploadParams = new RawUploadParams()
-        //         {
-        //             File = new FileDescription(file.Name, destinationStream),
-        //         };
-        //
-        //         var result = await Cloudinary.UploadAsync(uploadParams);
-        //
-        //         filesRepository.Add(result.Uri.AbsoluteUri);
-        //     }
-        //
-        //     return filesRepository;
-        // }
+        public async Task<ICollection<string>> UploadMultipleAsync(ICollection<IFormFile> files)
+        {
+            var filesRepository = new List<string>();
+
+            foreach (var file in files)
+            {
+                byte[] submittedFile;
+
+                using var memoryStream = new MemoryStream();
+                await file.CopyToAsync(memoryStream);
+                submittedFile = memoryStream.ToArray();
+
+                using var destinationStream = new MemoryStream(submittedFile);
+                var uploadParams = new RawUploadParams()
+                {
+                    File = new FileDescription(file.Name, destinationStream),
+                };
+
+                var result = await Cloudinary.UploadAsync(uploadParams);
+
+                filesRepository.Add(result.Uri.AbsoluteUri);
+            }
+
+            return filesRepository;
+        }
     }
 }

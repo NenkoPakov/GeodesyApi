@@ -10,6 +10,11 @@ namespace GeodesyApi.Data.Models
 {
     public class Material : BaseDeletableModel<int>
     {
+        public Material()
+        {
+            this.FilesUrls = new List<MaterialFiles>();
+        }
+
         [Required]
         [MinLength(2)]
         [MaxLength(50)]
@@ -29,7 +34,6 @@ namespace GeodesyApi.Data.Models
         [Display(Name = "Категория")]
         public MaterialsType Category { get; set; }
 
-        [Required]
-        public string FileUrl { get; set; }
+        public ICollection<MaterialFiles> FilesUrls { get; set; }
     }
 }

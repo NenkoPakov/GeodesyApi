@@ -10,12 +10,16 @@
     <aside>
         <h1><img src="~/img/icons/news.svg" alt="" title=""> Новини и събития</h1>
         <a href="#" id="show" class="show-nav">&#9776;</a>
+        <div class="sidebar-buttons">
+            <a asp-controller="News" asp-action="Create" title="" class="new-project">Създай</a>
+        </div><!-- sidebar-buttons  -->
         <div class="sidebar-nav" id="pushleft">
             <a href="#" id="hide" class="hide-nav">&times;</a>
             <!-- inner nav-->
             <ul class="cd-accordion-menu animated">
                 <li class="has-children">
                     <input type="checkbox" name="group-1" id="group-1">
+
                     <a asp-route="NumberOfNewsPages" asp-route-category="News" title="">Новини</a>
                     <ul>
                         <li><a href="#" title="">Заседание на работна група</a></li>
@@ -128,6 +132,7 @@
 
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <script>
+
     $(document).ready(function () {
 
 

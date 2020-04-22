@@ -9,6 +9,7 @@ namespace GeodesyApi.Services
     public interface ICloudinaryService
     {
         Task<string> UploadAsync(IFormFile file);
-        //Task<ICollection<string>> UploadMultipleAsync(ICollection<IFormFile> files);
+
+        Task<ICollection<string>> UploadMultipleAsync(ICollection<IFormFile> files);
     }
 }

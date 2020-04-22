@@ -36,7 +36,7 @@ namespace GeodesyApi.Services
 
         public async Task<News> CreateNews(CreateNewsViewModel input, ApplicationUser user)
         {
-            var uploadResult = await Cloudinary.UploadAsync(input.Image);
+            var uploadResult = await this.Cloudinary.UploadAsync(input.Image);
 
             var news = AutoMapperConfig.MapperInstance.Map<News>(input);
 

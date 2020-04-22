@@ -3,6 +3,7 @@
 
 <html>
 <head>
+    <link rel="icon" href="~/img/logo.jpg" type="image/gif" sizes="16x16">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -56,12 +57,13 @@
             <ul class="menu">
                 @if (!this.User.Identity.IsAuthenticated)
                 {
-                    <li><a asp-controller="Users" asp-action="Login" title=""><img src="~/img/icons/login-nav.svg" alt="" title="" asp-append-version="true"><br><span>Вход</span></a></li>
-                    <li><a asp-controller="Users" asp-action="Register" title=""><img src="~/img/icons/reg-nav.svg" alt="" title="" asp-append-version="true"><br><span>Регистрация</span></a></li>
-                }
-                else
-                {
-                    <li><a asp-controller="Users" asp-action="Logout" title=""><img src="~/img/icons/reg-nav.svg" alt="" title="" asp-append-version="true"><br><span>Изход</span></a></li>
+                    <li><a asp-area="Identity" asp-controller="Account" asp-action="Login" title=""><img src="~/img/icons/login-nav.svg" alt="" title="" asp-append-version="true"><br><span>Вход</span></a></li>
+                    <li><a asp-area="Identity" asp-controller="Account" asp-action="Register" title=""><img src="~/img/icons/reg-nav.svg" alt="" title="" asp-append-version="true"><br><span>Регистрация</span></a></li>
+                }          
+                else       
+                {          
+                    <li><a asp-area="Identity" asp-controller="Account" asp-action="Manage" title=""><img src="~/img/icons/user.svg" alt="" title="" asp-append-version="true"><br><span>Профил</span></a></li>
+                    <li><a  asp-controller="Users" asp-action="Logout" title=""><img src="~/img/icons/reg-nav.svg" alt="" title="" asp-append-version="true"><br><span>Изход</span></a></li>
                 }
             </ul>
         </div>

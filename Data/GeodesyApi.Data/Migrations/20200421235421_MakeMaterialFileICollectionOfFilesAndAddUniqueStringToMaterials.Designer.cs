@@ -4,14 +4,16 @@ using GeodesyApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GeodesyApi.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200421235421_MakeMaterialFileICollectionOfFilesAndAddUniqueStringToMaterials")]
+    partial class MakeMaterialFileICollectionOfFilesAndAddUniqueStringToMaterials
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -291,8 +293,12 @@ namespace GeodesyApi.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("MaterialId")
+                    b.Property<int?>("MaterialId")
                         .HasColumnType("int");
+
+                    b.Property<string>("MaterialUniqueString")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -933,11 +939,9 @@ namespace GeodesyApi.Data.Migrations
 
             modelBuilder.Entity("GeodesyApi.Data.Models.MaterialFiles", b =>
                 {
-                    b.HasOne("GeodesyApi.Data.Models.Material", "Material")
-                        .WithMany("FilesUrls")
-                        .HasForeignKey("MaterialId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.HasOne("GeodesyApi.Data.Models.Material", null)
+                        .WithMany("Files")
+                        .HasForeignKey("MaterialId");
                 });
 
             modelBuilder.Entity("GeodesyApi.Data.Models.News", b =>

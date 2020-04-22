@@ -4,8 +4,10 @@ using GeodesyApi.Data.Common.Repositories;
 using GeodesyApi.Data.Models;
 using GeodesyApi.Data.Models.Enums;
 using GeodesyApi.Services;
+using GeodesyApi.Services.Mapping;
 using GeodesyApi.Web.ViewModels;
 using GeodesyApi.Web.ViewModels.Materials;
+using GeodesyApi.Web.ViewModels.News;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -76,25 +78,6 @@ namespace GeodesyApi.Web.Controllers
             return this.View("All", materials);
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         public IActionResult Upload()
         {
             return this.View();
@@ -105,11 +88,27 @@ namespace GeodesyApi.Web.Controllers
         {
             var user = await this.UserManager.GetUserAsync(this.User);
 
-            var result = await MaterialsService.UploadAsync(input, user.Id);
-
-            //var materialsView = result
+            var result = await MaterialsService.UploadAsync(input, user);
 
             return this.RedirectToAction("All");
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var material = this.MaterialsService.GetById(id);
+            var materialViewModel = AutoMapperConfig.MapperInstance.Map<MaterialEditViewModel>(material);
+
+            return this.View(materialViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(MaterialEditViewModel input)
+        {
+            var user = await this.UserManager.GetUserAsync(this.User);
+
+            var result = await this.MaterialsService.EditAsync(input, user);
+
+            return this.RedirectToAction("GetMaterials");
         }
 
     }

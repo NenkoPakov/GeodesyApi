@@ -166,8 +166,8 @@
 
         <div class="comment-tabs">
             <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item"><a href="#comments" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Comments</h4></a></li>
-                <li class="nav-item"><a href="#add-comment" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Add comment</h4></a></li>
+                <li class="nav-item"><a href="#comments" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Коментари</h4></a></li>
+                <li class="nav-item"><a href="#add-comment" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Добави коментар</h4></a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane" id="comments">
@@ -178,7 +178,7 @@
                         <input type="hidden" name="NewsId" value="@this.Model.Id" />
                         <input type="hidden" name="ParentId" id="ParentId" value="" />
                         <div class="form-group">
-                            <label for="email" class="col-sm-2 control-label">Comment</label>
+                            <label for="email" class="col-sm-2 control-label">Коментар</label>
                             <div class="col-sm-10">
                                 <textarea name="Content" id="Content" class="form-control" rows="5"></textarea>
                             </div>
@@ -190,9 +190,13 @@
 
 
                                     var isDisabled = this.commentsService.CanCreate(user) ? string.Empty : "disabled";
-                                    <button href="#comments" class="btn btn-success btn-circle text-uppercase" type="submit" id="submitComment" @isDisabled><span class="glyphicon glyphicon-send"></span> Submmit comment</button>
+                                    <button href="#comments" class="btn btn-success btn-circle text-uppercase" type="submit" id="submitComment" @isDisabled><span class="glyphicon glyphicon-send"></span> Създай коментар</button>
                                 }
 
+                            </div>
+                            <div class="alert alert-success" id="success-alert">
+                                <button type="button" class="close" data-dismiss="alert">x</button>
+                                <strong>Успешно! </strong> Добавихте нов коментар.
                             </div>
                         </div>
                     </form>
@@ -209,3 +213,14 @@
         }
     </script>
 }
+
+<script>
+    $(document).ready(function () {
+  $("#success-alert").hide();
+  $("#submitComment").click(function showAlert() {
+    $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
+      $("#success-alert").slideUp(500);
+    });
+  });
+});
+</script>

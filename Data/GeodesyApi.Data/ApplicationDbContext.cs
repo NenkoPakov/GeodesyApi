@@ -53,6 +53,8 @@
 
         public virtual DbSet<Project> Projects { get; set; }
 
+        public virtual DbSet<MaterialFiles> MaterialsFiles { get; set; }
+
         //public virtual DbSet<NewsCategory> NewsCategories { get; set; }
 
 
