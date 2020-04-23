@@ -8,10 +8,6 @@ namespace GeodesyApi.Data.Models
 {
     public class MaterialFiles : BaseDeletableModel<int>
     {
-        public MaterialFiles()
-        {
-            //this.MaterialUniqueString = uniqueString;
-        }
 
         [Required]
         public int MaterialId { get; set; }

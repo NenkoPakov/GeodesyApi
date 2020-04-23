@@ -25,7 +25,9 @@ namespace GeodesyApi.Services
 
         Material GetById(int materialId);
 
-        void DelateMaterialsByUser(string userId, int materialId);
+        Task DelateMaterialFiles(int materialId);
+
+        Task Delete(int materialId);
 
         Task<IDeletableEntityRepository<Material>> EditAsync(MaterialEditViewModel input, ApplicationUser user);
     }

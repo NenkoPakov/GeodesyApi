@@ -98,6 +98,9 @@ namespace GeodesyApi.Services
         public async Task<IDeletableEntityRepository<Material>> UploadAsync(MaterialUploadViewModel input, ApplicationUser user)
         {
             var material = AutoMapperConfig.MapperInstance.Map<Material>(input);
+
+            await this.MaterialsRepository.AddAsync(material);
+
             material.AuthorId = user.Id;
 
             var uploadResult = await this.Cloudinary.UploadMultipleAsync(input.Files);
@@ -115,7 +118,6 @@ namespace GeodesyApi.Services
                 await this.MaterialFilesRepository.AddAsync(file);
             }
 
-            await this.MaterialsRepository.AddAsync(material);
             await this.MaterialsRepository.SaveChangesAsync();
             await this.MaterialFilesRepository.SaveChangesAsync();
             user.Materials.Add(material);
@@ -134,16 +136,14 @@ namespace GeodesyApi.Services
 
         public async Task<IDeletableEntityRepository<Material>> EditAsync(MaterialEditViewModel input, ApplicationUser user)
         {
-            this.DelateMaterialsByUser(user.Id, input.Id);
-
+            this.DelateMaterialFiles(input.Id);
+            
             var material = this.GetById(input.Id);
+
             material.Title = input.Title;
             material.Description = input.SanitizedDescription;
-            material.ModifiedOn = DateTime.UtcNow;
 
             var uploadResult = await this.Cloudinary.UploadMultipleAsync(input.Files);
-
-
             foreach (var fileUrl in uploadResult)
             {
                 var file = new MaterialFiles
@@ -154,6 +154,7 @@ namespace GeodesyApi.Services
                     FileUrl = fileUrl,
                 };
 
+                material.FilesUrls.Add(file);
                 await this.MaterialFilesRepository.AddAsync(file);
             }
 
@@ -164,11 +165,11 @@ namespace GeodesyApi.Services
             return this.MaterialsRepository;
         }
 
-        public void DelateMaterialsByUser(string userId, int materialId)
+        public async Task DelateMaterialFiles(int materialId)
         {
             var materials = this.MaterialsRepository
                 .AllAsNoTracking()
-                .Where(u => u.Id == materialId)
+                .Where(m => m.Id == materialId)
                 .Select(m => m.FilesUrls)
                 .FirstOrDefault();
 
@@ -176,18 +177,34 @@ namespace GeodesyApi.Services
             {
                 this.MaterialFilesRepository.Delete(material);
             }
+
+            //await this.MaterialFilesRepository.SaveChangesAsync();
+        }
+
+        public async Task Delete(int materialId)
+        {
+            var material = this.MaterialsRepository
+                .AllAsNoTracking()
+                .Where(u => u.Id == materialId)
+                .FirstOrDefault();
+
+            material.IsDeleted = true;
+            material.ModifiedOn = DateTime.UtcNow;
+            material.DeletedOn = DateTime.UtcNow;
+
+            //this.MaterialsRepository.Delete(material);
         }
 
         private IQueryable<Material> GetByCategoty(MaterialsType? materialsCategoty)
         {
-            return this.MaterialsRepository.All()
+            return this.MaterialsRepository.AllAsNoTracking()
                 .Where(c => c.Category == materialsCategoty)
                 .OrderByDescending(x => x.CreatedOn);
         }
 
         private IQueryable<Material> GetAll()
         {
-            return this.MaterialsRepository.All()
+            return this.MaterialsRepository.AllAsNoTracking()
                 .OrderByDescending(x => x.CreatedOn);
         }
 

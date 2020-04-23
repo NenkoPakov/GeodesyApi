@@ -111,5 +111,12 @@ namespace GeodesyApi.Web.Controllers
             return this.RedirectToAction("GetMaterials");
         }
 
+        public IActionResult Delete(int id)
+        {
+            this.MaterialsService.Delete(id);
+
+            return this.RedirectToAction("GetMaterials");
+        }
+
     }
 }

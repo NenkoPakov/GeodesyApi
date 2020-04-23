@@ -2,7 +2,7 @@
 <!-- PAGE -->
 <section class="page materials">
     <aside>
-        <h1><img src="~/img/icons/mats.svg" alt="" title=""> Дисциплини и материали</h1>
+        <h2><img src="~/img/icons/mats.svg" alt="" title=""> Дисциплини и материали</h2>
         <a href="#" id="show" class="show-nav">&#9776;</a>
         <div class="sidebar-buttons">
             <a asp-controller="Materials" asp-action="Upload" title="" class="new-project">Създай</a>
@@ -47,9 +47,8 @@
                         <h5>Категория: <em>@material.Category</em></h5>
                         <p>@material.ShortDescription</p>
                     </a>
-
                     <div class="buttons_list">
-                        <a id="pdf-selector" title="" onclick="myFunction('@material.FilesUrlsFileUrl.FirstOrDefault()')">виж повече</a>
+                        <a id="pdf-selector" title="" onclick="myFunction(@(@"[""")@String.Join(@""",""", material.FilesUrlsFileUrl)@(@"""]"),@material.Id)">виж повече</a>
 
 
                         @foreach (var url in @material.FilesUrlsFileUrl)
@@ -60,13 +59,13 @@
                             <a id="link" class="link-@material.Id.ToString()" href="@urlForDownload" hidden></a>
                         }
 
-                        <a class='download_delayed' onclick="sendData(@material.Id.ToString())" href="">Свали</a><br />
+                        <a class='download_delayed' onclick="sendData(@material.Id.ToString())" href="">Свали всички</a><br />
 
 
                         <!-- If current user is author of this material -->
 
-                        <a href="#" title="" class="reg_u">изтриване</a>
-                        <a asp-route="default" asp-route-controller="Materials" asp-route-action="Edit" asp-route-id="@material.Id" asp title="" class="reg_u">редактиране</a>
+                        <a asp-route="default" asp-route-controller="Materials" asp-route-action="Delete" asp-route-id="@material.Id" onclick="ConirmDelete()" class="reg_u">изтриване</a>
+                        <a asp-route="default" asp-route-controller="Materials" asp-route-action="Edit" asp-route-id="@material.Id"  title="" class="reg_u">редактиране</a>
                     </div>
 
                 </div><!-- .list -->
@@ -128,9 +127,11 @@
             <a href="#" title="Към всички материали" class="close">&times; Към всички материали</a>
             <div class="right-column2">
                 <div class="container-fluid">
-                    <iframe id="pdf-previewer" src="" style="width:100%; height:80vh;"></iframe>
+                    <iframe id="pdf-previewer" src="https://res.cloudinary.com/dv3tfjvk0/image/upload/v1587594558/Preview_doxwoi.pdf" style="width:100%; height:80vh;"></iframe>
 
-                    <a class="btn btn-success" id="pdf-previewer-download" href="#" title="" download>сваляне</a>
+                    <a class="btn btn-success" id="pdf-previewer-download" href="#" title="" disabled>Сваляне</a>
+                    <button class="btn btn-info" id="pdf-previewer-next" onclick="viewNextFile()" title="" disabled>Следващ</button>
+                    <button class="btn btn-danger" id="pdf-previewer-previous" onclick="viewPreviousFile()" title="" disabled>Предишен</button>
                 </div>
             </div>
         </div>
@@ -193,10 +194,70 @@
 </script>
 
 <script>
-    function myFunction(e) {
-        document.getElementById("pdf-previewer").setAttribute("src", e.replace("http://", "https://"));
-        document.getElementById("pdf-previewer-download").setAttribute("href", e.replace("http://", "https://"));
+    var materialUrls;
+    var all;
+    var current = -1;
+    var materialId;
+
+    function myFunction(urls, id) {
+        all = urls.length;
+        materialId = id;
+        materialUrls = urls;
+
+        viewNextFile()
     }
+
+    function viewNextFile() {
+        if (all == 1) {
+             current = current + 1;
+
+                document.getElementById("pdf-previewer-download").setAttribute('download', "download");
+                document.getElementById("pdf-previewer-download").setAttribute("href", materialUrls[current].replace("http://", "https://").replace("res.cloudinary.com/dv3tfjvk0/image/upload/", "res.cloudinary.com/dv3tfjvk0/image/upload/fl_attachment/"));
+            document.getElementById("pdf-previewer").setAttribute("src", materialUrls[current].replace("http://", "https://"));
+        }
+        else {
+            if ((all) == current) {
+                document.getElementById("pdf-previewer-next").setAttribute("disabled", "disabled");
+            }
+            else {
+                current = current + 1;
+
+                document.getElementById("pdf-previewer-download").setAttribute('download', "download");
+                document.getElementById("pdf-previewer-download").setAttribute("href", materialUrls[current].replace("http://", "https://").replace("res.cloudinary.com/dv3tfjvk0/image/upload/", "res.cloudinary.com/dv3tfjvk0/image/upload/fl_attachment/"));
+                document.getElementById("pdf-previewer-download").removeAttribute("disabled");
+                document.getElementById("pdf-previewer").setAttribute("src", materialUrls[current].replace("http://", "https://"));
+                document.getElementById("pdf-previewer-next").removeAttribute("disabled");
+                if (current > 0) {
+                    document.getElementById("pdf-previewer-previous").removeAttribute("disabled");
+                }
+            }
+        }
+
+    }
+
+    function viewPreviousFile() {
+        if (0 == current) {
+            document.getElementById("pdf-previewer-previous").setAttribute("disabled", "disabled");
+        }
+        else {
+
+            current = current - 1;
+            document.getElementById("pdf-previewer-download").setAttribute("href", materialUrls[current].replace("http://", "https://").replace("res.cloudinary.com/dv3tfjvk0/image/upload/", "res.cloudinary.com/dv3tfjvk0/image/upload/fl_attachment/"));
+            document.getElementById("pdf-previewer").setAttribute("src", materialUrls[current].replace("http://", "https://"));
+            document.getElementById("pdf-previewer-next").removeAttribute("disabled");
+
+
+        }
+    }
+
+
+
+</script>
+
+<script>
+    function ConirmDelete() {
+  confirm("Сигурни ли сте, че искате да го изтриете!");
+}
 </script>
 
 
