@@ -7,7 +7,7 @@ using System.Text;
 
 namespace GeodesyApi.Web.ViewModels.Comments
 {
-    public class CommentInNewsViewModel:IMapFrom<Comment>
+    public class CommentInNewsViewModel : IMapFrom<Comment>
     {
         public string Content { get; set; }
 

@@ -52,7 +52,7 @@ namespace GeodesyApi.Services
 
             foreach (var material in materials)
             {
-                var materialUrls = this.MaterialFilesRepository.AllAsNoTracking()
+                var materialUrls = this.MaterialFilesRepository.All()
                  .Where(x => x.MaterialId == material.Id)
                  .Select(x => x.FileUrl)
                  .ToList();
@@ -127,7 +127,7 @@ namespace GeodesyApi.Services
 
         public Material GetById(int materialId)
         {
-            var material = this.MaterialsRepository.AllAsNoTracking()
+            var material = this.MaterialsRepository.All()
                 .Where(n => n.Id == materialId)
                 .FirstOrDefault();
 
@@ -136,7 +136,7 @@ namespace GeodesyApi.Services
 
         public async Task<IDeletableEntityRepository<Material>> EditAsync(MaterialEditViewModel input, ApplicationUser user)
         {
-            this.DelateMaterialFiles(input.Id);
+           await this.DelateMaterialFiles(input.Id);
             
             var material = this.GetById(input.Id);
 
@@ -160,6 +160,7 @@ namespace GeodesyApi.Services
 
             this.MaterialsRepository.Update(material);
             await this.MaterialsRepository.SaveChangesAsync();
+            await this.MaterialFilesRepository.SaveChangesAsync();
             user.Materials.Add(material);
 
             return this.MaterialsRepository;
@@ -167,44 +168,46 @@ namespace GeodesyApi.Services
 
         public async Task DelateMaterialFiles(int materialId)
         {
-            var materials = this.MaterialsRepository
-                .AllAsNoTracking()
-                .Where(m => m.Id == materialId)
-                .Select(m => m.FilesUrls)
-                .FirstOrDefault();
+            var materials = this.MaterialFilesRepository
+                .All()
+                .Where(m => m.MaterialId == materialId);
 
             foreach (var material in materials)
             {
                 this.MaterialFilesRepository.Delete(material);
             }
 
-            //await this.MaterialFilesRepository.SaveChangesAsync();
+            await this.MaterialFilesRepository.SaveChangesAsync();
         }
 
-        public async Task Delete(int materialId)
+
+
+        public async Task<Material> DeleteAsync(int materialId)
         {
             var material = this.MaterialsRepository
-                .AllAsNoTracking()
+                .All()
                 .Where(u => u.Id == materialId)
                 .FirstOrDefault();
 
-            material.IsDeleted = true;
-            material.ModifiedOn = DateTime.UtcNow;
-            material.DeletedOn = DateTime.UtcNow;
+            await this.DelateMaterialFiles(materialId);
 
-            //this.MaterialsRepository.Delete(material);
+            this.MaterialsRepository.Delete(material);
+
+            await this.MaterialsRepository.SaveChangesAsync();
+
+            return material;
         }
 
         private IQueryable<Material> GetByCategoty(MaterialsType? materialsCategoty)
         {
-            return this.MaterialsRepository.AllAsNoTracking()
+            return this.MaterialsRepository.All()
                 .Where(c => c.Category == materialsCategoty)
                 .OrderByDescending(x => x.CreatedOn);
         }
 
         private IQueryable<Material> GetAll()
         {
-            return this.MaterialsRepository.AllAsNoTracking()
+            return this.MaterialsRepository.All()
                 .OrderByDescending(x => x.CreatedOn);
         }
 

@@ -13,9 +13,7 @@
         private readonly SendGridClient client;
 
         public SendGridEmailSender()
-        {
-            Environment.SetEnvironmentVariable("SEND_GRID", "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");
-
+        { 
             var apiKey = Environment.GetEnvironmentVariable("SEND_GRID");
 
             this.client = new SendGridClient(apiKey);

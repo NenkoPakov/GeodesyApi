@@ -66,7 +66,7 @@ namespace GeodesyApi.Web.Controllers
         [Route("News/{category}/{page?}")]
         public async Task<IActionResult> GetByCategory(NewsGroupType? category, int page = 1)
         {
-            if (category==null)
+            if (category == null)
             {
                 return this.BadRequest();
             }
@@ -94,8 +94,34 @@ namespace GeodesyApi.Web.Controllers
         {
             var news = this.NewsService.GetById(newsId);
 
+            var newsViewModel = AutoMapperConfig.MapperInstance.Map<GetNewsViewModel>(news);
 
-            return this.View("Details", news);
+            return this.View("Details", newsViewModel);
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var material = this.NewsService.GetById(id);
+            var newsViewModel = AutoMapperConfig.MapperInstance.Map<EditNewsViewModel>(material);
+
+            return this.View(newsViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditNewsViewModel input)
+        {
+            var user = await this.UserManager.GetUserAsync(this.User);
+
+            var result = await this.NewsService.EditAsync(input, user);
+
+            return this.RedirectToAction("GetNews");
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var deletedNews = await this.NewsService.DeleteAsync(id);
+
+            return this.RedirectToAction("GetNews");
         }
 
         //public async Task<IActionResult> Edit(int newsId)

@@ -27,6 +27,13 @@
                           {
                               new RolesSeeder(),
                               new SettingsSeeder(),
+                              new UsersSeeder(),
+                              new MaterialsSeeder(),
+                              new MaterialsFilesSeeder(),
+                              new NewsSeeder(),
+                              new CommentsSeeder(),
+                              new ChiledCommentsSeed(),
+                              new FillAllNavigationPropertiesSeeder(),
                           };
 
             foreach (var seeder in seeders)

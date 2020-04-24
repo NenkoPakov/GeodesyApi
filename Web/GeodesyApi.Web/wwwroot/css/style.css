@@ -11390,7 +11390,7 @@ h6 {padding:0; margin:0; font-size:1rem; font-weight:400; color:#4c4c4c;}
 
 .main-contact {
     width: 25%;
-    position: absolute;
+    position: relative;
     padding: 2.5rem 1.5rem 6.5rem 1.5rem;
     border-radius: 10px;
     color: #ffffff;
@@ -11780,10 +11780,11 @@ textarea {
     padding-left: .5rem;
 }
 
-
-
-
-
+.content-details {
+    max-width: calc(100% - 500px);
+    margin: auto;
+    justify-content: center
+}
 
 .box-image{
     height: 500px;

@@ -133,7 +133,7 @@ namespace GeodesyApi.Services.Data.Tests
 
 
             this.Cloydinary = new Mock<ICloudinaryService>();
-            this.NewsService = new NewsService(this.NewsRepository.Object, this.UserManager.Object, Cloydinary.Object);
+           // this.NewsService = new NewsService(this.NewsRepository.Object, this.UserManager.Object, Cloydinary.Object);
         }
 
 

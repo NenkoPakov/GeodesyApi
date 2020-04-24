@@ -19,7 +19,7 @@ namespace GeodesyApi.Web.ViewModels.News
         [Required(ErrorMessage = "Съдържанието е задължително и трябва да е между 2 и 500 символа")]
         [MinLength(2)]
         [MaxLength(500)]
-        [Display(Name = "Заглавие")]
+        [Display(Name = "Съдържание")]
         public string Content { get; set; }
 
         [Required(ErrorMessage = "Изображението е задължително ")]

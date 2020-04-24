@@ -13,5 +13,7 @@ namespace GeodesyApi.Services
         Task Create(CommentViewModel input, ApplicationUser user);
 
         bool CanCreate(string userId);
+
+        ICollection<Comment> GetAllByNewsId(int newsId);
     }
 }

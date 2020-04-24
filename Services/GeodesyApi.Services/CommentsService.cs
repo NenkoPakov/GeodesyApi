@@ -55,5 +55,13 @@ namespace GeodesyApi.Services
 
             Thread.Sleep(1500);
         }
+
+        public  ICollection<Comment> GetAllByNewsId(int newsId)
+        {
+            var comments= this.CommentsRepository.AllAsNoTracking()
+                .Where(x => x.NewsId == newsId).ToList();
+
+            return comments;
+        }
     }
 }

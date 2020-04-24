@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Http;
+using GeodesyApi.Services;
 
 namespace GeodesyApi.Web.Areas.Identity.Pages.Account
 {
@@ -29,12 +31,15 @@ namespace GeodesyApi.Web.Areas.Identity.Pages.Account
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            GeodesyApi.Services.Messaging.IEmailSender emailSender)
+            GeodesyApi.Services.Messaging.IEmailSender emailSender,
+            ICloudinaryService cloudinary)
+
         {
             this.UserManager = userManager;
             this.SignInManager = signInManager;
             this.Logger = logger;
             this.EmailSender = emailSender;
+            this.Cloudinary = cloudinary;
         }
 
         [BindProperty]
@@ -43,9 +48,13 @@ namespace GeodesyApi.Web.Areas.Identity.Pages.Account
         public string ReturnUrl { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
+        public ICloudinaryService Cloudinary { get; }
 
         public class InputModel
         {
+            [Display(Name = "Снимка")]
+            public IFormFile Picture { get; set; }
+
             [Required(ErrorMessage = "Потребителското име е задължително и трябва да е между 2 и 50 символа")]
             [MinLength(2)]
             [MaxLength(50)]
@@ -99,13 +108,13 @@ namespace GeodesyApi.Web.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+            returnUrl = returnUrl ?? this.Url.Content("~/");
             this.ExternalLogins = (await this.SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (this.ModelState.IsValid)
-            {
+            { 
                 var user = new ApplicationUser
                 {
-                    UserName = this.Input.Email,
+                    UserName = this.Input.Username,
                     FirstName = this.Input.FirstName,
                     LastName = this.Input.LastName,
                     Email = this.Input.Email,

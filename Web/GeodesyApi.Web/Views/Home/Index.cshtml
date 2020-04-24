@@ -60,20 +60,20 @@
             </a>
         </div>
         <div class="button">
-            <a href="#" title="">
+            <a href="http://localhost:1234/" title="">
                 <img src="~/img/icons/gis.svg" alt="" title=""> ГИС<br>
                 <span>Web базирана ГИС за района на БАБ, о. Ливингстон с данни за проектите от Българските антарктически експедиции</span>
             </a>
         </div>
         <div class="button">
-            <a href="#" title="">
+            <a  asp-controller="Users" asp-action="Register"  title="">
                 <img src="~/img/icons/projects.svg" alt="" title=""> Проекти<br>
                 <span>Информация за проектите, провеждани на о. Ливингстън - екипи, резултати, връзка с ГИС</span>
             </a>
         </div>
 
         <div class="button">
-            <a asp-controller="Users" asp-action="Register" title="">
+            <a asp-controller="Projects" asp-action="All" title="">
                 <img src="~/img/icons/reg.svg" alt="" title=""> Регистрация<br>
                 <span>Съдържание на данни, резултати и публикации, свързани с Българските антарктически експедиции.</span>
             </a>
@@ -124,13 +124,13 @@
 
         <div class="articles">
             <article>
-                <div class="contact-icon"><img src="img/icons/address.svg" alt="" title=""></div>
+                <div class="contact-icon"><img src="~/img/icons/address.svg" alt="" title=""></div>
                 <div class="personal-info">
-                    София 1164,<br>бул. Христо Смирненски № 1
+                    <a asp-controller="Contacts" asp-action="Contact">София 1164,<br>бул. Христо Смирненски № 1</a>
                 </div>
             </article>
             <article>
-                <div class="contact-icon"><img src="img/icons/personal.svg" alt="" title=""></div>
+                <div class="contact-icon"><img src="~/img/icons/personal.svg" alt="" title=""></div>
                 <div class="personal-info">
                     <strong>проф. д-р инж. Елена Пенева-Златкова</strong><br>
                     Декан<br>
@@ -140,7 +140,7 @@
                 </div>
             </article>
             <article>
-                <div class="contact-icon"><img src="img/icons/personal.svg" alt="" title=""></div>
+                <div class="contact-icon"><img src="~/img/icons/personal.svg" alt="" title=""></div>
                 <div class="personal-info">
                     <strong>доц. д-р инж. Иван Кунчев</strong><br>
                     Зам.-декан по учебната дейност<br>
@@ -150,7 +150,7 @@
                 </div>
             </article>
             <article>
-                <div class="contact-icon"><img src="img/icons/personal.svg" alt="" title=""></div>
+                <div class="contact-icon"><img src="~/img/icons/personal.svg" alt="" title=""></div>
                 <div class="personal-info">
                     <strong>мат. Албена Владимирова</strong><br>
                     Инспектор на факултет<br>

@@ -22,7 +22,7 @@ namespace GeodesyApi.Web.ViewModels.Materials
         [Required(ErrorMessage = "Описание е задължително и трябва да е между 2 и 500 символа")]
         [MinLength(2)]
         [MaxLength(500)]
-        [Display(Name = "Заглавие")]
+        [Display(Name = "Описание")]
         public string Description { get; set; }
 
         public string SanitizedDescription => new HtmlSanitizer().Sanitize(this.Description);

@@ -5,7 +5,7 @@
 <!-- PAGE -->
     <section class="page news">
         <aside>
-            <h1><img src="~/img/icons/news.svg" alt="" title=""> Новини и събития</h1>
+            <a asp-route="NumberOfNewsPages" style="text-align:center"><h1><img src="~/img/icons/news.svg" alt="" title="">Създаване на<br/>новини и събития</h1></a>
             <a href="#" id="show" class="show-nav">&#9776;</a>
             <div class="sidebar-nav" id="pushleft">
                 <a href="#" id="hide" class="hide-nav">&times;</a>
@@ -59,37 +59,42 @@
 
         <div class="content">
             <div class="news-container">
-                <article>
-                    <form method="post" asp-controller="News" asp-action="Create" enctype="multipart/form-data">
-                        <div>
-                            <label asp-for="Title"></label>
-                            <input asp-for="Title" class="input" />
-                            <span asp-validation-for="Title" class="text-danger"></span>
-                        </div>
+                    <div class="col-md-6 offset-md-3 mt-5">
+                        <form method="post" asp-controller="News" asp-action="Create" enctype="multipart/form-data">
+                            <div>
+                                <label asp-for="Title"></label>
+                                <input asp-for="Title" class="input" />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
 
-                        <div>
-                            <label asp-for="Content"></label>
-                            <textarea asp-for="Content" class="form-control"></textarea>
-                            <span asp-validation-for="Content" class="text-danger"></span>
-                        </div>
+                            <div>
+                                <label asp-for="Content"></label>
+                                <textarea asp-for="Content" class="form-control"></textarea>
+                                <span asp-validation-for="Content" class="text-danger"></span>
+                            </div>
 
-                        <br />
+                            <br />
 
-                        <div>
-                            <label asp-for="Category" class="dropdown-item">@Html.DropDownListFor(x => x.Category, @Html.GetEnumSelectList(typeof(GeodesyApi.Data.Models.Enums.NewsType)), new { @class = "form-control" })</label>
+                            <div>
+                                <label asp-for="Category"></label>
+                                <label asp-for="Category" class="dropdown-item">@Html.DropDownListFor(x => x.Category, @Html.GetEnumSelectList(typeof(GeodesyApi.Data.Models.Enums.NewsType)), new { @class = "form-control" })</label>
+                                <span asp-validation-for="Category" class="text-danger"></span>
+                            </div>
+                            <div>
+                                <label asp-for="Group"></label>
+                                <label asp-for="Group" class="dropdown-item">@Html.DropDownListFor(x => x.Group, @Html.GetEnumSelectList(typeof(GeodesyApi.Data.Models.Enums.NewsGroupType)), new { @class = "form-control" })</label>
+                                <span asp-validation-for="Group" class="text-danger"></span>
+                            </div>
+                            <hr>
+                            <div class="form-group mt-3">
+                                <label class="mr-2">Прикачи изображение:</label>
+                                <input asp-for="Image" type="file" name="Image" value="Прикачи изображение">
+                                <span asp-validation-for="Image" class="text-danger"></span>
+                            </div>
+                            <hr>
+                            <button type="submit" class="btn btn-primary">Създай</button>
+                        </form>
                         </div>
-                        <div>
-                            <label asp-for="Group" class="dropdown-item">@Html.DropDownListFor(x => x.Group, @Html.GetEnumSelectList(typeof(GeodesyApi.Data.Models.Enums.NewsGroupType)), new { @class = "form-control" })</label>
-                        </div>
-                        <hr>
-                        <div class="form-group mt-3">
-                            <label class="mr-2">Прикачи изображение:</label>
-                            <input asp-for="Image" type="file" name="Image" value="@@"..\wwwroot\img\newsDefaultImage.jpg"">
-                        </div>
-                        <hr>
-                        <button type="submit" class="btn btn-primary">Запази</button>
-                    </form>
-                </article>
             </div>
         </div>
         </div>
@@ -97,7 +102,7 @@
     </section><!-- PAGE -->
 
 
-<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="~/js/jquery.min.js" type="text/javascript"></script>
 <script>
         $(document).ready(function () {
             /* the Responsive menu script */

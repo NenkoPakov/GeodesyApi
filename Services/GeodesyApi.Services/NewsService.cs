@@ -19,11 +19,12 @@ namespace GeodesyApi.Services
 {
     public class NewsService : INewsService
     {
-        public NewsService(IDeletableEntityRepository<News> newsRepository, IDeletableEntityRepository<ApplicationUser> userRepository, ICloudinaryService cloudinary)
+        public NewsService(IDeletableEntityRepository<News> newsRepository, IDeletableEntityRepository<ApplicationUser> userRepository, ICommentsService commentsService,ICloudinaryService cloudinary)
         {
             this.Cloudinary = cloudinary;
             this.NewsRepository = newsRepository;
             this.UserRepository = userRepository;
+            this.CommentsService = commentsService;
         }
 
         public ICloudinaryService Cloudinary { get; }
@@ -33,6 +34,7 @@ namespace GeodesyApi.Services
         public IDeletableEntityRepository<News> NewsRepository { get; }
 
         public IDeletableEntityRepository<ApplicationUser> UserRepository { get; }
+        public ICommentsService CommentsService { get; }
 
         public async Task<News> CreateNews(CreateNewsViewModel input, ApplicationUser user)
         {
@@ -53,15 +55,13 @@ namespace GeodesyApi.Services
             return news;
         }
 
-        public GetNewsViewModel GetById(int newsId)
+        public News GetById(int newsId)
         {
-            var newsViewModel = new GetNewsViewModel();
+            var news = this.NewsRepository.All()
+                .Where(n => n.Id == newsId)
+                .FirstOrDefault();
 
-            var query = this.NewsRepository.All()
-                .Where(n => n.Id == newsId);
-
-
-            var news = query.To<GetNewsViewModel>().FirstOrDefault();
+            news.Comments=this.CommentsService.GetAllByNewsId(newsId);
 
             return news;
         }
@@ -114,7 +114,7 @@ namespace GeodesyApi.Services
 
         private IQueryable<News> GetAll()
         {
-            return this.NewsRepository.All()
+            return this.NewsRepository.AllAsNoTracking()
                 .OrderByDescending(x => x.CreatedOn);
         }
 
@@ -145,6 +145,34 @@ namespace GeodesyApi.Services
             newsViewModel.News = news;
 
             return newsViewModel;
+        }
+
+        public async Task<IDeletableEntityRepository<News>> EditAsync(EditNewsViewModel input, ApplicationUser user)
+        {
+            var uploadResult = await this.Cloudinary.UploadAsync(input.Image);
+
+            var news = AutoMapperConfig.MapperInstance.Map<News>(input);
+
+            news.ImageUrl = uploadResult;
+            news.User = user;
+            news.UserId = user.Id;
+
+            this.NewsRepository.Update(news);
+
+            await this.NewsRepository.SaveChangesAsync();
+            await this.UserRepository.SaveChangesAsync();
+
+            return this.NewsRepository;
+        }
+
+        public async Task<News> DeleteAsync(int newsId)
+        {
+            var news = this.GetById(newsId);
+
+            this.NewsRepository.Delete(news);
+            await this.NewsRepository.SaveChangesAsync();
+
+            return news;
         }
     }
 }

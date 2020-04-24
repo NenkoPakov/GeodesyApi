@@ -111,9 +111,9 @@ namespace GeodesyApi.Web.Controllers
             return this.RedirectToAction("GetMaterials");
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            this.MaterialsService.Delete(id);
+            var deletedNews = await this.MaterialsService.DeleteAsync(id);
 
             return this.RedirectToAction("GetMaterials");
         }

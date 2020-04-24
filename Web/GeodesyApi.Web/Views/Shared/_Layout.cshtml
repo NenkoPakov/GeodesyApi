@@ -42,12 +42,12 @@
                         <li><a asp-controller="Home" asp-action="Index" title=""><img src="~/img/icons/home.svg" alt="" title=""><br><span>Начало</span></a></li>
                         <li><a href="#" title=""><img src="~/img/icons/catalog-nav.svg" alt="" title=""><br><span>Каталог</span></a></li>
                         <li><a href="#" title=""><img src="~/img/icons/library-nav.svg" alt="" title=""><br><span>Библиотека</span></a></li>
-                        <li><a href="#" title=""><img src="~/img/icons/gis-nav.svg" alt="" title=""><br><span>ГИС</span></a></li>
-                        <li><a href="#" title=""><img src="~/img/icons/projects-nav.svg" alt="" title=""><br><span>Проекти</span></a></li>
+                        <li><a href="http://localhost:1234/" title=""><img src="~/img/icons/gis-nav.svg" alt="" title=""><br><span>ГИС</span></a></li>
+                        <li><a asp-controller="Projects" asp-action="All"  title=""><img src="~/img/icons/projects-nav.svg" alt="" title=""><br><span>Проекти</span></a></li>
                         <li><a href="#" title=""><img src="~/img/icons/tests-nav.svg" alt="" title=""><br><span>Проверка на знанията</span></a></li>
                         <li><a asp-route="NumberOfNewsPages" title=""><img src="~/img/icons/news-nav.svg" alt="" title=""><br><span>Новини и събития</span></a></li>
                         <li><a asp-route="NumberOfMaterialsPages" title=""><img src="~/img/icons/mats-nav.svg" alt="" title=""><br><span>Дисциплини и материали</span></a></li>
-                        <li><a href="#" title=""><img src="~/img/icons/contacts-nav.svg" alt="" title=""><br><span>Контакт</span></a></li>
+                        <li><a asp-controller="Contacts" asp-action="Contact"  title=""><img src="~/img/icons/contacts-nav.svg" alt="" title=""><br><span>Контакт</span></a></li>
                     </ul>
                 </div>
             </nav>
@@ -59,11 +59,11 @@
                 {
                     <li><a asp-area="Identity" asp-controller="Account" asp-action="Login" title=""><img src="~/img/icons/login-nav.svg" alt="" title="" asp-append-version="true"><br><span>Вход</span></a></li>
                     <li><a asp-area="Identity" asp-controller="Account" asp-action="Register" title=""><img src="~/img/icons/reg-nav.svg" alt="" title="" asp-append-version="true"><br><span>Регистрация</span></a></li>
-                }          
-                else       
-                {          
+                }
+                else
+                {
                     <li><a asp-area="Identity" asp-controller="Account" asp-action="Manage" title=""><img src="~/img/icons/user.svg" alt="" title="" asp-append-version="true"><br><span>Профил</span></a></li>
-                    <li><a  asp-controller="Users" asp-action="Logout" title=""><img src="~/img/icons/reg-nav.svg" alt="" title="" asp-append-version="true"><br><span>Изход</span></a></li>
+                    <li><a asp-controller="Users" asp-action="Logout" title=""><img src="~/img/icons/logout-nav.svg" alt="" title="" asp-append-version="true"><br><span>Изход</span></a></li>
                 }
             </ul>
         </div>
@@ -77,9 +77,21 @@
 
     @this.RenderSection("Scripts", required: false)
 
-    <footer>
-        Български антарктически институт, @DateTime.Now.Year
-    </footer><!-- FOOTER -->
+<footer>
+    <table style="width:100%">
+        <tr>
+            <td style="float:left">
+                <a asp-controller="Home" asp-action="Privacy" style="float:left">Политика на сайта</a>
+            </td>
+            <td style="float:none">
+                Български антарктически институт, @DateTime.Now.Year
+            </td>
+            <td style="float:right">
+                <a href="https://github.com/NenkoPakov/GeodesyApi" style="float:right">GitHub</a>
+            </td>
+        </tr>
+    </table>
+</footer><!-- FOOTER -->
 
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>

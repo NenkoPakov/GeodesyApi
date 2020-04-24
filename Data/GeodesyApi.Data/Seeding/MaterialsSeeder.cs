@@ -1,4 +1,6 @@
 ﻿using GeodesyApi.Common;
+using GeodesyApi.Data.Models;
+using GeodesyApi.Data.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,15 +19,33 @@ namespace GeodesyApi.Data.Seeding
                 return;
             }
 
-            foreach (string file in Directory.EnumerateFiles(GlobalConstants.FilesFolderPath))
+            var title = "Equal title for each material!";
+            var description = "Dispatched entreaties boisterous say why stimulated. Certain forbade picture now prevent carried she get see sitting. Up twenty limits as months. Inhabit so perhaps of in to certain. Sex excuse chatty was seemed warmth. Nay add far few immediate sweetness earnestly dejection. ";
+            var random = new Random();
+            var materials = new List<Material>();
+
+            for (int i = 0; i < 20; i++)
             {
-                var contents = await File.ReadAllBytesAsync(file);
-                
+                var authorId = dbContext.ApplicationUsers
+                          .Select(u => u.Id)
+                          .Skip(random.Next(0, 2))
+                          .FirstOrDefault();
 
+                var material = new Material
+                {
+                    AuthorId = authorId,
+                    Category = (MaterialsType)random.Next(1, 9),
+                    Description = description,
+                    Title = title,
+                    FilesUrls = dbContext.MaterialsFiles
+                    .Where(f => f.UserId == authorId)
+                              .ToList(),
+                };
 
+                materials.Add(material);
             }
 
-            //var materials = new List<>
+            dbContext.AddRange(materials);
         }
     }
 }

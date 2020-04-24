@@ -11,5 +11,6 @@ namespace GeodesyApi.Services
         Task<string> UploadAsync(IFormFile file);
 
         Task<ICollection<string>> UploadMultipleAsync(ICollection<IFormFile> files);
+
     }
 }

@@ -31,6 +31,6 @@ namespace GeodesyApi.Web.ViewModels.News
 
         public string ImageUrl { get; set; }
 
-        public virtual IEnumerable<NewsCommentViewModel> Comments { get; set; }
+        public virtual ICollection<NewsCommentViewModel> Comments { get; set; }
     }
 }

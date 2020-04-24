@@ -41,7 +41,7 @@
 
                         <li class="media">
                             <a class="pull-left" href="#">
-                                <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/dancounsell/128.jpg" alt="profile">
+                                <img class="media-object img-circle" src="@comment.UserPictureUrl" alt="profile">
                             </a>
                             <div class="media-body">
                                 <div class="well well-lg">
@@ -86,7 +86,7 @@
         @foreach (var comment in comments)
         {
 
-                    var countOfChildComments = this.Model.Comments.Count(x => x.ParentId == comment.Id);
+            var countOfChildComments = this.Model.Comments.Count(x => x.ParentId == comment.Id);
 
             <div class="collapse" id="replyOne-@parentId.ToString()">
                 <ul class="media-body">
@@ -125,82 +125,81 @@
 
 <link rel="stylesheet" href="~/css/bootstrap.css" asp-append-version="true" />
 
-<div class="container">
+<div class="content-details">
 
-    <div class="col-sm-8 blog-main d-block mx-auto">
-        <div class="blog-post  text-justify">
-            <div class="box-image align-items-center">
-                <img class="news-image " src="@Model.ImageUrl" />
+    <div class="blog-post  text-justify">
+        <div class="box-image align-items-center">
+            <img class="news-image " src="@Model.ImageUrl" />
+        </div>
+        <a asp-route="default" asp-route-controller="News" asp-route-action="Delete" asp-route-id="@Model.Id" onclick="ConirmDelete()" class="btn-danger" style="float:left">изтриване</a>
+        <a asp-route="default" asp-route-controller="News" asp-route-action="Edit" asp-route-id="@Model.Id" title="" class="btn-primary" style="float:right">редактиране</a>
+
+        <h2 class="blog-post-title text-center">@Model.Title</h2>
+        <p class="blog-post-meta">@Model.CreatedOn by <a href="#">@Model.UserUserName</a></p>
+        <hr>
+        <p>@Html.Raw(Model.SanitizedContent)</p>
+
+    </div>
+
+
+    <!------ Include the above in your HEAD tag ---------->
+
+    <script src="/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: "textarea",
+            plugins: ["image paste table link code media"]
+        });
+    </script>
+
+
+
+
+    <div class="page-header">
+        <h3 class="reviews">Comments</h3>
+    </div>
+
+
+
+
+
+
+    <div class="comment-tabs">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item"><a href="#comments" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Коментари</h4></a></li>
+            <li class="nav-item"><a href="#add-comment" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Добави коментар</h4></a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane" id="comments">
+                @{DisplayComments();}
             </div>
-
-
-            <h2 class="blog-post-title text-center">@Model.Title</h2>
-            <p class="blog-post-meta">@Model.CreatedOn by <a href="#">@Model.UserUserName</a></p>
-            <hr>
-            <p>@Html.Raw(Model.SanitizedContent)</p>
-
-        </div>
-
-
-        <!------ Include the above in your HEAD tag ---------->
-
-        <script src="/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
-        <script type="text/javascript">
-            tinymce.init({
-                selector: "textarea",
-                plugins: ["image paste table link code media"]
-            });
-        </script>
-
-
-
-
-        <div class="page-header">
-            <h3 class="reviews">Comments</h3>
-        </div>
-
-
-
-
-
-
-        <div class="comment-tabs">
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item"><a href="#comments" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Коментари</h4></a></li>
-                <li class="nav-item"><a href="#add-comment" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Добави коментар</h4></a></li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane" id="comments">
-                    @{DisplayComments();}
-                </div>
-                <div class="tab-pane" id="add-comment">
-                    <form asp-controller="Comments" asp-action="Create" method="post" class="form-horizontal" id="commentForm" role="form" enctype="multipart/form-data">
-                        <input type="hidden" name="NewsId" value="@this.Model.Id" />
-                        <input type="hidden" name="ParentId" id="ParentId" value="" />
-                        <div class="form-group">
-                            <label for="email" class="col-sm-2 control-label">Коментар</label>
-                            <div class="col-sm-10">
-                                <textarea name="Content" id="Content" class="form-control" rows="5"></textarea>
-                            </div>
+            <div class="tab-pane" id="add-comment">
+                <form asp-controller="Comments" asp-action="Create" method="post" class="form-horizontal" id="commentForm" role="form" enctype="multipart/form-data">
+                    <input type="hidden" name="NewsId" value="@this.Model.Id" />
+                    <input type="hidden" name="ParentId" id="ParentId" value="" />
+                    <div class="form-group">
+                        <label for="email" class="col-sm-2 control-label">Коментар</label>
+                        <div class="col-sm-10">
+                            <textarea name="Content" id="Content" class="form-control" rows="5"></textarea>
                         </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
 
-                                @{
+                            @{
 
 
-                                    var isDisabled = this.commentsService.CanCreate(user) ? string.Empty : "disabled";
-                                    <button href="#comments" class="btn btn-success btn-circle text-uppercase" type="submit" id="submitComment" @isDisabled><span class="glyphicon glyphicon-send"></span> Създай коментар</button>
-                                }
+                                var isDisabled = this.commentsService.CanCreate(user) ? string.Empty : "disabled";
+                                <button href="#comments" class="btn btn-success btn-circle text-uppercase" type="submit" id="submitComment" @isDisabled><span class="glyphicon glyphicon-send"></span> Създай коментар</button>
+                            }
 
-                            </div>
-                            <div class="alert alert-success" id="success-alert">
-                                <button type="button" class="close" data-dismiss="alert">x</button>
-                                <strong>Успешно! </strong> Добавихте нов коментар.
-                            </div>
                         </div>
-                    </form>
-                </div>
+                        <div class="alert alert-success" id="success-alert">
+                            <button type="button" class="close" data-dismiss="alert">x</button>
+                            <strong>Успешно! </strong> Добавихте нов коментар.
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -216,11 +215,11 @@
 
 <script>
     $(document).ready(function () {
-  $("#success-alert").hide();
-  $("#submitComment").click(function showAlert() {
-    $("#success-alert").fadeTo(2000, 500).slideUp(500, function() {
-      $("#success-alert").slideUp(500);
+        $("#success-alert").hide();
+        $("#submitComment").click(function showAlert() {
+            $("#success-alert").fadeTo(2000, 500).slideUp(500, function () {
+                $("#success-alert").slideUp(500);
+            });
+        });
     });
-  });
-});
 </script>

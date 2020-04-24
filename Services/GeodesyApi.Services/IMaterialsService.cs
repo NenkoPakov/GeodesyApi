@@ -27,7 +27,7 @@ namespace GeodesyApi.Services
 
         Task DelateMaterialFiles(int materialId);
 
-        Task Delete(int materialId);
+        Task<Material> DeleteAsync(int materialId);
 
         Task<IDeletableEntityRepository<Material>> EditAsync(MaterialEditViewModel input, ApplicationUser user);
     }

@@ -32,21 +32,23 @@ namespace GeodesyApi.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
-        
         [Range(0, 10000)]
         public int? FacultyNumber { get; set; }
 
         [Required]
         [MinLength(2)]
         [MaxLength(50)]
-        [Display(Name = "First Name")]
+        [Display(Name = "Собствено име")]
         public string FirstName { get; set; }
 
         [Required]
         [MinLength(2)]
         [MaxLength(50)]
-        [Display(Name = "Last Name")]
+        [Display(Name = "Фамилия")]
         public string LastName { get; set; }
+
+        [Display(Name = "Снимка")]
+        public string PictureUrl { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 

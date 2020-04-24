@@ -1,0 +1,76 @@
+﻿@model GeodesyApi.Web.ViewModels.Contacts.ContactViewModel
+@{
+    this.ViewData["Title"] = "Contact Page";
+}
+
+<section class="page contacts">
+
+    <div class="inner-wrapper">
+        <h1><img src="img/icons/contacts-nav.svg" alt="" title=""> Контакт</h1>
+
+
+        <div class="contacts-container">
+            <div class="main-contact">
+                <div class="contact-icon"><img src="img/icons/address.svg" alt="" title=""></div>
+                <div class="personal-info">
+                    София 1164,<br>бул. Христо Смирненски №1
+                </div>
+            </div>
+
+            <div class="contacts-other">
+                <form method="post" asp-controller="Contacts" asp-action="Contact" enctype="multipart/form-data">
+                    <h3>За връзка с нас</h3>
+
+                    <div>
+                        <label asp-for="@Model.Name"></label>
+                        <input asp-for="@Model.Name" class="input" />
+                        <span asp-validation-for="@Model.Name" class="text-danger"></span>
+                    </div>
+                    <div>
+                        <label asp-for="@Model.Email"></label>
+                        <input asp-for="@Model.Email" class="input" />
+                        <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                    </div>
+                    <div>
+                        <label asp-for="@Model.Message"></label>
+                        <textarea asp-for="@Model.Message" rows="7" cols="35"></textarea>
+                        <span asp-validation-for="@Model.Message" class="text-danger"></span>
+                    </div>
+                    <hr>
+                    <button type="submit" class="btn btn-primary">Изпрати</button>
+                </form>
+
+                <article>
+                    <div class="contact-icon"><img src="~/img/icons/personal.svg" alt="" title=""></div>
+                    <div class="personal-info">
+                        <strong>проф. д-р инж. Елена Пенева-Златкова</strong><br>
+                        Декан<br>
+                        Телефон: 9635245/645<br>
+                        Кабинет: P420<br>
+                        Имейл: penevae_fgs@uacg.bg
+                    </div>
+                </article>
+                <article>
+                    <div class="contact-icon"><img src="~/img/icons/personal.svg" alt="" title=""></div>
+                    <div class="personal-info">
+                        <strong>доц. д-р инж. Иван Кунчев</strong><br>
+                        Зам.-декан по учебната дейност<br>
+                        Телефон: 0889476337<br>
+                        Кабинет: Р207 и Р425<br>
+                        Имейл: ikunchev_fgs@uacg.bg
+                    </div>
+                </article>
+                <article>
+                    <div class="contact-icon"><img src="~/img/icons/personal.svg" alt="" title=""></div>
+                    <div class="personal-info">
+                        <strong>мат. Албена Владимирова</strong><br>
+                        Инспектор на факултет<br>
+                        Кабинет: Р326, Р208А<br>
+                        Имейл: atv_fte@uacg.bg
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+
+</section>

@@ -64,6 +64,8 @@
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
+            Environment.SetEnvironmentVariable("SEND_GRID", this.Configuration["Cloudinary:ApiName"]);
+
             // Cloudinary
             Account account = new Account(
                 this.Configuration["Cloudinary:ApiName"],
@@ -82,8 +84,9 @@
             services.AddTransient<IMaterialsService, MaterialsService>();
             services.AddTransient<INewsService, NewsService>();
             services.AddTransient<ICommentsService, CommentsService>();
-            services.AddTransient<ICloudinaryService, CloudinaryService>(c=>new CloudinaryService(cloudinary)); 
-            services.AddTransient<IProjectsService, ProjectsService>(); 
+            services.AddTransient<ICloudinaryService, CloudinaryService>(c => new CloudinaryService(cloudinary));
+            services.AddTransient<IProjectsService, ProjectsService>();
+            services.AddTransient<IContactsService, ContactsService>();
 
 
             //services.AddScoped<IRepository,MaterialsService>();

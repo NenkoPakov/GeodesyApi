@@ -17,12 +17,16 @@ namespace GeodesyApi.Services
 
         int GetCount(NewsGroupType? category = null);
 
-        GetNewsViewModel GetById(int newsId);
+        News GetById(int newsId);
 
         GetNewsCollectionViewModel GetNews(int? take = null, int skip = 0);
 
         GetNewsCollectionViewModel GetByCategory(NewsGroupType? newsGroup = null, int? take = null, int skip = 0);
 
         GetNewsCollectionViewModel GetLastNews();
+
+        Task<IDeletableEntityRepository<News>> EditAsync(EditNewsViewModel input, ApplicationUser user);
+
+        Task<News> DeleteAsync(int newsId);
     }
 }

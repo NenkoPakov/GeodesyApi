@@ -20,23 +20,23 @@ namespace GeodesyApi.Web.Middleware
             this.UserManager = userManager;
         }
 
-        public async Task InvokeAsync(HttpContext httpContext)
-        {
-            if (httpContext.User != null && httpContext.User.Identity.IsAuthenticated)
-            {
-                var currenUser = await this.UserManager.FindByNameAsync(httpContext.User.Identity.Name);
-                var userId = currenUser.Id;
-
-                var claims = new List<Claim>
-            {
-                new Claim("UserId", userId)
-            };
-
-                var appIdentity = new ClaimsIdentity(claims);
-                httpContext.User.AddIdentity(appIdentity);
-            }
-
-            await _next(httpContext);
-        }
+       // public async Task InvokeAsync(HttpContext httpContext)
+       // {
+       //     if (httpContext.User != null && httpContext.User.Identity.IsAuthenticated)
+       //     {
+       //         var currenUser = await this.UserManager.FindByNameAsync(httpContext.User.Identity.Name);
+       //         var userId = currenUser.Id;
+       //
+       //         var claims = new List<Claim>
+       //     {
+       //         new Claim("UserId", userId)
+       //     };
+       //
+       //         var appIdentity = new ClaimsIdentity(claims);
+       //         httpContext.User.AddIdentity(appIdentity);
+       //     }
+       //
+       //     await _next(httpContext);
+       // }
     }
 }

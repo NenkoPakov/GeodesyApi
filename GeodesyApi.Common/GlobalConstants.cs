@@ -8,6 +8,7 @@
 
         public const string AdministratorRoleName = "Administrator";
         public const string UserRoleName = "User";
+        public const string GeodesyApiAdminRoleName = "Admin";
 
         public const string FilesFolderPath = @"D:\SOFTuni\ASP.NET\GeodesyApi\Web\GeodesyApi.Web\wwwroot\files";
     }

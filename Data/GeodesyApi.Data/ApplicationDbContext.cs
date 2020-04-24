@@ -24,6 +24,7 @@
             : base(options)
         {
         }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         public DbSet<Setting> Settings { get; set; }
 
@@ -54,6 +55,8 @@
         public virtual DbSet<Project> Projects { get; set; }
 
         public virtual DbSet<MaterialFiles> MaterialsFiles { get; set; }
+
+        public virtual DbSet<Contact> Contacts { get; set; }
 
         //public virtual DbSet<NewsCategory> NewsCategories { get; set; }
 
