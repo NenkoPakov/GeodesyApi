@@ -1,13 +1,8 @@
 ﻿using GeodesyApi.Data.Models;
 using GeodesyApi.Services.Mapping;
-using GeodesyApi.Web.ViewModels;
 using GeodesyApi.Web.ViewModels.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace GeodesyApi.Web.Controllers
@@ -52,15 +47,10 @@ namespace GeodesyApi.Web.Controllers
 
             var isValidInput = await this.SignInManager.PasswordSignInAsync(username, password, true, true);
 
-           //if (isValidInput == Microsoft.AspNetCore.Identity.SignInResult.Success)
-           //{
-           //    var IdentityClaims = new List<Claim>()
-           //    {
-           //        value
-           //        new Claim(ClaimTypes.NameIdentifier,"")
-           //    }
-           //}
-
+            if (!isValidInput.Succeeded)
+            {
+                return this.View(loginInputModel);
+            }
 
             return this.Redirect("/");
         }
@@ -83,24 +73,6 @@ namespace GeodesyApi.Web.Controllers
 
             var password = registerInputModel.Password;
             var result = await this.UserManager.CreateAsync(user, password);
-
-            //var username = registerInputModel.Username;
-            //var firstName = registerInputModel.FirstName;
-            //var lastName = registerInputModel.LastName;
-            //var email = registerInputModel.Email;
-            //var phoneNumber = registerInputModel.PhoneNumber;
-            //var facultyNumber = registerInputModel.FacultyNumber;
-            //
-            //var result = await this.UserManager.CreateAsync(new ApplicationUser()
-            //{
-            //    UserName = username,
-            //    FirstName = firstName,
-            //    LastName = lastName,
-            //    Email = email,
-            //    //EmailConfirmed = true,
-            //    PhoneNumber = phoneNumber,
-            //    FacultyNumber = facultyNumber,
-            //}, password);
 
             return this.RedirectToAction("Login", registerInputModel);
         }

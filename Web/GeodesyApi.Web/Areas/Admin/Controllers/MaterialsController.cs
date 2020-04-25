@@ -10,9 +10,11 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
-namespace GeodesyApi.Web.Controllers
+namespace GeodesyApi.Web.Areas.Admin.Controllers
 {
-    [Authorize]
+
+    [Area("Admin")]
+    [Authorize(Roles = Common.GlobalConstants.GeodesyApiAdminRoleName)]
     public class MaterialsController : BaseController
     {
         private const int MaterialsPerPage = 3;
@@ -27,9 +29,7 @@ namespace GeodesyApi.Web.Controllers
 
         public IMaterialsService MaterialsService { get; }
 
-        public Cloudinary Cloudinary { get; }
-
-        [Route("Materials/All/{page?}")]
+        [Route("Admin/Materials/All/{page?}")]
         public IActionResult GetMaterials(int page = 1)
         {
             var materials = this.MaterialsService.GetMaterials(MaterialsPerPage, (page - 1) * MaterialsPerPage);
@@ -58,7 +58,7 @@ namespace GeodesyApi.Web.Controllers
             return this.View("All", materials);
         }
 
-        [Route("Materials/{category}/{page?}")]
+        [Route("Admin/Materials/{category}/{page?}")]
         public IActionResult GetByCategory(MaterialsType? category, int page = 1)
         {
             if (category == null)
@@ -85,55 +85,6 @@ namespace GeodesyApi.Web.Controllers
             }
 
             return this.View("All", materials);
-        }
-
-        public IActionResult Upload()
-        {
-            return this.View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Upload(MaterialUploadViewModel input)
-        {
-            if (!this.ModelState.IsValid)
-            {
-                return this.View(input);
-            }
-
-            var user = await this.UserManager.GetUserAsync(this.User);
-
-            var result = await MaterialsService.UploadAsync(input, user);
-
-            return this.RedirectToAction("All");
-        }
-
-        public IActionResult Edit(int id)
-        {
-            var material = this.MaterialsService.GetById(id);
-
-            if (material == null)
-            {
-                return this.NotFound();
-            }
-
-            var materialViewModel = AutoMapperConfig.MapperInstance.Map<MaterialEditViewModel>(material);
-
-            return this.View(materialViewModel);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Edit(MaterialEditViewModel input)
-        {
-            if (!this.ModelState.IsValid)
-            {
-                return this.View(input);
-            }
-
-            var user = await this.UserManager.GetUserAsync(this.User);
-
-            var result = await this.MaterialsService.EditAsync(input, user);
-
-            return this.RedirectToAction("GetMaterials");
         }
 
         public async Task<IActionResult> Delete(int id)

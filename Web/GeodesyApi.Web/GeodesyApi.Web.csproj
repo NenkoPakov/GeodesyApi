@@ -63,6 +63,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\GeodesyApi.Data.Models\GeodesyApi.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\GeodesyApi.Data\GeodesyApi.Data.csproj" />
+    <ProjectReference Include="..\..\GeodesyApi.Common\GeodesyApi.Common.csproj" />
     <ProjectReference Include="..\..\Services\GeodesyApi.Services.Data\GeodesyApi.Services.Data.csproj" />
     <ProjectReference Include="..\..\Services\GeodesyApi.Services.Mapping\GeodesyApi.Services.Mapping.csproj" />
     <ProjectReference Include="..\..\Services\GeodesyApi.Services.Messaging\GeodesyApi.Services.Messaging.csproj" />

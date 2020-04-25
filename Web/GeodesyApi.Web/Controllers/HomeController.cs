@@ -1,10 +1,9 @@
 ﻿namespace GeodesyApi.Web.Controllers
 {
-    using System.Diagnostics;
     using GeodesyApi.Services;
     using GeodesyApi.Web.ViewModels;
-
     using Microsoft.AspNetCore.Mvc;
+    using System.Diagnostics;
 
     public class HomeController : BaseController
     {

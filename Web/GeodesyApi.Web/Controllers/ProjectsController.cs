@@ -1,16 +1,15 @@
 ﻿using GeodesyApi.Data.Models;
 using GeodesyApi.Services;
 using GeodesyApi.Web.ViewModels.Projects;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace GeodesyApi.Web.Controllers
 {
-    public class ProjectsController:BaseController
+    [Authorize]
+    public class ProjectsController : BaseController
     {
         public ProjectsController(UserManager<ApplicationUser> userManager, IProjectsService projectsService)
         {
@@ -22,6 +21,7 @@ namespace GeodesyApi.Web.Controllers
 
         public IProjectsService ProjectsService { get; }
 
+        [AllowAnonymous]
         public IActionResult All()
         {
             return this.View();
@@ -29,6 +29,11 @@ namespace GeodesyApi.Web.Controllers
 
         public IActionResult Create()
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View();
+            }
+
             return this.View();
         }
 

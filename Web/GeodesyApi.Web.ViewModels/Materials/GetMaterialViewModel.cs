@@ -19,6 +19,8 @@ namespace GeodesyApi.Web.ViewModels.Materials
 
         public string AuthorUserName { get; set; }
 
+        public string AuthorId { get; set; }
+
         public string Description { get; set; }
 
         public DateTime CreatedOn { get; set; }

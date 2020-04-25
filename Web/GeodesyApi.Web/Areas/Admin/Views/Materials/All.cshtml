@@ -1,13 +1,5 @@
 ﻿@model GeodesyApi.Web.ViewModels.Materials.GetAllMaterialsViewModel
 
-@using System.Linq
-@using Microsoft.AspNetCore.Identity
-@using GeodesyApi.Data.Models
-@inject UserManager<ApplicationUser> UserManager
-@{
-    var user = UserManager.GetUserId(this.User);
-}
-
 @using System.Globalization
 <!-- PAGE -->
 <section class="page materials">
@@ -54,7 +46,7 @@
                 <div class="list">
                     <div>
                         <h4>@material.Title</h4>
-                        <h5>Категория: <em>@Html.DisplayFor(x => @material.Category)   @material.CreatedOn.ToString("G")</em></h5>
+                        <h5>Категория: <em>@Html.DisplayFor(x=>@material.Category)   @material.CreatedOn.ToString("G")</em></h5>
                         <p>@material.ShortDescription</p>
 
                     </div>
@@ -74,11 +66,9 @@
 
 
                         <!-- If current user is author of this material -->
-                        @if (material.AuthorId == user)
-                        {
-                            <a asp-route="default" asp-route-controller="Materials" asp-route-action="Delete" asp-route-id="@material.Id" onclick="ConirmDelete()" class="reg_u">изтриване</a>
-                            <a asp-route="default" asp-route-controller="Materials" asp-route-action="Edit" asp-route-id="@material.Id" title="" class="reg_u">редактиране</a>
-                        }
+
+                        <a asp-route="default" asp-route-controller="Materials" asp-route-action="Delete" asp-route-id="@material.Id" onclick="ConirmDelete()" class="reg_u">изтриване</a>
+                        <a asp-route="default" asp-route-controller="Materials" asp-route-action="Edit" asp-route-id="@material.Id" title="" class="reg_u">редактиране</a>
                     </div>
 
                 </div><!-- .list -->

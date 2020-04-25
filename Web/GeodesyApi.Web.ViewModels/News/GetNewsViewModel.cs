@@ -21,6 +21,8 @@ namespace GeodesyApi.Web.ViewModels.News
 
         public string UserUserName { get; set; }
 
+        public string UserId { get; set; }
+
         public NewsType Category { get; set; }
 
         public NewsGroupType Group { get; set; }

@@ -1,15 +1,11 @@
 ﻿using GeodesyApi.Services;
-using GeodesyApi.Web.ViewModels;
 using GeodesyApi.Web.ViewModels.Contacts;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace GeodesyApi.Web.Controllers
 {
-    public class ContactsController:BaseController
+    public class ContactsController : BaseController
     {
         public ContactsController(IContactsService contactsService)
         {
@@ -26,6 +22,11 @@ namespace GeodesyApi.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Contact(ContactViewModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
             await this.ContactsService.SaveContactMasageAsync(input);
 
             return this.Redirect("/");

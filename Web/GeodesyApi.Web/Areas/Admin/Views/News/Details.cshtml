@@ -3,6 +3,7 @@
 @using System.Linq
 @using Microsoft.AspNetCore.Identity
 @using GeodesyApi.Data.Models
+@using System.Globalization
 
 @inject GeodesyApi.Services.ICommentsService commentsService
 
@@ -133,12 +134,8 @@
         <div class="box-image align-items-center">
             <img class="news-image " src="@Model.ImageUrl" />
         </div>
-
-        @if (@Model.UserId == user)
-        {
-            <a asp-route="default" asp-route-controller="News" asp-route-action="Delete" asp-route-id="@Model.Id" onclick="ConirmDelete()" class="btn-danger" style="float:left">изтриване</a>
-            <a asp-route="default" asp-route-controller="News" asp-route-action="Edit" asp-route-id="@Model.Id" title="" class="btn-primary" style="float:right">редактиране</a>
-        }
+        <a asp-route="default" asp-route-controller="News" asp-route-action="Delete" asp-route-id="@Model.Id" onclick="ConirmDelete()" class="btn-danger" style="float:left">изтриване</a>
+        <a asp-route="default" asp-route-controller="News" asp-route-action="Edit" asp-route-id="@Model.Id" title="" class="btn-primary" style="float:right">редактиране</a>
 
         <h2 class="blog-post-title text-center">@Model.Title</h2>
         <p class="blog-post-meta">@Model.CreatedOn.ToString("G") by <a href="#">@Model.UserUserName</a></p>

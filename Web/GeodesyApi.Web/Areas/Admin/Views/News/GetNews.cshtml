@@ -1,13 +1,7 @@
 ﻿@model GeodesyApi.Web.ViewModels.News.GetNewsCollectionViewModel
 
-@using System.Linq
-@using Microsoft.AspNetCore.Identity
-@using GeodesyApi.Data.Models
-@inject UserManager<ApplicationUser> UserManager
+@using System.Globalization
 
-@{
-    var user = UserManager.GetUserId(this.User);
-}
 @{
     this.ViewData["Title"] = "News";
 }
@@ -74,21 +68,17 @@
             <div class="articles">
                 @foreach (var item in Model.News)
                 {
-                <article class="col-md-6">
-                    <div class="news-icon">
-                        <img src="~/img/icons/news-list2.svg" alt="" title="">
-                    </div>
-                    <div class="article-title">
-                        <a asp-action="Details" asp-route-id="@item.Id" title="">@item.Title</a><br>
-                        <span> <time datetime=" @item.CreatedOn.ToString("o")"></time>,<br/>Публикуван в категория: <a href="#" title="">@Html.DisplayFor(x => item.Category) </a></span>
-                    </div>
-                    @if (item.UserId == user)
-                    {
-                        <a asp-route="default" asp-route-controller="News" asp-route-action="Delete" asp-route-id="@item.Id" onclick="ConirmDelete()" class="btn-danger">изтриване</a>
-                        <a asp-route="default" asp-route-controller="News" asp-route-action="Edit" asp-route-id="@item.Id" title="" class="btn-primary">редактиране</a>
-                    }
-                </article>
-                    <hr>
+                    <article class="col-md-6">
+                        <div class="news-icon">
+                            <img src="~/img/icons/news-list2.svg" alt="" title="">
+                        </div>
+                        <div class="article-title">
+                            <a asp-action="Details" asp-route-id="@item.Id" title="">@item.Title</a><br>
+                            <span> <time datetime=" @item.CreatedOn.ToString("o")"></time>,<br />Публикуван в категория: <a href="#" title="">@Html.DisplayFor(x => item.Category) </a></span>
+                            <a asp-area="Admin" asp-route="default" asp-route-controller="News" asp-route-action="Delete" asp-route-id="@item.Id" onclick="ConirmDelete()" class="reg_u">изтриване</a>
+                            <a asp-route="default" asp-route-controller="News" asp-route-action="Edit" asp-route-id="@item.Id" title="" class="reg_u">редактиране</a>
+                        </div>
+                    </article>
                     <hr>
                 }
             </div>

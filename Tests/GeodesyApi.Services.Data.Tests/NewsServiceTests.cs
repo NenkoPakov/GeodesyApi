@@ -1,37 +1,66 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using GeodesyApi.Data;
-using GeodesyApi.Data.Common.Repositories;
+﻿using GeodesyApi.Data.Common.Repositories;
 using GeodesyApi.Data.Models;
-using GeodesyApi.Services;
-using GeodesyApi.Data.Repositories;
-
-using Microsoft.EntityFrameworkCore;
-
-using Moq;
-
-using Xunit;
+using GeodesyApi.Services.Mapping;
 using GeodesyApi.Web.ViewModels.News;
-using GeodesyApi.Data.Models.Enums;
-using GeodesyApi.Web.Controllers;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
-using System.IO;
-using System.Text;
+using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using System;
-using CloudinaryDotNet;
-using System.Threading;
-using GeodesyApi.Common.CloudinaryHelper;
-using CloudinaryDotNet.Actions;
-using static System.Net.WebRequestMethods;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace GeodesyApi.Services.Data.Tests
 {
-    public class NewsTestData
+    public class NewsServiceTest : BaseServiceTests
     {
-        public static ApplicationUser User = new ApplicationUser()
+        public NewsServiceTest()
+        {
+            AutoMapperConfig.RegisterMappings(typeof(GetNewsViewModel).GetTypeInfo().Assembly);
+
+            this.DbContext.News.Add(new News
+            {
+                Title = "TestNews1",
+                Content = "TestNews1",
+                ImageUrl = "https://test.com",
+                Category = GeodesyApi.Data.Models.Enums.NewsType.Practice,
+                Group = GeodesyApi.Data.Models.Enums.NewsGroupType.RecommendedForStudents,
+                CreatedOn = DateTime.UtcNow,
+                User = user,
+                UserId = user.Id,
+
+            });
+            this.DbContext.News.Add(new News
+            {
+                Title = "TestNews2",
+                Content = "TestNews2",
+                ImageUrl = "https://test.com",
+                Category = GeodesyApi.Data.Models.Enums.NewsType.Practice,
+                Group = GeodesyApi.Data.Models.Enums.NewsGroupType.RecommendedForStudents,
+                CreatedOn = DateTime.UtcNow,
+                User = user,
+                UserId = user.Id,
+
+            });
+            this.DbContext.News.Add(new News
+            {
+                Title = "TestNews3",
+                Content = "TestNews3",
+                ImageUrl = "https://test.com",
+                Category = GeodesyApi.Data.Models.Enums.NewsType.Practice,
+                Group = GeodesyApi.Data.Models.Enums.NewsGroupType.RecommendedForStudents,
+                CreatedOn = DateTime.UtcNow,
+                User = user,
+                UserId = user.Id,
+
+            });
+
+            this.DbContext.SaveChangesAsync().GetAwaiter().GetResult();
+        }
+
+        ApplicationUser user = new ApplicationUser
         {
             FirstName = "testUser",
             LastName = "testUser",
@@ -39,160 +68,95 @@ namespace GeodesyApi.Services.Data.Tests
             Email = "test@test.test",
         };
 
-        public IQueryable<News> GetTestData()
-        {
-            return new List<News>
-            {
-                 new News {
-                     Title = "TestNews1",
-                     Content = "TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 ews1",
-                     ImageUrl = "Test1",
-                     Category = GeodesyApi.Data.Models.Enums.NewsType.BuyingNewTools,
-                     Group = GeodesyApi.Data.Models.Enums.NewsGroupType.Event,
-                     UserId = "UserIdTest1",
-                 },
-                 new News {
-                     Title = "TestNews2",
-                     Content = "TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 ews1",
-                     ImageUrl = "Test2",
-                     Category = GeodesyApi.Data.Models.Enums.NewsType.Meetings,
-                     Group = GeodesyApi.Data.Models.Enums.NewsGroupType.News,
-                     UserId = "UserIdTest1",
-                 },
-                 new News {
-                     Title = "TestNews3",
-                     Content = "TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 ews1",
-                     ImageUrl = "Test3",
-                     Category = GeodesyApi.Data.Models.Enums.NewsType.Practice,
-                     Group = GeodesyApi.Data.Models.Enums.NewsGroupType.RecommendedForStudents,
-                     UserId = "UserIdTest1",
-                 },
-            }.AsQueryable();
-
-        }
-
-        static IFormFile file = new FormFile(new MemoryStream(Encoding.UTF8.GetBytes("This is a dummy file")), 0, 0, "Data", "dummy.pdf");
-
-        public static List<CreateNewsViewModel> InputModels()
-        {
-            return new List<CreateNewsViewModel>
-            {
-                new CreateNewsViewModel
-                {
-                    Title = "TestNews3",
-                    Content = "TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 ews1",
-                    Image =file,
-                    Category = GeodesyApi.Data.Models.Enums.NewsType.Practice,
-                    Group = GeodesyApi.Data.Models.Enums.NewsGroupType.RecommendedForStudents,
-                    CreatedOn = DateTime.UtcNow,
-                },
-                new CreateNewsViewModel
-                {
-                    Title = "TestNews2",
-                    Content = "TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 ews1",
-                    Image = file,
-                    Category = GeodesyApi.Data.Models.Enums.NewsType.Practice,
-                    Group = GeodesyApi.Data.Models.Enums.NewsGroupType.RecommendedForStudents,
-                    CreatedOn = DateTime.UtcNow,
-                },
-                new CreateNewsViewModel
-                {
-                    Title = "TestNews1",
-                    Content = "TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 ews1",
-                    Image = file,
-                    Category = GeodesyApi.Data.Models.Enums.NewsType.Practice,
-                    Group = GeodesyApi.Data.Models.Enums.NewsGroupType.RecommendedForStudents,
-                    CreatedOn = DateTime.UtcNow,
-                },
-            };
-        }
-    }
-
-    public class NewsServiceTests
-    {
-        protected Mock<IDeletableEntityRepository<News>> NewsRepository { get; set; }
-
-        private Mock<IDeletableEntityRepository<ApplicationUser>> UserManager { get; set; }
-
-        private Mock<ICloudinaryService> Cloydinary { get; set; }
-
-        private INewsService NewsService { get; set; }
-
-        public NewsServiceTests()
-        {
-            this.NewsRepository = new Mock<IDeletableEntityRepository<News>>();
-
-            this.NewsRepository.SetupAllProperties();
-
-            this.UserManager = new Mock<IDeletableEntityRepository<ApplicationUser>>();
-
-            Account account = new Account(
-                "dv3tfjvk0",
-                "834565789315234",
-                "fh3CxN8m5yoWHhCuxfl6xQJ50hQ");
-
-
-            this.Cloydinary = new Mock<ICloudinaryService>();
-           // this.NewsService = new NewsService(this.NewsRepository.Object, this.UserManager.Object, Cloydinary.Object);
-        }
+        private INewsService NewsServiceMock => this.ServiceProvider.GetRequiredService<INewsService>();
 
 
         [Fact]
-        public void CreateNewsShouldReturnValidItemOfTypeNews()
+        public async Task GetById()
         {
-            //RawUploadParams uploadParams = new RawUploadParams
-            //{
-            //    File = new FileDescription("spreadsheet2.xls", new MemoryStream()),
-            //    PublicId = "sample_spreadsheet2"
-            //};
-            //Task<RawUploadResult> uploadResult = await Cloydinary.Upload(uploadParams, "raw");
 
-            var moqCloudinaryService = new Mock<ICloudinaryService>();
-            var moqIFormFile = new Mock<IFormFile>();
-            moqCloudinaryService.Setup(x => x.UploadAsync(moqIFormFile.Object))
-                .ReturnsAsync("http://test.com");
+            
 
-            var news = new List<CreateNewsViewModel> 
-            { 
-
-                new CreateNewsViewModel
+            var expected = new News
             {
-                Title = "TestNews3",
-                Content = "TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 TestNews3 ews1",
-                Image = moqIFormFile.Object,
+                Title = "TestNews1",
+                Content = "TestNews1",
+                ImageUrl = "https://test.com",
                 Category = GeodesyApi.Data.Models.Enums.NewsType.Practice,
                 Group = GeodesyApi.Data.Models.Enums.NewsGroupType.RecommendedForStudents,
                 CreatedOn = DateTime.UtcNow,
-            },
-                new CreateNewsViewModel
-                {
-                    Title = "TestNews2",
-                    Content = "TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 TestNews2 ews1",
-                    Image = moqIFormFile.Object,
-                    Category = GeodesyApi.Data.Models.Enums.NewsType.Practice,
-                    Group = GeodesyApi.Data.Models.Enums.NewsGroupType.RecommendedForStudents,
-                    CreatedOn = DateTime.UtcNow,
-                },
-                new CreateNewsViewModel
-                {
-                    Title = "TestNews1",
-                    Content = "TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 TestNews1 ews1",
-                    Image = moqIFormFile.Object,
-                    Category = GeodesyApi.Data.Models.Enums.NewsType.Practice,
-                    Group = GeodesyApi.Data.Models.Enums.NewsGroupType.RecommendedForStudents,
-                    CreatedOn = DateTime.UtcNow,
-                },
+                User = user,
+                UserId = user.Id,
             };
 
-            //var news = NewsTestData.InputModels();
+            AutoMapperConfig.RegisterMappings(typeof(GetNewsViewModel).GetTypeInfo().Assembly);
 
-             foreach (var item in news)
-             {
-                 this.NewsService.CreateNews(item, NewsTestData.User);
-             }
-            
-            Assert.Equal(news.Count(), NewsRepository.Object.AllAsNoTracking().Count());
-            }
+            // var expectedNews = AutoMapperConfig.MapperInstance.Map<GetNewsViewModel>(expected);
+
+            var result = this.NewsServiceMock.GetById(1);
+
+            // var actualNews = AutoMapperConfig.MapperInstance.Map<GetNewsViewModel>(result);
+
+            Assert.Equal(expected.Title, result.Title);
+            Assert.Equal(expected.Content, result.Content);
+            Assert.Equal(expected.Group, result.Group);
+            Assert.Equal(expected.Category, result.Category);
+            Assert.Equal(expected.User, result.User);
+            Assert.Equal(expected.UserId, result.UserId);
+        }
+
+        [Fact]
+        public async Task GetNewsTest()
+        {
+            var result = this.NewsServiceMock.GetNews();
+
+
+            var expected = new List<News>
+            {
+                new News
+            {
+                Title = "TestNews1",
+                Content = "TestNews1",
+                ImageUrl = "https://test.com",
+                Category = GeodesyApi.Data.Models.Enums.NewsType.Practice,
+                Group = GeodesyApi.Data.Models.Enums.NewsGroupType.RecommendedForStudents,
+                CreatedOn = DateTime.UtcNow,
+                User = user,
+                UserId = user.Id,
+
+            },
+            new News
+            {
+                Title = "TestNews2",
+                Content = "TestNews2",
+                ImageUrl = "https://test.com",
+                Category = GeodesyApi.Data.Models.Enums.NewsType.Practice,
+                Group = GeodesyApi.Data.Models.Enums.NewsGroupType.RecommendedForStudents,
+                CreatedOn = DateTime.UtcNow,
+                User = user,
+                UserId = user.Id,
+
+            },
+            new News
+            {
+                Title = "TestNews3",
+                Content = "TestNews3",
+                ImageUrl = "https://test.com",
+                Category = GeodesyApi.Data.Models.Enums.NewsType.Practice,
+                Group = GeodesyApi.Data.Models.Enums.NewsGroupType.RecommendedForStudents,
+                CreatedOn = DateTime.UtcNow,
+                User = user,
+                UserId = user.Id,
+
+            },
+            }.OrderByDescending(x=>x.CreatedOn)
+            .ToList();
+
+            Assert.Equal(expected.Count, result.News.Count);
+            Assert.Equal(expected.FirstOrDefault().Title, result.News.FirstOrDefault().Title);
+            Assert.Equal(expected.FirstOrDefault().Content, result.News.FirstOrDefault().Content);
+            Assert.Equal(expected.Last().Title, result.News.Last().Title);
+            Assert.Equal(expected.Last().UserId, result.News.Last().UserId);
+        }
     }
 }
-

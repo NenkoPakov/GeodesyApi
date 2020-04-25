@@ -1,16 +1,14 @@
-﻿using GeodesyApi.Data;
-using GeodesyApi.Data.Models;
+﻿using GeodesyApi.Data.Models;
 using GeodesyApi.Web.ViewModels;
-using GeodesyApi.Web.ViewModels.News;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace GeodesyApi.Web.Controllers
 {
+    [Authorize]
+    [Authorize(Roles = Common.GlobalConstants.GeodesyApiAdminRoleName)]
     public class TestController : BaseController
     {
         public TestController(UserManager<ApplicationUser> userManager)
@@ -22,36 +20,13 @@ namespace GeodesyApi.Web.Controllers
 
         public async Task<IActionResult> CreateUser()
         {
-            //var result = await this.UserManager.CreateAsync(new ApplicationUser()
-            //{
-            //    Email = "nenko_pakov@abv.bg",
-            //    UserName = "nenko",
-            //    EmailConfirmed = true,
-            //    FirstName = "Nenko",
-            //    LastName = "Pakov",
-            //    PhoneNumber = "0888996096",
-            //    FacultyNumber = 4691,
-            //}, "nenko123");
-
-            var result = await this.UserManager.CreateAsync(new ApplicationUser()
-             {
-                 Email = "hristo_dechev@abv.bg",
-                 UserName = "dechev",
-                 EmailConfirmed = true,
-                 FirstName = "Hristo",
-                 LastName = "Dechev",
-                 PhoneNumber = "0888888888",
-                 FacultyNumber = 0,
-             }, "dechev123");
-
-
             return this.Redirect("/Home/Index");
         }
 
 
         public IActionResult Test()
         {
-        return this.View();
+            return this.View();
         }
 
         [HttpPost]
