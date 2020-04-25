@@ -19,11 +19,11 @@ namespace GeodesyApi.Services
 {
     public class NewsService : INewsService
     {
-        public NewsService(IDeletableEntityRepository<News> newsRepository, IDeletableEntityRepository<ApplicationUser> userRepository, ICommentsService commentsService,ICloudinaryService cloudinary)
+        public NewsService(IDeletableEntityRepository<News> newsRepository, IDeletableEntityRepository<ApplicationUser> usersRepository, ICommentsService commentsService,ICloudinaryService cloudinary)
         {
             this.Cloudinary = cloudinary;
             this.NewsRepository = newsRepository;
-            this.UserRepository = userRepository;
+            this.UsersRepository = usersRepository;
             this.CommentsService = commentsService;
         }
 
@@ -33,7 +33,7 @@ namespace GeodesyApi.Services
 
         public IDeletableEntityRepository<News> NewsRepository { get; }
 
-        public IDeletableEntityRepository<ApplicationUser> UserRepository { get; }
+        public IDeletableEntityRepository<ApplicationUser> UsersRepository { get; }
         public ICommentsService CommentsService { get; }
 
         public async Task<News> CreateNews(CreateNewsViewModel input, ApplicationUser user)
@@ -50,7 +50,7 @@ namespace GeodesyApi.Services
             await this.NewsRepository.AddAsync(news);
 
             await this.NewsRepository.SaveChangesAsync();
-            await this.UserRepository.SaveChangesAsync();
+            await this.UsersRepository.SaveChangesAsync();
 
             return news;
         }
@@ -63,6 +63,15 @@ namespace GeodesyApi.Services
 
             news.Comments=this.CommentsService.GetAllByNewsId(newsId);
 
+            foreach (var comment in news.Comments)
+            {
+                var user = this.UsersRepository
+                    .All()
+                    .Where(x=>x.Id== comment.UserId)
+                    .FirstOrDefault();
+
+                comment.User = user;
+            }
             return news;
         }
 
@@ -160,7 +169,7 @@ namespace GeodesyApi.Services
             this.NewsRepository.Update(news);
 
             await this.NewsRepository.SaveChangesAsync();
-            await this.UserRepository.SaveChangesAsync();
+            await this.UsersRepository.SaveChangesAsync();
 
             return this.NewsRepository;
         }

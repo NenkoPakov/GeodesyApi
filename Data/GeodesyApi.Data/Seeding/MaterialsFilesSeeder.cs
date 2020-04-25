@@ -25,7 +25,7 @@ namespace GeodesyApi.Data.Seeding
                 "https://res.cloudinary.com/dv3tfjvk0/image/upload/v1587598066/dbyewp7gk3reqr8ncegm.pdf",
                 "https://res.cloudinary.com/dv3tfjvk0/image/upload/v1587598063/bso0kjtqm6wybwea2ucs.pdf",
                 "https://res.cloudinary.com/dv3tfjvk0/image/upload/v1584389192/dechev.pdf",
-                "https://res.cloudinary.com/dv3tfjvk0/image/upload/v1584813294/c4qzw2forruyeg78nocl.jpg",
+                "https://res.cloudinary.com/dv3tfjvk0/image/upload/v1587625868/q4ebqh1q9ivvhm3vdwbf.pdf",
             };
 
             var materialsFiles = new List<MaterialFiles>();
@@ -36,7 +36,7 @@ namespace GeodesyApi.Data.Seeding
             }
 
 
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 150; i++)
             {
                 var materialFile = new MaterialFiles
                 {

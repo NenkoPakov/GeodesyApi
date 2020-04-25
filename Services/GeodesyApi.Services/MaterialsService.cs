@@ -50,15 +50,7 @@ namespace GeodesyApi.Services
 
             var materials = query.To<GetMaterialViewModel>().ToList();
 
-            foreach (var material in materials)
-            {
-                var materialUrls = this.MaterialFilesRepository.All()
-                 .Where(x => x.MaterialId == material.Id)
-                 .Select(x => x.FileUrl)
-                 .ToList();
-
-                material.FilesUrlsFileUrl = materialUrls;
-            }
+            this.AddMaterialFiles(materials);
 
             viewModel.Materials = materials;
 
@@ -78,6 +70,8 @@ namespace GeodesyApi.Services
             }
 
             var materials = query.To<GetMaterialViewModel>().ToList();
+
+            this.AddMaterialFiles(materials);
 
             viewModel.Materials = materials;
 
@@ -211,5 +205,15 @@ namespace GeodesyApi.Services
                 .OrderByDescending(x => x.CreatedOn);
         }
 
+        private void AddMaterialFiles(ICollection<GetMaterialViewModel> materials)
+        {
+             foreach (var material in materials)
+            {
+                material.FilesUrlsFileUrl = this.MaterialFilesRepository
+                    .AllAsNoTracking()
+                    .Where(x => x.MaterialId == material.Id)
+                    .Select(x => x.FileUrl).ToList();
+            };
+        }
     }
 }

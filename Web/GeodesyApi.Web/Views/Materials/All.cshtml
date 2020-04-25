@@ -1,4 +1,6 @@
 ﻿@model GeodesyApi.Web.ViewModels.Materials.GetAllMaterialsViewModel
+
+@using System.Globalization
 <!-- PAGE -->
 <section class="page materials">
     <aside>
@@ -42,11 +44,12 @@
             {
                 <!-- .list -->
                 <div class="list">
-                    <a href="#" title="" class="status">
+                    <div>
                         <h4>@material.Title</h4>
                         <h5>Категория: <em>@material.Category</em></h5>
-                        <p>@material.ShortDescription</p>
-                    </a>
+                        <p>@material.ShortDescription</p>@material.CreatedOn.ToString("O", new CultureInfo("bg-BG"))
+
+                    </div>
                     <div class="buttons_list">
                         <a id="pdf-selector" title="" onclick="myFunction(@(@"[""")@String.Join(@""",""", material.FilesUrlsFileUrl)@(@"""]"),@material.Id)">виж повече</a>
 

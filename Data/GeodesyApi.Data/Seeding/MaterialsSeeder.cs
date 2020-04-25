@@ -19,8 +19,8 @@ namespace GeodesyApi.Data.Seeding
                 return;
             }
 
-            var title = "Equal title for each material!";
-            var description = "Dispatched entreaties boisterous say why stimulated. Certain forbade picture now prevent carried she get see sitting. Up twenty limits as months. Inhabit so perhaps of in to certain. Sex excuse chatty was seemed warmth. Nay add far few immediate sweetness earnestly dejection. ";
+            var title = "Заглавие за всички материали!";
+            var description = "В писмо до директора на АГКК инж. Михаил Киров, КИГ предложиха в състава на комисията за разглеждане на обществените поръчки в областта на геодезията и кадастъра да бъде включен като наблюдаващ член и представител на НПО: адв. Лъчезар Тодоров от Софийска адвокатска колегия. ";
             var random = new Random();
             var materials = new List<Material>();
 

@@ -1,4 +1,7 @@
 ﻿@model GeodesyApi.Web.ViewModels.News.GetNewsCollectionViewModel
+
+@using System.Globalization
+
 @{
     this.ViewData["Title"] = "News";
 }
@@ -71,7 +74,7 @@
                         </div>
                         <div class="article-title">
                             <a asp-action="Details" asp-route-id="@item.Id" title="">@item.Title</a><br>
-                            <span> <time datetime=" @item.CreatedOn.ToString("O")"></time>, Публикуван в категория: <a href="#" title="">@item.Category </a></span>
+                            <span> <time datetime=" @item.CreatedOn.ToString("O", new CultureInfo("bg-BG"))"></time>, Публикуван в категория: <a href="#" title="">@item.Category </a></span>
                         </div>
                     </article>
                     <hr>
@@ -130,7 +133,7 @@
 </section><!-- PAGE -->
 
 
-<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="~/js/jquery.min.js" type="text/javascript"></script>
 <script>
 
     $(document).ready(function () {

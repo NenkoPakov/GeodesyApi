@@ -1,5 +1,7 @@
-﻿@using GeodesyApi.Common
-@model GeodesyApi.Web.ViewModels.News.GetNewsCollectionViewModel
+﻿@model GeodesyApi.Web.ViewModels.News.GetNewsCollectionViewModel
+@using GeodesyApi.Common
+@using System.Globalization
+
 @{
     this.ViewData["Title"] = "Home Page";
 }
@@ -8,211 +10,210 @@
 
 <link rel="stylesheet" href="~/css/owl.carousel.css" type="text/css">
 <link rel="stylesheet" href="~/css/owl.theme.default.min.css" type="text/css">
-    <script src="~/js/jquery.min.js" type="text/javascript"></script>
-    <script src="~/js/owl.carousel.js" type="text/javascript"></script>
+<script src="~/js/jquery.min.js" type="text/javascript"></script>
+<script src="~/js/owl.carousel.js" type="text/javascript"></script>
 
 
 
-    <!-- HOME SLIDER -->
-    <section class="home-slider">
-        <div class="welcome">
-            <span>Добре дошли в платформа на катедра "Геодезия и геоинформатика", Геодезически факултет, УАСГ</span>
-            <p>Разгледайте проекти на студентите, карти и материали и научете повече за летните практики.</p>
+<!-- HOME SLIDER -->
+<section class="home-slider">
+    <div class="welcome">
+        <span>Добре дошли в платформа на катедра "Геодезия и геоинформатика", Геодезически факултет, УАСГ</span>
+        <p>Разгледайте проекти на студентите, карти и материали и научете повече за летните практики.</p>
+    </div>
+
+
+    <div class="owl-carousel owl-theme">
+        <div class="item">
+            <picture>
+                <source srcset="~/img/slide1.jpg" media="(min-width: 1025px)" />
+                <source srcset="~/img/slide1-medium.jpg" media="(min-width: 601px)" />
+                <img src="~/img/slide1-small.jpg" alt="" />
+            </picture>
         </div>
+        <div class="item">
+            <picture>
+                <source srcset="~/img/slide2.jpg" media="(min-width: 1025px)" />
+                <source srcset="~/img/slide2-medium.jpg" media="(min-width: 601px)" />
+                <img src="~/img/slide2-small.jpg" alt="" />
+            </picture>
+        </div>
+        <div class="item">
+            <picture>
+                <source srcset="~/img/slide3.jpg" media="(min-width: 1025px)" />
+                <source srcset="~/img/slide3-medium.jpg" media="(min-width: 601px)" />
+                <img src="~/img/slide3-small.jpg" alt="" />
+            </picture>
+        </div>
+    </div>
+</section><!-- HOME SLIDER -->
+<!-- BUTTONS -->
+<section class="buttons">
+    <div class="button">
+        <a title="">
+            <img src="~/img/icons/catalog.svg" alt="" title=""> Каталог<br>
+            <span>Съдържание на данни, резултати и публикации, свързани с Българските антарктически експедиции.</span>
+        </a>
+    </div>
+    <div class="button">
+        <a href="#" title="">
+            <img src="~/img/icons/library.svg" alt="" title=""> Библиотека<br>
+            <span>Актуални новини и предстоящи събития</span>
+        </a>
+    </div>
+    <div class="button">
+        <a href="http://localhost:1234/" title="">
+            <img src="~/img/icons/gis.svg" alt="" title=""> ГИС<br>
+            <span>Web базирана ГИС за района на БАБ, о. Ливингстон с данни за проектите от Българските антарктически експедиции</span>
+        </a>
+    </div>
+    <div class="button">
+        <a asp-controller="Users" asp-action="Register" title="">
+            <img src="~/img/icons/projects.svg" alt="" title=""> Проекти<br>
+            <span>Информация за проектите, провеждани на о. Ливингстън - екипи, резултати, връзка с ГИС</span>
+        </a>
+    </div>
 
+    <div class="button">
+        <a asp-controller="Projects" asp-action="All" title="">
+            <img src="~/img/icons/reg.svg" alt="" title=""> Регистрация<br>
+            <span>Съдържание на данни, резултати и публикации, свързани с Българските антарктически експедиции.</span>
+        </a>
+    </div>
+    <div class="button">
+        <a href="#" title="">
+            <img src="~/img/icons/tests.svg" alt="" title=""> Проверка на знанията<br>
+            <span>Web базирана ГИС за района на БАБ, о. Ливингстон с данни за проектите от Българските антарктически експедиции</span>
+        </a>
+    </div>
+    <div class="button">
+        <a asp-route="NumberOfNewsPages" title="">
+            <img src="~/img/icons/news.svg" alt="" title=""> Новини и събития<br>
+            <span>Актуални новини и предстоящи събития</span>
+        </a>
+    </div>
+    <div class="button">
+        <a asp-route="NumberOfMaterialsPages" title="">
+            <img src="~/img/icons/mats.svg" alt="" title=""> Дисциплини и материали<br>
+            <span>Информация за проектите, провеждани на о. Ливингстън - екипи, резултати, връзка с ГИС</span>
+        </a>
+    </div>
 
-        <div class="owl-carousel owl-theme">
-            <div class="item">
-                <picture>
-                    <source srcset="~/img/slide1.jpg" media="(min-width: 1025px)" />
-                    <source srcset="~/img/slide1-medium.jpg" media="(min-width: 601px)" />
-                    <img src="~/img/slide1-small.jpg" alt="" />
-                </picture>
+</section><!-- BUTTONS -->
+<!-- NEWS -->
+<section class="news">
+    <span class="section-title"><a asp-route="NumberOfNewsPages" title="">Новини и събития</a></span>
+
+    <div class="articles">
+
+        @foreach (var news in @Model.News)
+        {
+            <article>
+                <div class="news-icon">
+                    <img src="~/img/icons/news-list.svg" alt="" title="">
+                </div>
+                <div class="article-title">
+                    <a asp-controller="News" asp-action="Details" asp-route-id="@news.Id" title="">@news.Title</a><br>
+                    <span><time datetime=" @news.CreatedOn.ToString("O", new CultureInfo("bg-BG"))"></time></span>
+                </div>
+            </article>
+        }
+    </div>
+</section><!-- NEWS -->
+<!-- CONTACTS -->
+<section class="contacts">
+    <span class="section-title"><a asp-controller="Contacts" asp-action="Contact" title="">За контакт</a></span>
+    <div class="articles">
+        <article>
+            <div class="contact-icon"><img src="~/img/icons/address.svg" alt="" title=""></div>
+            <div class="personal-info">
+                <a asp-controller="Contacts" asp-action="Contact">София 1164,<br>бул. Христо Смирненски № 1</a>
             </div>
-            <div class="item">
-                <picture>
-                    <source srcset="~/img/slide2.jpg" media="(min-width: 1025px)" />
-                    <source srcset="~/img/slide2-medium.jpg" media="(min-width: 601px)" />
-                    <img src="~/img/slide2-small.jpg" alt="" />
-                </picture>
+        </article>
+        <article>
+            <div class="contact-icon"><img src="~/img/icons/personal.svg" alt="" title=""></div>
+            <div class="personal-info">
+                <strong>проф. д-р инж. Елена Пенева-Златкова</strong><br>
+                Декан<br>
+                Телефон: 9635245/645<br>
+                Кабинет: P420<br>
+                Имейл: penevae_fgs@uacg.bg
             </div>
-            <div class="item">
-                <picture>
-                    <source srcset="~/img/slide3.jpg" media="(min-width: 1025px)" />
-                    <source srcset="~/img/slide3-medium.jpg" media="(min-width: 601px)" />
-                    <img src="~/img/slide3-small.jpg" alt="" />
-                </picture>
+        </article>
+        <article>
+            <div class="contact-icon"><img src="~/img/icons/personal.svg" alt="" title=""></div>
+            <div class="personal-info">
+                <strong>доц. д-р инж. Иван Кунчев</strong><br>
+                Зам.-декан по учебната дейност<br>
+                Телефон: 0889476337<br>
+                Кабинет: Р207 и Р425<br>
+                Имейл: ikunchev_fgs@uacg.bg
             </div>
-        </div>
-    </section><!-- HOME SLIDER -->
-    <!-- BUTTONS -->
-    <section class="buttons">
-        <div class="button">
-            <a title="">
-                <img src="~/img/icons/catalog.svg" alt="" title=""> Каталог<br>
-                <span>Съдържание на данни, резултати и публикации, свързани с Българските антарктически експедиции.</span>
-            </a>
-        </div>
-        <div class="button">
-            <a href="#" title="">
-                <img src="~/img/icons/library.svg" alt="" title=""> Библиотека<br>
-                <span>Актуални новини и предстоящи събития</span>
-            </a>
-        </div>
-        <div class="button">
-            <a href="http://localhost:1234/" title="">
-                <img src="~/img/icons/gis.svg" alt="" title=""> ГИС<br>
-                <span>Web базирана ГИС за района на БАБ, о. Ливингстон с данни за проектите от Българските антарктически експедиции</span>
-            </a>
-        </div>
-        <div class="button">
-            <a  asp-controller="Users" asp-action="Register"  title="">
-                <img src="~/img/icons/projects.svg" alt="" title=""> Проекти<br>
-                <span>Информация за проектите, провеждани на о. Ливингстън - екипи, резултати, връзка с ГИС</span>
-            </a>
-        </div>
+        </article>
+        <article>
+            <div class="contact-icon"><img src="~/img/icons/personal.svg" alt="" title=""></div>
+            <div class="personal-info">
+                <strong>мат. Албена Владимирова</strong><br>
+                Инспектор на факултет<br>
+                Кабинет: Р326, Р208А<br>
+                Имейл: atv_fte@uacg.bg
+            </div>
+        </article>
+    </div>
+</section>
 
-        <div class="button">
-            <a asp-controller="Projects" asp-action="All" title="">
-                <img src="~/img/icons/reg.svg" alt="" title=""> Регистрация<br>
-                <span>Съдържание на данни, резултати и публикации, свързани с Българските антарктически експедиции.</span>
-            </a>
-        </div>
-        <div class="button">
-            <a href="#" title="">
-                <img src="~/img/icons/tests.svg" alt="" title=""> Проверка на знанията<br>
-                <span>Web базирана ГИС за района на БАБ, о. Ливингстон с данни за проектите от Българските антарктически експедиции</span>
-            </a>
-        </div>
-        <div class="button">
-            <a asp-route="NumberOfNewsPages" title="">
-                <img src="~/img/icons/news.svg" alt="" title=""> Новини и събития<br>
-                <span>Актуални новини и предстоящи събития</span>
-            </a>
-        </div>
-        <div class="button">
-            <a asp-route="NumberOfMaterialsPages" title="">
-                <img src="~/img/icons/mats.svg" alt="" title=""> Дисциплини и материали<br>
-                <span>Информация за проектите, провеждани на о. Ливингстън - екипи, резултати, връзка с ГИС</span>
-            </a>
-        </div>
+<script src="~/js/jquery.min.js" type="text/javascript"></script>
+<script src="~/js/owl.carousel.js"></script>
+<script>
+    $(document).ready(function () {
+        var heroSlider = $('.home-slider .owl-carousel');
+        heroSlider.owlCarousel({
+            items: 1,
+            animateOut: 'fadeOut',
+            mouseDrag: true,
+            touchDrag: true,
+            loop: true,
+            autoplay: true,
+            autoplayTimeout: 5000,
+            autoplayHoverPause: false,
+            nav: true
+        });
 
-    </section><!-- BUTTONS -->
-    <!-- NEWS -->
-    <section class="news">
-        <span class="section-title"><a asp-route="NumberOfNewsPages" title="">Новини и събития</a></span>
-
-        <div class="articles">
-
-            @foreach (var news in @Model.News)
-            {
-                <article>
-                    <div class="news-icon">
-                        <img src="~/img/icons/news-list.svg" alt="" title="">
-                    </div>
-                    <div class="article-title">
-                        <a asp-controller="News" asp-action="Details" asp-route-id="@news.Id" title="">@news.Title</a><br>
-                        <span><time datetime=" @news.CreatedOn.ToString("O")"></time></span>
-                    </div>
-                </article>
-            }
-        </div>
-    </section><!-- NEWS -->
-    <!-- CONTACTS -->
-    <section class="contacts">
-        <span class="section-title">За контакт</span>
-
-        <div class="articles">
-            <article>
-                <div class="contact-icon"><img src="~/img/icons/address.svg" alt="" title=""></div>
-                <div class="personal-info">
-                    <a asp-controller="Contacts" asp-action="Contact">София 1164,<br>бул. Христо Смирненски № 1</a>
-                </div>
-            </article>
-            <article>
-                <div class="contact-icon"><img src="~/img/icons/personal.svg" alt="" title=""></div>
-                <div class="personal-info">
-                    <strong>проф. д-р инж. Елена Пенева-Златкова</strong><br>
-                    Декан<br>
-                    Телефон: 9635245/645<br>
-                    Кабинет: P420<br>
-                    Имейл: penevae_fgs@uacg.bg
-                </div>
-            </article>
-            <article>
-                <div class="contact-icon"><img src="~/img/icons/personal.svg" alt="" title=""></div>
-                <div class="personal-info">
-                    <strong>доц. д-р инж. Иван Кунчев</strong><br>
-                    Зам.-декан по учебната дейност<br>
-                    Телефон: 0889476337<br>
-                    Кабинет: Р207 и Р425<br>
-                    Имейл: ikunchev_fgs@uacg.bg
-                </div>
-            </article>
-            <article>
-                <div class="contact-icon"><img src="~/img/icons/personal.svg" alt="" title=""></div>
-                <div class="personal-info">
-                    <strong>мат. Албена Владимирова</strong><br>
-                    Инспектор на факултет<br>
-                    Кабинет: Р326, Р208А<br>
-                    Имейл: atv_fte@uacg.bg
-                </div>
-            </article>
-        </div>
-    </section>
-
-    <script src="~/js/jquery.min.js" type="text/javascript"></script>
-    <script src="~/js/owl.carousel.js"></script>
-    <script>
-        $(document).ready(function () {
-            var heroSlider = $('.home-slider .owl-carousel');
-            heroSlider.owlCarousel({
-                items: 1,
-                animateOut: 'fadeOut',
-                mouseDrag: true,
-                touchDrag: true,
-                loop: true,
-                autoplay: true,
-                autoplayTimeout: 5000,
-                autoplayHoverPause: false,
-                nav: true
-            });
-
-        })</script>
-    <script>
-        $(document).ready(function () {
+    })</script>
+<script>
+    $(document).ready(function () {
 
 
-            /* the Responsive menu script */
-            $('body').addClass('js');
-            var $menu = $('#menu'),
-                $menulink = $('.menu-link'),
-                $menuTrigger = $('.has-subnav > a');
+        /* the Responsive menu script */
+        $('body').addClass('js');
+        var $menu = $('#menu'),
+            $menulink = $('.menu-link'),
+            $menuTrigger = $('.has-subnav > a');
 
-            $menulink.click(function (e) {
-                e.preventDefault();
-                $menulink.toggleClass('active');
-                $menu.toggleClass('active');
-            });
+        $menulink.click(function (e) {
+            e.preventDefault();
+            $menulink.toggleClass('active');
+            $menu.toggleClass('active');
+        });
 
-            var add_toggle_links = function () {
-                if ($('.menu-link').is(":visible")) {
-                    if ($(".toggle-link").length > 0) {
-                    }
-                    else {
-                        $('.has-subnav > a').before('<span class="toggle-link"> Open submenu </span>');
-                        $('.toggle-link').click(function (e) {
-                            var $this = $(this);
-                            $this.toggleClass('active').siblings('ul').toggleClass('active');
-                        });
-                    }
+        var add_toggle_links = function () {
+            if ($('.menu-link').is(":visible")) {
+                if ($(".toggle-link").length > 0) {
                 }
                 else {
-                    $('.toggle-link').empty();
+                    $('.has-subnav > a').before('<span class="toggle-link"> Open submenu </span>');
+                    $('.toggle-link').click(function (e) {
+                        var $this = $(this);
+                        $this.toggleClass('active').siblings('ul').toggleClass('active');
+                    });
                 }
             }
-            add_toggle_links();
-            $(window).bind("resize", add_toggle_links);
+            else {
+                $('.toggle-link').empty();
+            }
+        }
+        add_toggle_links();
+        $(window).bind("resize", add_toggle_links);
 
-        });</script>
+    });</script>
 

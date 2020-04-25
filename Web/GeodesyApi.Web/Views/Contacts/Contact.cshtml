@@ -37,8 +37,14 @@
                         <span asp-validation-for="@Model.Message" class="text-danger"></span>
                     </div>
                     <hr>
-                    <button type="submit" class="btn btn-primary">Изпрати</button>
+                    <button type="submit" class="btn btn-primary" type="submit" id="submitComment">Изпрати</button>
                 </form>
+
+                @*
+                    <div class="alert alert-success" id="success-alert">
+                        <button type="button" class="close" data-dismiss="alert">x</button>
+                        <strong>Успешно! </strong> Свързахте се с нас.
+                    </div>*@
 
                 <article>
                     <div class="contact-icon"><img src="~/img/icons/personal.svg" alt="" title=""></div>
@@ -72,5 +78,17 @@
             </div>
         </div>
     </div>
-
 </section>
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#success-alert").hide();
+        $("#submitComment").click(function showAlert() {
+            $("#success-alert").fadeTo(2000, 500).slideUp(500, function () {
+                $("#success-alert").slideUp(500);
+            });
+        });
+    });
+</script>

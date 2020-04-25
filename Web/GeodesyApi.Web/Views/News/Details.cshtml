@@ -3,6 +3,8 @@
 @using System.Linq
 @using Microsoft.AspNetCore.Identity
 @using GeodesyApi.Data.Models
+@using System.Globalization
+
 @inject GeodesyApi.Services.ICommentsService commentsService
 
 @inject UserManager<ApplicationUser> UserManager
@@ -47,8 +49,9 @@
                                 <div class="well well-lg">
                                     <h4 class="media-heading text-uppercase reviews">@comment.UserUserName </h4>
                                     <ul class="media-date text-uppercase reviews list-inline">
-                                        <time datetime="@comment.CreatedOn.ToString("O")"></time>
+                                        <time datetime="@comment.CreatedOn.ToString("O", new CultureInfo("bg-BG"))"></time>
                                     </ul>
+
                                     <p class="media-comment">
                                         @Html.Raw(comment.SanitizedContent)
                                     </p>
@@ -92,13 +95,13 @@
                 <ul class="media-body">
                     <li class="media media-replied">
                         <a class="pull-left" href="#">
-                            <img class="media-object img-circle" src="https://s3.amazonaws.com/uifaces/faces/twitter/ManikRathee/128.jpg" alt="profile">
+                            <img class="media-object img-circle" src="@comment.UserPictureUrl" alt="profile">
                         </a>
                         <div class="media-body">
                             <div class="well well-lg">
                                 <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> @comment.UserUserName</h4>
                                 <ul class="media-date text-uppercase reviews list-inline">
-                                    <time datetime=" @comment.CreatedOn.ToString("O")"></time>
+                                    <time datetime=" @comment.CreatedOn.ToString("O", new CultureInfo("bg-BG"))"></time>
 
                                 </ul>
                                 <p class="media-comment">
@@ -135,7 +138,7 @@
         <a asp-route="default" asp-route-controller="News" asp-route-action="Edit" asp-route-id="@Model.Id" title="" class="btn-primary" style="float:right">редактиране</a>
 
         <h2 class="blog-post-title text-center">@Model.Title</h2>
-        <p class="blog-post-meta">@Model.CreatedOn by <a href="#">@Model.UserUserName</a></p>
+        <p class="blog-post-meta">@Model.CreatedOn.ToString("O", new CultureInfo("bg-BG")) by <a href="#">@Model.UserUserName</a></p>
         <hr>
         <p>@Html.Raw(Model.SanitizedContent)</p>
 
