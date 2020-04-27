@@ -18,6 +18,17 @@
   <PropertyGroup>
     <GenerateRuntimeConfigurationFiles>True</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <Compile Remove="Migrations\20200427083347_EditAnswerEntity.cs" />
+    <Compile Remove="Migrations\20200427083347_EditAnswerEntity.Designer.cs" />
+    <Compile Remove="Migrations\20200427093918_FinishTestAndQustionAndAnswerEntities.cs" />
+    <Compile Remove="Migrations\20200427093918_FinishTestAndQustionAndAnswerEntities.Designer.cs" />
+    <Compile Remove="Migrations\20200427152344_AddTestAndQustionAndAnswerEntitiesFinal2.cs" />
+    <Compile Remove="Migrations\20200427152344_AddTestAndQustionAndAnswerEntitiesFinal2.Designer.cs" />
+    <Compile Remove="Migrations\20200427165205_EditTestIdToBeNullableInQestions.cs" />
+    <Compile Remove="Migrations\20200427165205_EditTestIdToBeNullableInQestions.Designer.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />

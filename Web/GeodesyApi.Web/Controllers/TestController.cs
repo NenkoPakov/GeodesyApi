@@ -24,13 +24,13 @@ namespace GeodesyApi.Web.Controllers
         }
 
 
-        public IActionResult Test()
+        public IActionResult ATest()
         {
             return this.View();
         }
 
         [HttpPost]
-        public IActionResult Test(Test input)
+        public IActionResult BTest()
         {
             return this.View();
         }

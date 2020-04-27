@@ -34,7 +34,7 @@ namespace GeodesyApi.Data.Seeding
             {
                 var authorId = dbContext.ApplicationUsers
                             .Select(u => u.Id)
-                            .Skip(random.Next(0, 2))
+                            .Skip(random.Next(0, 3))
                             .FirstOrDefault();
 
                 var comment = new Comment
@@ -49,9 +49,6 @@ namespace GeodesyApi.Data.Seeding
 
                 mainComments.Add(comment);
             }
-
-            
-
 
             dbContext.Comments.AddRange(mainComments);
         }

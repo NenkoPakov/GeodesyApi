@@ -33,6 +33,9 @@
                               new NewsSeeder(),
                               new CommentsSeeder(),
                               new ChiledCommentsSeed(),
+                              new QuestionsSeeder(),
+                              //new AnswersSeeder(),
+                              new TestsSeeder(),
                               new FillAllNavigationPropertiesSeeder(),
                           };
 

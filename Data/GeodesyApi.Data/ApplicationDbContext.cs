@@ -58,9 +58,11 @@
 
         public virtual DbSet<Contact> Contacts { get; set; }
 
-        //public virtual DbSet<NewsCategory> NewsCategories { get; set; }
-
-
+        public virtual DbSet<Question> Questions { get; set; }
+       
+        public virtual DbSet<Test> Tests { get; set; }
+       
+        public virtual DbSet<Answer> Answers { get; set; }
 
         public override int SaveChanges() => SaveChanges(true);
 
