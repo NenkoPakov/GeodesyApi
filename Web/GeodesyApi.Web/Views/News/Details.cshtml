@@ -47,12 +47,10 @@
                             <div class="media-body">
                                 <div class="well well-lg">
                                     <h4 class="media-heading text-uppercase reviews">@comment.UserUserName </h4>
-                                    <ul class="media-date text-uppercase reviews list-inline">
-                                        <time datetime="@comment.CreatedOn.ToString("G")"></time>
-                                    </ul>
+                                        <h6><time datetime="@comment.CreatedOn.ToString("O")"></time></h6>
 
                                     <p class="media-comment">
-                                        @Html.Raw(comment.SanitizedContent)
+                                       <h6> @Html.Raw(comment.SanitizedContent)</h6>
                                     </p>
 
                                     <ul class="nav nav-tabs list-inline" role="tablist">
@@ -99,12 +97,10 @@
                         <div class="media-body">
                             <div class="well well-lg">
                                 <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> @comment.UserUserName</h4>
-                                <ul class="media-date text-uppercase reviews list-inline">
-                                    <time datetime=" @comment.CreatedOn.ToString("G")"></time>
-
-                                </ul>
+                                
+                                    <h6><time datetime="@comment.CreatedOn.ToString("O")"></time></h6>
                                 <p class="media-comment">
-                                    @Html.Raw(comment.SanitizedContent)
+                                    <h6>@Html.Raw(comment.SanitizedContent)</h6>
                                 </p>
                                 <ul class="nav nav-tabs list-inline" role="tablist">
                                     <button class="btn btn-info btn-circle text-uppercase" href="#add-comment" onclick="addParentIdValue(@comment.Id)" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-share-alt"></span> Reply</button>

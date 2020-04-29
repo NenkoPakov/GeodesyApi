@@ -25,7 +25,6 @@
     using System;
     using System.IO;
     using GeodesyApi.Services;
-    using GeodesyApi.Web.Middleware;
     using Microsoft.AspNetCore.Mvc;
 
     public class Startup

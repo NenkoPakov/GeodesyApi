@@ -130,10 +130,9 @@ namespace GeodesyApi.Services
 
         public async Task<IDeletableEntityRepository<Material>> EditAsync(MaterialEditViewModel input, ApplicationUser user)
         {
-           await this.DelateMaterialFiles(input.Id);
-            
-            var material = this.GetById(input.Id);
+            await this.DelateMaterialFiles(input.Id);
 
+            var material = this.GetById(input.Id);
             material.Title = input.Title;
             material.Description = input.SanitizedDescription;
 
@@ -207,13 +206,13 @@ namespace GeodesyApi.Services
 
         private void AddMaterialFiles(ICollection<GetMaterialViewModel> materials)
         {
-             foreach (var material in materials)
+            foreach (var material in materials)
             {
                 material.FilesUrlsFileUrl = this.MaterialFilesRepository
                     .AllAsNoTracking()
                     .Where(x => x.MaterialId == material.Id)
                     .Select(x => x.FileUrl).ToList();
-            };
+            }
         }
     }
 }

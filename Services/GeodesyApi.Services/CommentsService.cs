@@ -2,12 +2,9 @@
 using GeodesyApi.Data.Models;
 using GeodesyApi.Services.Mapping;
 using GeodesyApi.Web.ViewModels.Comments;
-using GeodesyApi.Web.ViewModels.News;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,23 +21,27 @@ namespace GeodesyApi.Services
 
         public bool CanCreate(string userId)
         {
-            var currentTime = DateTime.UtcNow.TimeOfDay;
+            var currentTime = DateTime.UtcNow;
 
-            var LastPost = this.CommentsRepository.AllWithDeleted()
+            var lastPost = this.CommentsRepository.AllWithDeleted()
            .Where(c => c.UserId == userId)
             .OrderByDescending(c => c.CreatedOn)
             .FirstOrDefault();
 
-            if (LastPost == null)
+            if (lastPost == null)
             {
                 return true;
             }
 
-            var createdOnTimeOfLastPost= LastPost.CreatedOn.TimeOfDay;
+            var createdOnTimeOfLastPost = lastPost.CreatedOn;
 
-            return (currentTime - createdOnTimeOfLastPost).TotalMinutes > 2;
+            if (currentTime.Date == createdOnTimeOfLastPost.Date)
+            {
+                return (currentTime.TimeOfDay - createdOnTimeOfLastPost.TimeOfDay).TotalMinutes > 2;
+            }
+
+            return true;
         }
-
 
         public async Task Create(CommentViewModel input, ApplicationUser user)
         {
@@ -56,9 +57,9 @@ namespace GeodesyApi.Services
             Thread.Sleep(1500);
         }
 
-        public  ICollection<Comment> GetAllByNewsId(int newsId)
+        public ICollection<Comment> GetAllByNewsId(int newsId)
         {
-            var comments= this.CommentsRepository.AllAsNoTracking()
+            var comments = this.CommentsRepository.AllAsNoTracking()
                 .Where(x => x.NewsId == newsId).ToList();
 
             return comments;

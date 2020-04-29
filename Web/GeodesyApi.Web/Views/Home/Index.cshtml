@@ -163,57 +163,7 @@
 </section>
 
 <script src="~/js/jquery.min.js" type="text/javascript"></script>
-<script src="~/js/owl.carousel.js"></script>
-<script>
-    $(document).ready(function () {
-        var heroSlider = $('.home-slider .owl-carousel');
-        heroSlider.owlCarousel({
-            items: 1,
-            animateOut: 'fadeOut',
-            mouseDrag: true,
-            touchDrag: true,
-            loop: true,
-            autoplay: true,
-            autoplayTimeout: 5000,
-            autoplayHoverPause: false,
-            nav: true
-        });
-
-    })</script>
-<script>
-    $(document).ready(function () {
-
-
-        /* the Responsive menu script */
-        $('body').addClass('js');
-        var $menu = $('#menu'),
-            $menulink = $('.menu-link'),
-            $menuTrigger = $('.has-subnav > a');
-
-        $menulink.click(function (e) {
-            e.preventDefault();
-            $menulink.toggleClass('active');
-            $menu.toggleClass('active');
-        });
-
-        var add_toggle_links = function () {
-            if ($('.menu-link').is(":visible")) {
-                if ($(".toggle-link").length > 0) {
-                }
-                else {
-                    $('.has-subnav > a').before('<span class="toggle-link"> Open submenu </span>');
-                    $('.toggle-link').click(function (e) {
-                        var $this = $(this);
-                        $this.toggleClass('active').siblings('ul').toggleClass('active');
-                    });
-                }
-            }
-            else {
-                $('.toggle-link').empty();
-            }
-        }
-        add_toggle_links();
-        $(window).bind("resize", add_toggle_links);
-
-    });</script>
+<script src="~/js/owl.carousel.min.js" type="text/javascript"></script>
+<script src="~/js/Home/Index/owlCarousel.js" type="text/javascript"></script>
+<script src="~/js/Home/Index/homeMenu.js" type="text/javascript"></script>
 

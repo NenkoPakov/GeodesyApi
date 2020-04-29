@@ -103,10 +103,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ValidationAttributes\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Areas\Identity\Pages\Account\Login.cshtml" />
     <None Include="Areas\Identity\Pages\Account\Logout.cshtml" />
     <None Include="Areas\Identity\Pages\Account\Manage\Index.cshtml" />
