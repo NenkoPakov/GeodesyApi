@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace GeodesyApi.Web.Areas.Admin.Controllers
 {
 
-    [Area("Admin")]
+    [Area(Common.GlobalConstants.GeodesyApiAdminRoleName)]
     [Authorize(Roles = Common.GlobalConstants.GeodesyApiAdminRoleName)]
     public class MaterialsController : BaseController
     {

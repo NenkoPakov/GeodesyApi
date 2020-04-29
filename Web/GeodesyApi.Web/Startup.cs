@@ -26,6 +26,7 @@
     using System.IO;
     using GeodesyApi.Services;
     using GeodesyApi.Web.Middleware;
+    using Microsoft.AspNetCore.Mvc;
 
     public class Startup
     {
@@ -40,6 +41,10 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews(configure =>
+            configure.Filters.Add(new AutoValidateAntiforgeryTokenAttribute())
+            );
+
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -78,8 +83,8 @@
 
             // Application services
             services.AddTransient<GeodesyApi.Services.Messaging.IEmailSender, SendGridEmailSender>(provider =>
-                                                                     new SendGridEmailSender(/*this.Configuration["SendGridApiKey"]*/));
-            services.AddTransient<GeodesyApi.Services.Messaging.IEmailSender>(x => new SendGridEmailSender(/*this.Configuration["SendGridApiKey"]*/));
+                                                                     new SendGridEmailSender());
+            services.AddTransient<GeodesyApi.Services.Messaging.IEmailSender>(x => new SendGridEmailSender());
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IMaterialsService, MaterialsService>();
             services.AddTransient<INewsService, NewsService>();
@@ -87,12 +92,9 @@
             services.AddTransient<ICloudinaryService, CloudinaryService>(c => new CloudinaryService(cloudinary));
             services.AddTransient<IProjectsService, ProjectsService>();
             services.AddTransient<IContactsService, ContactsService>();
-
-
-            //services.AddScoped<IRepository,MaterialsService>();
-
-
-
+            services.AddTransient<ITestsService, TestsService>();
+            services.AddTransient<IQuestionsService, QuestionsService>();
+            services.AddTransient<IAnswersService, AnswersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -131,24 +133,39 @@
             app.UseRouting();
 
             app.UseAuthentication();
-           // app.UseMiddleware<IdCookieModdleware>();
             app.UseAuthorization();
 
             app.UseEndpoints(
                 endpoints =>
                 {
                     endpoints.MapControllerRoute(
-                        "NumberOfMaterialsPages",
-                        "materials/{category}/{page}",
+                        "AreaNumberOfMaterialsPages",
+                        "{area:exists}/materials/{category}/{page}",
                         new { controller = "Materials", action = "GetMaterials", page = 1 });
+                    endpoints.MapControllerRoute(
+    "NumberOfMaterialsPages",
+    "materials/{category}/{page}",
+    new { controller = "Materials", action = "GetMaterials", page = 1 });
+                    endpoints.MapControllerRoute(
+    "AreaNumberOfMaterialsPages",
+    "{area:exists}/materials/All/{page}",
+    new { controller = "Materials", action = "GetMaterials", page = 1 });
                     endpoints.MapControllerRoute(
                         "NumberOfMaterialsPages",
                         "materials/All/{page}",
                         new { controller = "Materials", action = "GetMaterials", page = 1 });
                     endpoints.MapControllerRoute(
+    "AreaNumberOfNewsPages",
+    "{area:exists}/news/{category}/{page}",
+    new { controller = "News", action = "GetNews", page = 1 });
+                    endpoints.MapControllerRoute(
                         "NumberOfNewsPages",
                         "news/{category}/{page}",
                         new { controller = "News", action = "GetNews", page = 1 });
+                    endpoints.MapControllerRoute(
+    "AreaNumberOfNewsPages",
+    "{area:exists}/news/All/{page}",
+    new { controller = "News", action = "GetNews", page = 1 });
                     endpoints.MapControllerRoute(
                         "NumberOfNewsPages",
                         "news/All/{page}",

@@ -48,7 +48,7 @@ namespace GeodesyApi.Data.Seeding
 
             if (result.Succeeded)
             {
-                await userManager.AddToRoleAsync(user, GlobalConstants.AdministratorRoleName);
+                await userManager.AddToRoleAsync(user, GlobalConstants.GeodesyApiAdminRoleName);
             }
 
             for (int i = 1; i <= 2; i++)

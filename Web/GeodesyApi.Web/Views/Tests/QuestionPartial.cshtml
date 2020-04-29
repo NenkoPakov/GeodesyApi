@@ -1,0 +1,38 @@
+﻿@model GeodesyApi.Web.ViewModels.Tests.SolveQuestionViewModel
+
+<div class="test_Q_Container">
+    <span class="count_Q">Въпрос 1 от 10</span>
+
+    <span class="question">
+       @Model.QuestionText
+    </span>
+
+    <p>
+        @for (int i = 0; i < Model.Answers.Count; i++)
+        {
+            var @char = (int)'А' + i;
+
+           <ul>@((char)@char) - @Model.Answers.Skip(i).Take(1)</ul>
+        }
+    </p>
+</div>
+
+<div class="answer">
+    <div class="prev">
+        <a href="#" title=""><img src="img/prev-small.png" alt="" title=""> Предишен въпрос</a>
+    </div>
+
+    <div class="choose">
+        <span>Избери отговор:</span>
+        @for (int i = 0; i < Model.Answers.Count; i++)
+        {
+            var @char = (int)'А' + i;
+
+            <input type="radio" name="answer" value="" id=""><label for=""> @Html.Encode(@char)</label>
+        }
+    </div>
+
+    <div class="next">
+        <a href="#" title="">Следващ въпрос <img src="img/next-small.png" alt="" title=""> </a>
+    </div>
+</div>

@@ -9,10 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
-namespace GeodesyApi.Web.Areas.Admin.Controllers
+namespace GeodesyApi.Web.Areas.News.Controllers
 {
-    [Area(Common.GlobalConstants.GeodesyApiAdminRoleName)]
-    [Authorize(Roles = Common.GlobalConstants.GeodesyApiAdminRoleName)]
+    [Area("News")]
+    [Authorize]
     public class NewsController : BaseController
     {
         private const int NewsPerPage = 10;
@@ -32,7 +32,23 @@ namespace GeodesyApi.Web.Areas.Admin.Controllers
             return this.View();
         }
 
-        [Route("{area?}/News/All/{page?}")]
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateNewsViewModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+            var user = await this.UserManager.GetUserAsync(this.User);
+
+            var news = await this.NewsService.CreateNews(input, user);
+
+            return this.RedirectToAction("GetNews");
+        }
+
+        [AllowAnonymous]
+        [Route("News/News/All/{page?}")]
         public IActionResult GetNews(int page = 1)
         {
             var news = this.NewsService.GetNews(NewsPerPage, (page - 1) * NewsPerPage);
@@ -61,7 +77,8 @@ namespace GeodesyApi.Web.Areas.Admin.Controllers
             return this.View(news);
         }
 
-        [Route("Admin/News/{category}/{page?}")]
+        [AllowAnonymous]
+        [Route("News/News/{category}/{page?}")]
         public IActionResult GetByCategory(NewsGroupType? category, int page = 1)
         {
             if (category == null)
@@ -92,8 +109,8 @@ namespace GeodesyApi.Web.Areas.Admin.Controllers
 
 
 
-        [Route("Admin/News/Details/{newsId}")]
-        public IActionResult GetNewsById(int newsId)
+        [Route("News/News/Details/{newsId}")]
+        public async Task<IActionResult> GetNewsById(int newsId)
         {
             var news = this.NewsService.GetById(newsId);
 
@@ -105,6 +122,35 @@ namespace GeodesyApi.Web.Areas.Admin.Controllers
             var newsViewModel = AutoMapperConfig.MapperInstance.Map<GetNewsViewModel>(news);
 
             return this.View("Details", newsViewModel);
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var news = this.NewsService.GetById(id);
+
+            if (news == null)
+            {
+                return this.NotFound();
+            }
+
+            var newsViewModel = AutoMapperConfig.MapperInstance.Map<EditNewsViewModel>(news);
+
+            return this.View(newsViewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditNewsViewModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+            var user = await this.UserManager.GetUserAsync(this.User);
+
+            var result = await this.NewsService.EditAsync(input, user);
+
+            return this.RedirectToAction("GetNews");
         }
 
         public async Task<IActionResult> Delete(int id)

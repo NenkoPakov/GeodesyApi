@@ -1,0 +1,94 @@
+﻿@model GeodesyApi.Web.ViewModels.Tests.AllTestsViewModel
+@using GeodesyApi.Data.Models.Enums
+<!-- PAGE -->
+<section class="page tests">
+    <aside>
+        <h1><img src="~/img/icons/news.svg" alt="" title=""> Проверка на знанията</h1>
+        <a href="#" id="show" class="show-nav">&#9776;</a>
+        <div class="sidebar-nav" id="pushleft">
+            <a href="#" id="hide" class="hide-nav">&times;</a>
+            <!-- inner nav-->
+            <ul class="cd-accordion-menu animated">
+
+                @foreach (var testSubject in Enum.GetValues(typeof(TestSubjectType)).Cast<TestSubjectType>())
+                {
+                    var tests = Model.Tests.Where(x => x.Subject == testSubject).ToList();
+
+                    <li class="has-children">
+                        <input type="checkbox" name="group-@testSubject" id="group-@testSubject">
+                        <label for="group-@testSubject">@testSubject</label>
+                        <ul>
+                            @foreach (var test in tests)
+                            {
+                                <li><a asp-action="Details" asp-route-id="@test.Id" title="">@test.Title</a></li>
+                            }
+
+                        </ul>
+                    </li>
+                }
+            </ul><!-- inner nav-->
+
+            <div class="sidebar-buttons">
+                <a href="#" title="" class="all-projects">Създай тест</a>
+            </div>
+        </div>
+
+
+    </aside>
+    <div class="content-details">
+        <div class="news-container">
+
+            <div class="test-text">
+                <p>Тази страница е достъпна за всчики студенти на УАСГ. Всички от изпитите ще се провеждат онлайн.</p>
+                <p>Тестовете се състоят от 10 въпроса. Изберете верния отговр от формата по-горе. Докато не изберете бутон "Изпрати" можете да проверявате и променяте отговорите на въпросите, като избирате бутони "Предишен" и "Напред". С избора на "Изпрати" тестът приключва. За всеки верен отговор получавате 10т.</p>
+                <p>Успешно преминат е тест с общ резултат най-малко 50 точки от 10 въпроса.</p>
+
+
+                <h3>Списък с препоръчителни материали за подготовка ще бъде посочен в долната част на детайлите на теста. </h3>
+
+                <p>Подгответе се за всеки от изпитите възможно най добре, за да имате висок резултат. Голяма част от добре представилите се кандидати ще бъда препоръчани на фирми за стаж.</p>
+                <p>Ако Ви харесат и проявят интерес към Вас ще ви предоставим контактите за възка.</p>
+                <p>Не преписвайте и не търсете отговорите в интернет по време на теста, защото така резултатите Ви няма да са реални и по този начин бъдещите Ви работодатели ще бъдат разочаровани! </p>
+
+            </div>
+
+</section><!-- PAGE -->
+
+<script src="~/js/jquery.min.js" type="text/javascript"></script>
+<script>
+    $(document).ready(function () {
+
+
+        /* the Responsive menu script */
+        $('body').addClass('js');
+        var $menu = $('#menu'),
+            $menulink = $('.menu-link'),
+            $menuTrigger = $('.has-subnav > a');
+
+        $menulink.click(function (e) {
+            e.preventDefault();
+            $menulink.toggleClass('active');
+            $menu.toggleClass('active');
+        });
+
+        var add_toggle_links = function () {
+            if ($('.menu-link').is(":visible")) {
+                if ($(".toggle-link").length > 0) {
+                }
+                else {
+                    $('.has-subnav > a').before('<span class="toggle-link"> Open submenu </span>');
+                    $('.toggle-link').click(function (e) {
+                        var $this = $(this);
+                        $this.toggleClass('active').siblings('ul').toggleClass('active');
+                    });
+                }
+            }
+            else {
+                $('.toggle-link').empty();
+            }
+        }
+        add_toggle_links();
+        $(window).bind("resize", add_toggle_links);
+
+    });
+</script>

@@ -1,0 +1,27 @@
+﻿@model GeodesyApi.Web.ViewModels.Tests.TestQuestionViewModel
+
+
+
+<h2>Тест 1 по кадастър</h2>
+<h4>Студент: asdasdasdsadasd sad sad aswdas ф№: 941415</h4>
+
+<vc:question-by-id question-id="@Model.Questions.FirstOrDefault().Id"></vc:question-by-id>
+
+<div class="answer">
+    <div class="prev">
+        <a href="#" title=""><img src="img/prev-small.png" alt="" title=""> Предишен въпрос</a>
+    </div>
+
+   
+
+    <div class="next">
+        <a onclick="getQuestion(@Model.Questions.)" title="">Следващ въпрос <img src="img/next-small.png" alt="" title=""> </a>
+    </div>
+</div>
+
+<div class="do_test">
+    <h5>Тест 1 по кадастър</h5>
+    <p>Тестът по дисциплината "Курсов проект по кадастър" се състои от 10 въпроса. Изберете верния отговр от формата по-горе. Докато не изберете бутон "Изпрати" можете да проверявате и променяте отговорите на въпросите, като избирате бутони "Предишен" и "Напред". С избора на "Изпрати" тестът приключва. За всеки верен отговор получавате 10т.</p>
+    <p>Успешно преминат е тест с общ резултат най-малко 60 точки от 10 въпроса.</p>
+    <a href="#" title="">Изпрати тест</a>
+</div>

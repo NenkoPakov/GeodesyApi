@@ -1,7 +1,13 @@
 ﻿@model GeodesyApi.Web.ViewModels.News.GetNewsCollectionViewModel
 
-@using System.Globalization
+@using System.Linq
+@using Microsoft.AspNetCore.Identity
+@using GeodesyApi.Data.Models
+@inject UserManager<ApplicationUser> UserManager
 
+@{
+    var user = UserManager.GetUserId(this.User);
+}
 @{
     this.ViewData["Title"] = "News";
 }
@@ -11,7 +17,7 @@
 <!-- PAGE -->
 <section class="page news">
     <aside>
-        <a asp-route="AreaNumberOfNewsPages" style="text-align:center"><h1><img src="~/img/icons/news.svg" alt="" title="">Новини и събития</h1></a>
+        <a asp-route="NumberOfNewsPages" style="text-align:center"><h1><img src="~/img/icons/news.svg" alt="" title="">Новини и събития</h1></a>
         <a href="#" id="show" class="show-nav">&#9776;</a>
         <div class="sidebar-buttons">
             <a asp-controller="News" asp-action="Create" title="" class="new-project">Създай</a>
@@ -22,17 +28,40 @@
             <ul class="cd-accordion-menu animated">
                 <li class="has-children">
                     <input type="checkbox" name="group-1" id="group-1">
-                    <a asp-route="AreaNumberOfNewsPages" asp-route-category="News" asp-route-page="1" title="">Новини</a>
+
+                    <a asp-route="NumberOfNewsPages" asp-route-category="News" asp-route-page="1" title="">Новини</a>
+                    <ul>
+                        <li><a href="#" title="">Заседание на работна група</a></li>
+                        <li><a href="#" title="" class="active">Конференция</a></li>
+                        <li><a href="#" title="">Нови геод. инструменти</a></li>
+                        <li><a href="#" title="">Конкурси</a></li>
+                    </ul>
                 </li>
                 <li class="has-children">
                     <input type="checkbox" name="group-2" id="group-2">
-                    <a asp-route="AreaNumberOfNewsPages" asp-route-category="Event" asp-route-page="1">Събития</a>
+                    <a asp-route="NumberOfNewsPages" asp-route-category="Event" asp-route-page="1">Събития</a>
+                    <ul>
+                        <li><a href="#" title="">Заседание на работна група</a></li>
+                        <li><a href="#" title="">Конференция</a></li>
+                        <li><a href="#" title="">Нови геод. инструменти</a></li>
+                        <li><a href="#" title="">Конкурси</a></li>
+                    </ul>
                 </li>
                 <li class="has-children">
                     <input type="checkbox" name="group-3" id="group-3">
-                    <a asp-route="AreaNumberOfNewsPages" asp-route-category="RecommendedForStudents" asp-route-page="1">Препоръчано за студенти</a>
+                    <a asp-route="NumberOfNewsPages" asp-route-category="RecommendedForStudents" asp-route-page="1">Препоръчано за студенти</a>
+                    <ul>
+                        <li><a href="#" title="">Биология и екология</a></li>
+                        <li><a href="#" title="" class="active">Науки за земята</a></li>
+                        <li><a href="#" title="">Биология</a></li>
+                        <li><a href="#" title="">Медицина</a></li>
+                        <li><a href="#" title="">Геология</a></li>
+                        <li><a href="#" title="">Геодезия, картография и ГИС</a></li>
+                        <li><a href="#" title="">Океанографски науки</a></li>
+                        <li><a href="#" title="">Логистика и инженерни науки</a></li>
+                    </ul>
                 </li>
-                <li><a asp-route="AreaNumberOfNewsPages" asp-route-page="1" title="">Всички</a></li>
+                <li><a asp-route="NumberOfNewsPages" asp-route-page="1" title="">Всички</a></li>
             </ul><!-- inner nav-->
 
         </div>
@@ -45,17 +74,21 @@
             <div class="articles">
                 @foreach (var item in Model.News)
                 {
-                    <article class="col-md-6">
-                        <div class="news-icon">
-                            <img src="~/img/icons/news-list2.svg" alt="" title="">
-                        </div>
-                        <div class="article-title">
-                            <a asp-action="Details" asp-route-id="@item.Id" title="">@item.Title</a><br>
-                            <span> <time datetime=" @item.CreatedOn.ToString("o")"></time>,<br />Публикуван в категория: <a href="#" title="">@Html.DisplayFor(x => item.Category) </a></span>
-                            <a asp-route="default" asp-route-controller="News" asp-route-action="Delete" asp-route-id="@item.Id" onclick="ConirmDelete()" class="reg_u">изтриване</a>
-                            <a asp-route="default" asp-route-controller="News" asp-route-action="Edit" asp-route-id="@item.Id" title="" class="reg_u">редактиране</a>
-                        </div>
-                    </article>
+                <article class="col-md-6">
+                    <div class="news-icon">
+                        <img src="~/img/icons/news-list2.svg" alt="" title="">
+                    </div>
+                    <div class="article-title">
+                        <a asp-action="Details" asp-route-id="@item.Id" title="">@item.Title</a><br>
+                        <span> <time datetime=" @item.CreatedOn.ToString("o")"></time>,<br/>Публикуван в категория: <a href="#" title="">@Html.DisplayFor(x => item.Category) </a></span>
+                    </div>
+                    @if (item.UserId == user)
+                    {
+                        <a asp-route="default" asp-route-controller="News" asp-route-action="Delete" asp-route-id="@item.Id" onclick="ConirmDelete()" class="btn-danger">изтриване</a>
+                        <a asp-route="default" asp-route-controller="News" asp-route-action="Edit" asp-route-id="@item.Id" title="" class="btn-primary">редактиране</a>
+                    }
+                </article>
+                    <hr>
                     <hr>
                 }
             </div>
@@ -73,7 +106,7 @@
                     {
                         <li class="page-item">
                             <a class="page-link"
-                               asp-route="AreaNumberOfNewsPages"
+                               asp-route="NumberOfNewsPages"
                                asp-route-page="@(this.Model.CurrentPage - 1)">Previous</a>
                         </li>
                     }
@@ -83,7 +116,7 @@
                         var active = i == this.Model.CurrentPage ? "active" : string.Empty;
                         <li class="page-item @active">
                             <a class="page-link"
-                               asp-route="AreaNumberOfNewsPages"
+                               asp-route="NumberOfNewsPages"
                                asp-route-page="@i">@i</a>
                         </li>
                     }
@@ -98,7 +131,7 @@
                     {
                         <li class="page-item">
                             <a class="page-link"
-                               asp-route="AreaNumberOfNewsPages"
+                               asp-route="NumberOfNewsPages"
                                asp-route-page="@(this.Model.CurrentPage + 1)">Next</a>
                         </li>
                     }

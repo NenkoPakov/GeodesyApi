@@ -1,0 +1,231 @@
+﻿@model GeodesyApi.Web.ViewModels.News.GetNewsViewModel
+
+@using System.Linq
+@using Microsoft.AspNetCore.Identity
+@using GeodesyApi.Data.Models
+
+@inject GeodesyApi.Services.ICommentsService commentsService
+
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    var user = UserManager.GetUserId(this.User);
+}
+@{
+    this.ViewData["Title"] = "News";
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+
+
+
+    void DisplayComments()
+    {
+
+        var comments = this.Model.Comments.Where(x => x.ParentId == null).OrderBy(n => n.CreatedOn);
+        if (!comments.Any())
+        {
+            return;
+        }
+
+
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="comments-logout">
+                <ul class="media-list">
+                    @foreach (var comment in comments)
+                    {
+
+                        var countOfChildComments = this.Model.Comments.Count(x => x.ParentId == comment.Id);
+
+                        <li class="media">
+                            <a class="pull-left" href="#">
+                                <img class="media-object img-circle" src="@comment.UserPictureUrl" alt="profile">
+                            </a>
+                            <div class="media-body">
+                                <div class="well well-lg">
+                                    <h4 class="media-heading text-uppercase reviews">@comment.UserUserName </h4>
+                                    <ul class="media-date text-uppercase reviews list-inline">
+                                        <time datetime="@comment.CreatedOn.ToString("G")"></time>
+                                    </ul>
+
+                                    <p class="media-comment">
+                                        @Html.Raw(comment.SanitizedContent)
+                                    </p>
+
+                                    <ul class="nav nav-tabs list-inline" role="tablist">
+                                        <button class="btn btn-info btn-circle text-uppercase" href="#add-comment" onclick="addParentIdValue(@comment.Id)" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-share-alt"></span> Reply</button>
+                                        @if (@countOfChildComments > 0)
+                                        {
+                                            <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" href="#replyOne-@comment.Id.ToString()"><span class="glyphicon glyphicon-comment"></span> @countOfChildComments comments</a>
+                                        }
+                                    </ul>
+                                </div>
+
+                                @{ DisplayChildComments(comment.Id); }
+
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+
+
+
+    void DisplayChildComments(int? parentId)
+    {
+        var comments = this.Model.Comments.Where(x =>
+          x.ParentId == parentId);
+        if (!comments.Any())
+        {
+            return;
+        }
+
+        @foreach (var comment in comments)
+        {
+
+            var countOfChildComments = this.Model.Comments.Count(x => x.ParentId == comment.Id);
+
+            <div class="collapse" id="replyOne-@parentId.ToString()">
+                <ul class="media-body">
+                    <li class="media media-replied">
+                        <a class="pull-left" href="#">
+                            <img class="media-object img-circle" src="@comment.UserPictureUrl" alt="profile">
+                        </a>
+                        <div class="media-body">
+                            <div class="well well-lg">
+                                <h4 class="media-heading text-uppercase reviews"><span class="glyphicon glyphicon-share-alt"></span> @comment.UserUserName</h4>
+                                <ul class="media-date text-uppercase reviews list-inline">
+                                    <time datetime=" @comment.CreatedOn.ToString("G")"></time>
+
+                                </ul>
+                                <p class="media-comment">
+                                    @Html.Raw(comment.SanitizedContent)
+                                </p>
+                                <ul class="nav nav-tabs list-inline" role="tablist">
+                                    <button class="btn btn-info btn-circle text-uppercase" href="#add-comment" onclick="addParentIdValue(@comment.Id)" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-share-alt"></span> Reply</button>
+                                    @if (@countOfChildComments > 0)
+                                    {
+                                        <a class="btn btn-warning btn-circle text-uppercase" data-toggle="collapse" href="#replyOne-@comment.Id.ToString()"><span class="glyphicon glyphicon-comment"></span> @countOfChildComments comments</a>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+
+                    </li>
+                    @{DisplayChildComments(comment.Id);}
+                </ul>
+            </div>
+        }
+
+    }
+}
+
+<link rel="stylesheet" href="~/css/bootstrap.css" asp-append-version="true" />
+
+<div class="content-details">
+
+    <div class="blog-post  text-justify">
+        <div class="box-image align-items-center">
+            <img class="news-image " src="@Model.ImageUrl" />
+        </div>
+
+        @if (@Model.UserId == user)
+        {
+            <a asp-route="default" asp-route-controller="News" asp-route-action="Delete" asp-route-id="@Model.Id" onclick="ConirmDelete()" class="btn-danger" style="float:left">изтриване</a>
+            <a asp-route="default" asp-route-controller="News" asp-route-action="Edit" asp-route-id="@Model.Id" title="" class="btn-primary" style="float:right">редактиране</a>
+        }
+
+        <h2 class="blog-post-title text-center">@Model.Title</h2>
+        <p class="blog-post-meta">@Model.CreatedOn.ToString("G") by <a href="#">@Model.UserUserName</a></p>
+        <hr>
+        <p>@Html.Raw(Model.SanitizedContent)</p>
+
+    </div>
+
+
+    <!------ Include the above in your HEAD tag ---------->
+
+    <script src="/lib/tinymce/tinymce.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: "textarea",
+            plugins: ["image paste table link code media"]
+        });
+    </script>
+
+
+
+
+    <div class="page-header">
+        <h3 class="reviews">Comments</h3>
+    </div>
+
+
+
+
+
+
+    <div class="comment-tabs">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item"><a href="#comments" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Коментари</h4></a></li>
+            <li class="nav-item"><a href="#add-comment" role="tab" data-toggle="tab"><h4 class="reviews text-capitalize">Добави коментар</h4></a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane" id="comments">
+                @{DisplayComments();}
+            </div>
+            <div class="tab-pane" id="add-comment">
+                <form asp-controller="Comments" asp-action="Create" method="post" class="form-horizontal" id="commentForm" role="form" enctype="multipart/form-data">
+                    <input type="hidden" name="NewsId" value="@this.Model.Id" />
+                    <input type="hidden" name="ParentId" id="ParentId" value="" />
+                    <div class="form-group">
+                        <label for="email" class="col-sm-2 control-label">Коментар</label>
+                        <div class="col-sm-10">
+                            <textarea name="Content" id="Content" class="form-control" rows="5"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+
+                            @{
+
+
+                                var isDisabled = this.commentsService.CanCreate(user) ? string.Empty : "disabled";
+                                <button href="#comments" class="btn btn-success btn-circle text-uppercase" type="submit" id="submitComment" @isDisabled><span class="glyphicon glyphicon-send"></span> Създай коментар</button>
+                            }
+
+                        </div>
+                        <div class="alert alert-success" id="success-alert">
+                            <button type="button" class="close" data-dismiss="alert">x</button>
+                            <strong>Успешно! </strong> Добавихте нов коментар.
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function addParentIdValue(parentId) {
+            $("#commentForm input[name='ParentId']").val(parentId);
+        }
+    </script>
+}
+
+<script>
+    $(document).ready(function () {
+        $("#success-alert").hide();
+        $("#submitComment").click(function showAlert() {
+            $("#success-alert").fadeTo(2000, 500).slideUp(500, function () {
+                $("#success-alert").slideUp(500);
+            });
+        });
+    });
+</script>

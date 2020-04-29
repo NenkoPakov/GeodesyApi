@@ -1,0 +1,41 @@
+﻿@model GeodesyApi.Web.ViewModels.Tests.QuestionViewModel
+    <div id="questionAjax">
+        <div class="test_Q_Container">
+            <span class="count_Q">Въпрос 1 от 10</span>
+
+            <span class="question">
+                @Model.QuestionText
+            </span>
+
+            <p>
+                @for (int i = 0; i < Model.Answers.Count; i++)
+                {
+                    var @char = (int)'А' + i;
+                    var answerText = @Model.Answers.ToList()[i].AnswerText;
+
+
+                    <ul>@((char)@char) - @answerText</ul>
+                }
+            </p>
+        </div>
+
+        <div class="choose">
+            <span>Избери отговор:</span>
+            @for (int i = 0; i < Model.Answers.Count; i++)
+            {
+                var @char = (int)'А' + i;
+
+                <input type="radio" name="answer" value="" id=""><label for=""> @((char)@char)</label>
+            }
+        </div>
+    </div>
+
+<script>
+    var currentQuestion = 5;
+
+    function getQuestion(e) {    
+        currentQuestion = currentQuestion + e;
+
+   $('#questionAjax').load('/ViewComponent/Get', {id: currentQuestion});
+};
+</script>
