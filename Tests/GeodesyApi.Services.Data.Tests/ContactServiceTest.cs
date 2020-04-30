@@ -28,7 +28,7 @@ namespace GeodesyApi.Services.Data.Tests
                 Name = "Testov",
             };
 
-            this.ContactServiceMock.SaveContactMasageAsync(message);
+           await this.ContactServiceMock.SaveContactMasageAsync(message);
 
             var savedMessage = this.DbContext.Contacts.FirstOrDefault();
 

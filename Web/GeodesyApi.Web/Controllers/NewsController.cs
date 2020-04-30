@@ -14,7 +14,7 @@ namespace GeodesyApi.Web.Controllers
     [Authorize]
     public class NewsController : BaseController
     {
-        private const int NewsPerPage = 10;
+        private const int NewsPerPage = GeodesyApi.Common.GlobalConstants.NewsResultsPerPageCount;
 
         public NewsController(UserManager<ApplicationUser> userManager, INewsService newsService)
         {

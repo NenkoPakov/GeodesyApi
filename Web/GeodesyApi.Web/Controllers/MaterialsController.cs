@@ -15,7 +15,7 @@ namespace GeodesyApi.Web.Controllers
     [Authorize]
     public class MaterialsController : BaseController
     {
-        private const int MaterialsPerPage = 3;
+        private const int MaterialsPerPage = GeodesyApi.Common.GlobalConstants.MaterialsResultsPerPageCount;
 
         public MaterialsController(UserManager<ApplicationUser> userManager, IMaterialsService materialsService)
         {
