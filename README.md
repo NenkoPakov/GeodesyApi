@@ -1,5 +1,5 @@
 # GeodesyApi
-My first ASP.NET CORE
+ASP.NET CORE
 
 ## :eyeglasses: Project Introduction
 
